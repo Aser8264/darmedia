@@ -1,0 +1,105 @@
+---
+// Formular generic care trimite către aceleași endpoint-uri Brevo folosite de vechiul site.
+import Arrow from './Arrow.astro';
+import data from '../data/forms.json';
+interface Props { formKey: string; submitLabel?: string; id?: string }
+const { formKey, submitLabel, id = `f-${formKey}` } = Astro.props;
+const form = (data.forms as Record<string, any>)[formKey];
+const NAMES: Record<string, string> = { EMAIL: 'Email', FIRSTNAME: 'Prenume', LASTNAME: 'Nume', COMPANYNAME: 'Companie', MESAJ: 'Mesajul tău', SITE: 'Website', SMS: 'Telefon' };
+const JUNK = new Set(['EMAIL', 'SMS', 'Email', 'Prenume', 'Companie', 'Telefon', 'Nume', 'Adresa de email', 'Nume și prenume', 'Lasa-ne mesajul tau']);
+const fields = form.fields.map((f: any) => {
+  const label = (f.label || (f.placeholder && !['EMAIL', 'SMS'].includes(f.placeholder) ? f.placeholder : '') || NAMES[f.name] || f.name).replace(/:\s*$/, '').replace('Lasa-ne mesajul tau', 'Mesajul tău');
+  const placeholder = f.placeholder && !JUNK.has(f.placeholder) ? f.placeholder : undefined;
+  return { ...f, label, placeholder };
+});
+const isMessage = (f: any) => formKey === 'contact' && f.name === 'MESAJ';
+---
+<form class="form" id={id} method="POST" action={form.action} data-brevo novalidate>
+  {fields.map((f: any) => {
+    const fid = `${id}-${f.name}`;
+    if (f.kind === 'optin') {
+      const terms = /termenii/i.test(f.label);
+      return (
+        <label class="choice">
+          <input type="checkbox" name={f.name} value={f.value} required={f.required} />
+          <span>{terms ? <>Sunt de acord cu <a href="/termeni-si-conditii/">termenii și condițiile</a> DAR Media Marketing.</> : f.label}</span>
+        </label>
+      );
+    }
+    if (f.kind === 'radio' || f.kind === 'checkbox') {
+      return (
+        <fieldset class="field">
+          <legend>{f.label}{f.required && <span aria-hidden="true"> *</span>}</legend>
+          <div class="choices">
+            {f.options.map((o: any) => (
+              <label class="choice"><input type={f.kind} name={f.name} value={o.value} required={f.required && f.kind === 'radio'} /><span>{o.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+      );
+    }
+    if (f.kind === 'sms') {
+      return (
+        <div class="field">
+          <label for={fid}>{f.label}{f.required && <span aria-hidden="true"> *</span>}</label>
+          <div class="phone">
+            <select class="input" name="SMS__COUNTRY_CODE" aria-label="Prefix țară">
+              {data.countryCodes.map(([v, t]: string[]) => <option value={v} selected={t.endsWith(' RO')}>{t}</option>)}
+            </select>
+            <input class="input" id={fid} type="tel" name="SMS" inputmode="tel" autocomplete="tel-national" placeholder="7xx xxx xxx" required={f.required} />
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div class="field">
+        <label for={fid}>{f.label}{f.required && <span aria-hidden="true"> *</span>}</label>
+        {isMessage(f)
+          ? <textarea class="input" id={fid} name={f.name} rows="3" maxlength={f.maxlength ?? 200} required={f.required}></textarea>
+          : <input class="input" id={fid} name={f.name} type={f.name === 'EMAIL' ? 'email' : 'text'} placeholder={f.placeholder} maxlength={f.maxlength}
+              autocomplete={f.name === 'EMAIL' ? 'email' : f.name === 'FIRSTNAME' ? 'given-name' : f.name === 'COMPANYNAME' ? 'organization' : f.name === 'SITE' ? 'url' : undefined} required={f.required} />}
+      </div>
+    );
+  })}
+  <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  {Object.entries(form.hidden).map(([k, v]) => <input type="hidden" name={k} value={v as string} />)}
+  <div class="form__end">
+    <button class="btn" type="submit"><span>{submitLabel ?? form.submit}</span><Arrow /></button>
+    <p class="form__note">Câmpurile marcate cu * sunt obligatorii.</p>
+  </div>
+  <p class="form__status" role="status" aria-live="polite" hidden></p>
+</form>
+<style>
+  .form__end { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 0.5rem; }
+</style>
+<script>
+  // Trimitere asincronă către Brevo; dacă cererea nu poate fi făcută din browser, formularul se trimite clasic.
+  document.querySelectorAll<HTMLFormElement>('form[data-brevo]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.form__status')!;
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const say = (kind: 'ok' | 'err', msg: string) => { status.hidden = false; status.dataset.kind = kind; status.textContent = msg; };
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.hidden = true;
+      const bad = [...form.querySelectorAll<HTMLInputElement>('input,textarea,select')].find((el) => !el.checkValidity());
+      if (bad) { say('err', 'Te rugăm să completezi corect câmpurile obligatorii.'); bad.focus(); return; }
+      const fd = new FormData(form);
+      const sms = String(fd.get('SMS') ?? '').replace(/\D/g, '').replace(/^0+/, '');
+      if (fd.has('SMS')) { if (sms) fd.set('SMS', sms); else { fd.delete('SMS'); fd.delete('SMS__COUNTRY_CODE'); } }
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action + '?isAjax=1', { method: 'POST', body: fd });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.success !== false) {
+          if (json.redirect) { window.location.href = json.redirect; return; }
+          form.reset();
+          say('ok', 'Mesajul tău a fost trimis cu succes! Te contactăm în cel mai scurt timp.');
+        } else {
+          say('err', 'Înregistrarea ta nu a putut fi salvată. Te rugăm să verifici datele și să reîncerci.');
+        }
+      } catch {
+        form.submit();
+      } finally { btn.disabled = false; }
+    });
+  });
+</script>

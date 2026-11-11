@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { timeline } from '../data/site';
+---
+<Base title="Povestea noastră" description="Ne-am molipsit cu pasiunea pentru marketing online și antreprenoriat încă din 2011. Am început de la zero cu blogging, social media, affiliate marketing și network marketing.">
+  <PageHero eyebrow="Povestea noastră" title="Cum ne-am descoperit <em>DAR-ul</em> care te sprijină în afacerea ta." crumbs={[{ label: 'Despre noi', href: '/despre-noi/' }, { label: 'Povestea noastră' }]} />
+  <section class="story">
+    <div class="wrap grid">
+      <div class="story__text">
+        <p class="story__first">Ne-am molipsit cu pasiunea pentru marketing online și antreprenoriat încă din 2011. Am început de la zero cu blogging, social media, affiliate marketing și network marketing.</p>
+        <p>Călătoria noastră în domeniu a devenit foarte intensă în 2014, când, alături de alți 11 tineri determinați, am pornit într-o călătorie, la propriu, în jurul României. Ne-am numit proiectul „Zig Zag prin România”. Scopul nostru era să promovăm destinațiile turistice din fiecare județ, oamenii locului cu povești de viață inspiraționale, dar și să oferim recomandări utile pentru turiști (hoteluri, restaurante, cafenele etc.).</p>
+        <p>În cadrul echipei, noi, Dumitru, Adelina și Radu, am activat în departamentele de marketing și vânzări. Asta ne-a permis ca în 2 ani și jumătate să interacționăm cu sute de afaceri românești, din domeniul turismului și alte nișe. Acum, ne place să punem umărul acolo unde experiența își spune deja cuvântul, mai cu seamă în afaceri prospere și cu tradiție.</p>
+        <blockquote>Există o cale mai bună pentru a ne îndeplini visele și obiectivele: digital marketing!</blockquote>
+        <p>La începutul anului 2017 ni s-a conturat o nouă viziune: de acum încolo ne vom concentra doar pe marketing online și vânzări sau, altfel spus, „darurile noastre”. Le vom da mai departe atât prin informații gratuite din experiența noastră, cât și prin consultanță sau servicii directe.</p>
+        <p>Ne-a plăcut ideea și destul de repede ne-am găsit misiunea noastră. Ajutăm cât mai multe afaceri românești să folosească potențialul serviciilor de marketing online ca să-și amplifice propriile „daruri”. Noi facem asta printr-o abordare orientată spre rezultate și impact social, care include atât îmbunătățirea magazinului online în sine, cât și campanii de marketing pe mai multe canale, cum ar fi PPC, email, SEO, social media content sau SMS.</p>
+        <p><strong>Așa am ajuns să creăm DAR Media Marketing!</strong></p>
+        <a class="btn" href="/servicii/"><span>Descoperă cum te putem ajuta</span><Arrow /></a>
+      </div>
+      <aside class="story__time" aria-label="Cronologie">
+        <p class="eyebrow">Cronologie</p>
+        <ol>{timeline.map((t) => <li data-reveal><span class="story__year">{t.year}</span><p>{t.text}</p></li>)}</ol>
+      </aside>
+    </div>
+  </section>
+  <Cta />
+</Base>
+<style>
+  .story { padding-bottom: var(--section); border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 5rem); }
+  .story__text { grid-column: 1 / span 6; display: grid; gap: 1.4rem; align-content: start; justify-items: start; font-size: 1.125rem; line-height: 1.7; }
+  .story__first { font-family: var(--serif); font-size: clamp(1.6rem, 2.6vw, 2.3rem); line-height: 1.18; letter-spacing: -0.01em; }
+  .story__text blockquote { font-family: var(--serif); font-style: italic; font-size: clamp(1.8rem, 3.2vw, 2.8rem); line-height: 1.1; color: var(--plum); margin-block: 1.5rem; }
+  .story__text .btn { margin-top: 1rem; }
+  .story__time { grid-column: 8 / -1; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
+  .story__time ol { margin-top: 1.5rem; border-top: 1px solid var(--line-strong); }
+  .story__time li { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .story__year { font-family: var(--serif); font-size: 2rem; line-height: 1; color: var(--plum); }
+  .story__time p { font-size: 0.9875rem; line-height: 1.5; }
+  @media (max-width: 900px) { .story__text, .story__time { grid-column: 1 / -1; position: static; } .story__time { margin-top: 3.5rem; } }
+</style>

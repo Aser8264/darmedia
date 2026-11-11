@@ -1,0 +1,148 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../PageHero.astro';
+import Arrow from '../Arrow.astro';
+import Cta from '../Cta.astro';
+import { services, groups, whyUs, type Service } from '../../data/services';
+interface Props { service: Service }
+const { service: s } = Astro.props;
+const parent = s.parent ? services.find((x) => x.slug === s.parent) : undefined;
+const subs = services.filter((x) => x.parent === s.slug);
+const siblings = parent ? services.filter((x) => x.parent === parent.slug && x.slug !== s.slug) : [];
+const order = services.filter((x) => !x.parent);
+const idx = order.findIndex((x) => x.slug === (parent?.slug ?? s.slug));
+const next = order[(idx + 1) % order.length];
+const prev = order[(idx - 1 + order.length) % order.length];
+const group = groups.find((g) => g.id === s.group)!;
+const crumbs = [{ label: 'Servicii', href: '/servicii/' }, ...(parent ? [{ label: parent.name, href: `/${parent.slug}/` }] : []), { label: s.name }];
+---
+<Base title={`${s.name} — servicii DAR Media`} description={s.lead}>
+  <PageHero eyebrow={`${group.label} · ${group.note}`} title={s.name} lead={s.lead} crumbs={crumbs} />
+
+  {s.what && (
+    <section class="section--tight sv-what">
+      <div class="wrap grid">
+        <h2 class="h3 sv-side" data-reveal>{s.what.title}</h2>
+        <div class="sv-main stack" data-reveal style="--d:100ms">
+          {s.what.paras.map((p, i) => <p class={i === 0 ? 'sv-first' : 'muted'}>{p}</p>)}
+          {s.what.bullets && <ul class="ticks">{s.what.bullets.map((b) => <li>{b}</li>)}</ul>}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section sv-why">
+    <div class="wrap grid">
+      <div class="sv-side sv-sticky" data-reveal>
+        <p class="eyebrow">Beneficii</p>
+        <h2 class="h2">{s.why.title}</h2>
+      </div>
+      <div class="sv-main stack" style="--stack:1.75rem" data-reveal style="--d:100ms">
+        {s.why.intro && <p class="lead">{s.why.intro}</p>}
+        {s.why.items.length > 0 && <ul class="ticks">{s.why.items.map((b) => <li>{b}</li>)}</ul>}
+        {s.why.outro && <p class="muted">{s.why.outro}</p>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section sv-how on-dark">
+    <div class="wrap">
+      <div class="sv-how__head">
+        <p class="eyebrow">Cum lucrăm</p>
+        <h2 class="h2">{s.how.title}</h2>
+        {s.how.intro && <p class="lead">{s.how.intro}</p>}
+      </div>
+      <ol class="steps sv-how__list">{s.how.items.map((b) => <li><span>{b}</span></li>)}</ol>
+    </div>
+  </section>
+
+  {subs.length > 0 && (
+    <section class="section--tight sv-subs">
+      <div class="wrap">
+        <p class="eyebrow">Platforme</p>
+        <ul>{subs.map((x) => <li><a href={`/${x.slug}/`}><span class="h2">{x.name}</span><span class="muted">{x.summary}</span><Arrow /></a></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  {s.fit && (
+    <section class="section sv-fit">
+      <div class="wrap grid">
+        <div class="sv-side sv-sticky" data-reveal>
+          <p class="eyebrow">Pentru cine</p>
+          <h2 class="h2">{s.fit.title}</h2>
+        </div>
+        <div class="sv-main">
+          <ol class="steps">{s.fit.items.map((b) => <li><span>{b}</span></li>)}</ol>
+          {s.fit.outro && <p class="sv-outro">{s.fit.outro}</p>}
+          <a class="btn" href="/contact/"><span>Hai să vorbim</span><Arrow /></a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {siblings.length > 0 && (
+    <section class="section--tight sv-subs">
+      <div class="wrap">
+        <p class="eyebrow">Alte platforme de reclamă</p>
+        <ul>{siblings.map((x) => <li><a href={`/${x.slug}/`}><span class="h2">{x.name}</span><span class="muted">{x.summary}</span><Arrow /></a></li>)}</ul>
+      </div>
+    </section>
+  )}
+
+  <section class="section sv-us">
+    <div class="wrap grid">
+      <div class="sv-us__head">
+        <p class="eyebrow">{whyUs.title}</p>
+        <h2 class="h2">O agenție de performance marketing <em>tânără, creativă</em> și orientată spre rezultate.</h2>
+        <figure><img src="/media/site/adelina.webp" alt="Adelina Elena Ababei, co-fondator DAR Media" width="450" height="452" loading="lazy" /></figure>
+      </div>
+      <ul class="ticks sv-us__list">{whyUs.items.map((b) => <li>{b}</li>)}</ul>
+    </div>
+  </section>
+
+  <nav class="sv-nav" aria-label="Alte servicii">
+    <div class="wrap">
+      <a href={`/${prev.slug}/`} class="sv-nav__prev"><span class="tag">Serviciul anterior</span><span class="h3">{prev.name}</span></a>
+      <a href={`/${next.slug}/`} class="sv-nav__next"><span class="tag">Serviciul următor</span><span class="h3">{next.name}</span></a>
+    </div>
+  </nav>
+  <Cta />
+</Base>
+<style>
+  .sv-side { grid-column: 1 / span 5; align-self: start; }
+  .sv-sticky { position: sticky; top: calc(var(--header-h) + 2rem); display: grid; gap: 1.25rem; }
+  .sv-main { grid-column: 7 / -1; }
+  .sv-what { border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 5rem); }
+  .sv-first { font-size: clamp(1.2rem, 1.7vw, 1.45rem); line-height: 1.5; }
+  .sv-why { background: var(--white); }
+  .sv-how__head { display: grid; gap: 1.5rem; max-width: 56rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .sv-how__list { columns: 2; column-gap: calc(var(--gap) * 2); }
+  .sv-how__list > li { break-inside: avoid; }
+  .sv-how__list > li:last-child { border-bottom: 0; }
+  .sv-fit { background: var(--paper-2); }
+  .sv-outro { font-family: var(--serif); font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.2; margin: 2.25rem 0; font-style: italic; color: var(--plum); }
+  .sv-subs .eyebrow { margin-bottom: 1.5rem; }
+  .sv-subs ul { border-top: 1px solid var(--line-strong); }
+  .sv-subs a { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 1.5rem; gap: 1.5rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--line); transition: padding 0.4s var(--ease), color 0.3s; }
+  .sv-subs a:hover { padding-left: 1rem; color: var(--plum); }
+  .sv-subs a :global(.arrow) { align-self: center; }
+  .sv-us__head { grid-column: 1 / span 5; display: grid; gap: 1.5rem; align-content: start; }
+  .sv-us__head figure { width: min(100%, 17rem); margin-top: 1rem; }
+  .sv-us__head img { width: 100%; mix-blend-mode: multiply; }
+  .sv-us__list { grid-column: 7 / -1; align-self: start; }
+  .sv-nav { border-top: 1px solid var(--line); }
+  .sv-nav .wrap { display: grid; grid-template-columns: 1fr 1fr; }
+  .sv-nav a { display: grid; gap: 0.6rem; padding: clamp(2rem, 4vw, 3.5rem) 0; transition: color 0.3s; }
+  .sv-nav a:hover { color: var(--plum); }
+  .sv-nav__next { text-align: right; border-left: 1px solid var(--line); padding-left: 2rem !important; }
+  @media (max-width: 900px) {
+    .sv-side, .sv-main, .sv-us__head, .sv-us__list { grid-column: 1 / -1; position: static; }
+    .sv-main { margin-top: 2rem; }
+    .sv-how__list { columns: 1; }
+    .sv-how__list > li:last-child { border-bottom: 1px solid var(--line); }
+    .sv-subs a { grid-template-columns: 1fr 1.5rem; }
+    .sv-subs a .muted { grid-column: 1; grid-row: 2; }
+    .sv-us__list { margin-top: 2rem; }
+  }
+</style>

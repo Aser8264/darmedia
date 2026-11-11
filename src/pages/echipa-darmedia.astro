@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import { team } from '../data/site';
+---
+<Base title="Echipa DAR Media" description="Fă cunoștință cu echipa care contribuie la creșterea afacerii tale, în online.">
+  <PageHero eyebrow="Echipa" title="Oamenii care contribuie la <em>creșterea afacerii tale,</em> în online." lead="Credem cu tărie în forța echipei noastre, formată din colegi tineri, creativi și orientați spre rezultate. Atuurile noastre sunt comunicarea, transparența, evoluția continuă și relațiile solide construite între noi." crumbs={[{ label: 'Despre noi', href: '/despre-noi/' }, { label: 'Echipa' }]} />
+  <section class="tm">
+    <div class="wrap">
+      <ul>
+        {team.map((m, i) => (
+          <li data-reveal style={`--d:${(i % 4) * 70}ms`}>
+            <div class="tm__pic"><img src={m.img} alt={m.name} width="400" height="400" loading={i < 4 ? 'eager' : 'lazy'} /></div>
+            <h2>{m.name}</h2>
+            <p class="muted small">{m.role}</p>
+          </li>
+        ))}
+        <li class="tm__join">
+          <p class="h3">Vrei să-ți folosești „darurile” alături de noi?</p>
+          <a class="link" href="/cariere/">Vezi pagina de carieră</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <Cta title="Hai să <em>colaborăm!</em>" />
+</Base>
+<style>
+  .tm { padding-bottom: var(--section); }
+  .tm ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(2.5rem, 5vw, 4rem) var(--gap); border-top: 1px solid var(--line); padding-top: clamp(2.5rem, 5vw, 4rem); }
+  .tm li:nth-child(4n + 2), .tm li:nth-child(4n + 4) { margin-top: clamp(0rem, 4vw, 3.5rem); }
+  .tm__pic { aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--paper-2); margin-bottom: 1.25rem; }
+  .tm__pic img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.24); filter: grayscale(1) contrast(1.05); transition: filter 0.6s var(--ease), transform 0.8s var(--ease); }
+  .tm li:hover img { filter: none; transform: scale(1.3); }
+  .tm h2 { font-family: var(--serif); font-weight: 400; font-size: 1.55rem; line-height: 1.1; margin-bottom: 0.35rem; }
+  .tm__join { display: grid; gap: 1rem; align-content: center; justify-items: start; }
+  .tm__join .h3 { font-style: italic; color: var(--plum); }
+  @media (max-width: 900px) { .tm ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tm li:nth-child(n) { margin-top: 0; } .tm li:nth-child(2n) { margin-top: 2.5rem; } }
+</style>

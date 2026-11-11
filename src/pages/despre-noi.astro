@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { process, stats, aboutNav, partners } from '../data/site';
+---
+<Base title="Despre noi" description="DAR Media Marketing: numele vine de la inițialele celor trei fondatori — Dumitru, Adelina, Radu — și de la ideea că orice om sau business are un dar prețios de oferit celorlalți.">
+  <PageHero eyebrow="Despre noi" title="Orice business are un <em>dar</em> prețios de oferit." crumbs={[{ label: 'Despre noi' }]} />
+  <section class="ab-intro">
+    <div class="wrap grid">
+      <figure class="ab-fig" data-reveal><img src="/media/site/fondatori.webp" width="1600" height="1093" alt="Fondatorii DAR Media: Dumitru, Adelina și Radu" /></figure>
+      <div class="ab-name" data-reveal>
+        <p class="eyebrow">De unde numele</p>
+        <p class="ab-letters" aria-hidden="true"><span>D</span><span>A</span><span>R</span></p>
+      </div>
+      <div class="ab-text stack" data-reveal style="--d:100ms">
+        <p class="lead">Numele a apărut de la inițialele prenumelor noastre, cei 3 fondatori — Dumitru, Adelina, Radu — și de la ideea că orice om/business are un dar prețios de oferit celorlalți.</p>
+        <p class="muted">Marketingul online este instrumentul prin care te ajutăm să oferi darul tău oamenilor care îl vor/au nevoie de el și să câștigi bani și satisfacție sufletească din asta.</p>
+        <p class="muted">Cu pasiune și dedicare îți oferim experiența acumulată în ani de studiu și practică pentru ca afacerea ta să evolueze constant.</p>
+        <ul class="ab-links">{aboutNav.slice(1).map((n) => <li><a class="more" href={n.href}>{n.label} <Arrow /></a></li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-dark">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Cum funcționează</p><h2 class="h2">Colaborarea <em>noastră</em></h2></div>
+      <ol class="proc">
+        {process.map((p, i) => <li data-reveal style={`--d:${i * 100}ms`}><span class="proc__n">{i + 1}</span><h3 class="h3">{p.title}</h3><p class="muted">{p.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section ab-help">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Cum te putem ajuta</p><h2 class="h2">Trei feluri în care <em>lucrăm împreună.</em></h2></div>
+      <ul class="help">
+        <li><a href="/servicii/"><span class="num">01</span><h3 class="h3">Servicii de marketing</h3><p class="muted">Îți oferim servicii de marketing omnichannel care vizează întreaga călătorie a clientului. De la audit și strategie, până la implementare și raportare, ne ocupăm de fiecare.</p><span class="more">Vezi serviciile <Arrow /></span></a></li>
+        <li><a href="/consultanta-marketing/"><span class="num">02</span><h3 class="h3">Consultanță</h3><p class="muted">Îți oferim servicii de consultanță în marketing online, care îți vor oferi claritate asupra eficienței marketingului tău și instrumente concrete pentru a avea rezultate mai bune.</p><span class="more">Despre consultanță <Arrow /></span></a></li>
+        <li><a href="/ebook/"><span class="num">03</span><h3 class="h3">Resurse gratuite</h3><p class="muted">Te poți informa și aplica singur strategiile de marketing utile pentru creșterea afacerii tale, cu ajutorul articolelor din blog sau al ebook-urilor noastre gratuite.</p><span class="more">Vezi resursele <Arrow /></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="ab-stats">
+    <div class="wrap">
+      <dl>{stats.map((s) => <div><dd>{s.value}{s.unit && <small>{s.unit}</small>}</dd><dt>{s.label}</dt></div>)}</dl>
+      <p class="muted small">Parteneri &amp; certificări: {partners.join(' · ')}</p>
+    </div>
+  </section>
+  <Testimonials title="Clienții ne <em>vorbesc de bine</em>" />
+  <Cta title="Ți-ar plăcea să <em>lucrăm împreună?</em>" />
+</Base>
+<style>
+  .ab-intro { padding-bottom: var(--section); }
+  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: #dcdcde; margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .ab-fig img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .ab-name { grid-column: 1 / span 5; display: grid; gap: 1rem; align-content: start; }
+  .ab-letters { font-family: var(--serif); font-size: clamp(6rem, 17vw, 16rem); line-height: 0.8; letter-spacing: -0.02em; color: var(--plum); display: flex; gap: 0.06em; }
+  .ab-letters span:nth-child(2) { font-style: italic; }
+  .ab-text { grid-column: 7 / -1; }
+  .ab-links { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-top: 1.5rem; margin-top: 2rem !important; border-top: 1px solid var(--line); }
+  .proc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .proc li { border-top: 1px solid var(--line); padding-top: 1.5rem; display: grid; gap: 1rem; align-content: start; }
+  .proc__n { font-family: var(--serif); font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; color: var(--rose); margin-bottom: 1.5rem; }
+  .help { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .help a { display: grid; gap: 1rem; align-content: start; height: 100%; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; transition: color 0.3s; }
+  .help a .h3 { margin-top: 2rem; }
+  .help a:hover .h3 { color: var(--plum); }
+  .help a:hover .more :global(.arrow) { transform: translateX(0.3rem); }
+  .ab-stats { background: var(--paper-2); padding-block: clamp(3rem, 6vw, 5rem); }
+  .ab-stats dl { margin: 0 0 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .ab-stats dd { margin: 0; font-family: var(--serif); font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; }
+  .ab-stats dd small { font-size: 0.25em; font-style: italic; color: var(--plum); margin-left: 0.3em; letter-spacing: 0; }
+  .ab-stats dt { margin-top: 0.75rem; font-weight: 600; }
+  @media (max-width: 900px) {
+    .ab-fig { aspect-ratio: 3 / 2; }
+    .ab-name, .ab-text { grid-column: 1 / -1; }
+    .ab-text { margin-top: 2rem; }
+    .proc, .help { grid-template-columns: 1fr; }
+    .ab-stats dl { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BrevoForm from '../components/BrevoForm.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Arrow from '../components/Arrow.astro';
+const checks = [
+  'Analizăm pâlnia ta de vânzare existentă și punctele în care se blochează conversiile.',
+  'Audităm experiența pe care clienții o au pe site-ul/magazinul tău online (UI, UX, identificăm problemele tehnice, viteză de încărcare etc.).',
+  'Analizăm campaniile de reclamă și cât de eficient sunt alocate bugetele.',
+  'Verificăm cum te poziționezi în căutările potențialilor clienți printr-un audit SEO.',
+  'Evaluăm prezența pe rețelele sociale și cât de bine interacționezi cu audiența ta.',
+  'Verificăm poziționarea brandului în mediul online, față de audiența ta țintă.',
+  'Vedem care este poziția ta ca brand în raport cu competiția.',
+  'Identificăm noi oportunități de canale și tactici de marketing sau metode de diferențiere.',
+];
+const fit = [
+  'Îți crești vânzările într-un mod cât mai predictibil',
+  'Ai o viziune clară asupra punctelor slabe ale promovării și cum poți să le îmbunătățești',
+  'Accelerezi dezvoltarea afacerii tale',
+  'Înțelegi cum poți să-ți îmbunătățești strategia de marketing actuală',
+  'Ai o poziționare mai bună în motorul de căutare Google și pe rețelele sociale',
+];
+---
+<Base title="Audit gratuit de marketing" description="Află ce trebuie să faci mai puțin, ce să nu mai faci și ce să faci mai mult ca să-ți duci afacerea la nivelul următor. Îți oferim în DAR un audit gratuit.">
+  <PageHero eyebrow="Audit gratuit" title="Îți oferim în <em>DAR</em> un audit de marketing." lead="Află ce trebuie să faci mai puțin, ce să nu mai faci și ce să faci mai mult ca să-ți duci afacerea la nivelul următor. Descoperi ce nu funcționează în strategia ta și cum poți să-ți atingi obiectivele de business." crumbs={[{ label: 'Audit gratuit' }]} />
+  <section class="au">
+    <div class="wrap grid">
+      <div class="au__main">
+        <h2 class="h3">Cum te ajutăm să îți crești veniturile printr-un audit de marketing?</h2>
+        <ol class="steps">{checks.map((c) => <li><span>{c}</span></li>)}</ol>
+        <h2 class="h3 au__h">Este pentru tine acest audit dacă vrei să…</h2>
+        <ul class="ticks">{fit.map((c) => <li>{c}</li>)}</ul>
+        <p class="muted">Timpul și atenția noastră sunt limitate și de aceea ne alegem cu atenție proiectele. Solicităm la rândul nostru o atitudine potrivită, răbdare și disponibilitatea de a aloca resursele necesare atingerii obiectivelor tale de business.</p>
+        <a class="more" href="/audit-marketing/">Vrei un audit complet? Vezi serviciul de audit de marketing <Arrow /></a>
+      </div>
+      <aside class="au__form on-dark" id="formular">
+        <p class="eyebrow">Solicită auditul</p>
+        <h2 class="h3">Completează formularul și te contactăm noi.</h2>
+        <BrevoForm formKey="audit" />
+      </aside>
+    </div>
+  </section>
+  <Testimonials />
+</Base>
+<style>
+  .au { padding-bottom: var(--section); }
+  .au__main { grid-column: 1 / span 6; display: grid; gap: 1.5rem; align-content: start; justify-items: start; }
+  .au__main > ol, .au__main > ul { width: 100%; }
+  .au__h { margin-top: 2.5rem; }
+  .au__form { grid-column: 8 / -1; padding: clamp(1.5rem, 3vw, 2.75rem); display: grid; gap: 1.25rem; align-self: start; position: sticky; top: calc(var(--header-h) + 1.5rem); }
+  @media (max-width: 1000px) { .au__main, .au__form { grid-column: 1 / -1; position: static; } .au__form { order: -1; margin-bottom: 3rem; } }
+</style>

@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Arrow from '../components/Arrow.astro';
+import Cta from '../components/Cta.astro';
+import { keyResults } from '../data/site';
+const formUrl = 'https://forms.gle/egVrB7pmtW2PTmT26';
+const role = [
+  'Contactezi potențiali clienți care sunt interesați să colaboreze cu noi (inbound).',
+  'Identifici și contactezi posibili clienți, online, dar și offline (outbound).',
+  'Te poziționezi ca un consultant de încredere, oferind soluții realiste, nu promisiuni magice.',
+  'Inițiezi și coordonezi întregul proces de vânzare (de la callul inițial, până la follow-up, ofertare, negociere și finalizarea vânzării).',
+  'Colaborezi cu echipa de research și cea de implementare pentru a atinge obiectivele stabilite trimestrial, lunar și săptămânal.',
+  'Rezolvi situațiile apărute în procesul de vânzare și post-vânzare.',
+  'Ai abilități de comunicare și scriere în limba engleză, de nivel mediu, de preferat nivel avansat.',
+  'Participi la evenimente pentru a extinde rețeaua de contacte și a atrage noi clienți.',
+];
+const req = [
+  'Experiență de minimum 2 ani în vânzări, ideal în servicii B2B și digital marketing.',
+  'Cunoștințe solide despre marketing digital și eCommerce.',
+  'Disponibilitatea de a învăța, de a accepta provocări și de a-ți consolida abilitățile (de comunicare, vânzări, marketing și networking).',
+  'Competențe excelente de comunicare și persuasiune.',
+  'Deținerea unui PFA sau a unei firme proprii (pentru a emite facturi).',
+  'Avantaj dacă ești din Cluj-Napoca, dar nu obligatoriu.',
+];
+const offer = [
+  'Colaborare exclusiv pe comision: one-time și recurent, în funcție de valoarea contractelor semnate.',
+  'Acces la traininguri, feedback și suport direct pentru dezvoltarea abilităților tale.',
+  'Acces la evenimente de business și networking, materiale de digital marketing și suport în momentele dificile (da, vor fi și acestea).',
+];
+const not = [
+  'Preferi un job clasic, cu salariu fix.',
+  'Îți plac vânzările, dar nu te pasionează / nu ai disponibilitate să înveți digital marketing și eCommerce.',
+  'Nu ai posibilitatea să ne emiți factură pentru serviciile tale.',
+  'Vrei să ai rezultate rapid, fără să-ți dezvolți competențele necesare.',
+];
+---
+<Base title="Carieră" description="Căutăm colegi freelanceri care vor să-și folosească „darurile” ca să aducă rezultate excelente pentru clienții DAR Media.">
+  <PageHero eyebrow="Carieră" title="Haide în <em>echipa noastră!</em>" lead="Căutăm colegi freelanceri care vor să-și folosească „darurile”, aka abilitățile, ca să aducă rezultate excelente pentru clienții DAR Media. Asta în timp ce au prosperitate financiară, lifestyle flexibil și dezvoltare profesională pentru ei înșiși." crumbs={[{ label: 'Despre noi', href: '/despre-noi/' }, { label: 'Carieră' }]} />
+  <section class="job">
+    <div class="wrap grid">
+      <aside class="job__side">
+        <p class="eyebrow">Poziție deschisă</p>
+        <h2 class="h2">Coleg/colegă pasionat/ă de <em>vânzări &amp; marketing</em></h2>
+        <p class="muted">Tu vei găsi clienții care să aleagă din portofoliul DAR Media serviciile potrivite pentru a-și atinge obiectivele.</p>
+        <dl>
+          <div><dt>Tip</dt><dd>Colaborare freelance, pe comision</dd></div>
+          <div><dt>Locație</dt><dd>Remote · avantaj Cluj-Napoca</dd></div>
+        </dl>
+        <a class="btn" href={formUrl} target="_blank" rel="noopener"><span>Completează formularul</span><Arrow dir="up-right" /></a>
+      </aside>
+      <div class="job__main">
+        <section>
+          <h3 class="h3">Despre noi</h3>
+          <p>Salutare! Suntem DAR Media — agenția de marketing din Cluj care oferă antreprenorilor (în mod special din eCommerce) soluții de marketing omnichannel ce aduc leaduri și vânzări profitabile. Ne concentrăm să livrăm 4 rezultate cheie:</p>
+          <ul class="ticks">{keyResults.map((k) => <li><strong>{k.title}.</strong> {k.text}</li>)}</ul>
+          <p>Avem clienți precum Alevia, Torockoi, Casa Vie, Faunus Plant, Noodle Pack sau TEDx. Suntem parteneri Meta și Google. De asemenea, avem parteneriate active în eCommerce (Gomag, TheMarketer, EasySales) și business (RBL, APAR, OFA).</p>
+          <p>Credem că fiecare om, respectiv fiecare business, are un set de DARuri. Din 2017, darul nostru a devenit misiunea noastră: să ne folosim abilitățile de digital marketing pentru a sprijini afacerile mici și mijlocii să-și atingă obiectivele de vânzări, profit și impact social.</p>
+        </section>
+        <section><h3 class="h3">Rolul tău</h3><ol class="steps">{role.map((r) => <li><span>{r}</span></li>)}</ol></section>
+        <section><h3 class="h3">Cerințele noastre</h3><ul class="ticks">{req.map((r) => <li>{r}</li>)}</ul></section>
+        <section><h3 class="h3">Ce îți oferim</h3><ul class="ticks">{offer.map((r) => <li>{r}</li>)}</ul></section>
+        <section class="job__not"><h3 class="h3">Nu aplica dacă…</h3><ul>{not.map((r) => <li>{r}</li>)}</ul></section>
+        <section>
+          <p class="lead">Dacă te regăsești în descriere și vrei să faci parte dintr-o super echipă care sprijină afacerile să crească, hai să ne cunoaștem! Completează formularul, apoi te contactăm noi pentru a continua discuția, într-un mod relaxat.</p>
+          <a class="btn" href={formUrl} target="_blank" rel="noopener"><span>Completează formularul</span><Arrow dir="up-right" /></a>
+        </section>
+      </div>
+    </div>
+  </section>
+  <Cta title="Ai o întrebare despre rol? <em>Scrie-ne.</em>" text="Ne găsești la salut@darmedia.ro sau pe rețelele sociale. Răspundem cu drag." />
+</Base>
+<style>
+  .job { padding-bottom: var(--section); border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 5rem); }
+  .job__side { grid-column: 1 / span 5; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; display: grid; gap: 1.5rem; justify-items: start; }
+  .job__side dl { margin: 0; width: 100%; border-top: 1px solid var(--line-strong); }
+  .job__side dl > div { display: grid; grid-template-columns: 6rem 1fr; padding: 0.9rem 0; border-bottom: 1px solid var(--line); }
+  .job__side dt { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); align-self: center; }
+  .job__side dd { margin: 0; }
+  .job__main { grid-column: 7 / -1; display: grid; gap: 3.5rem; }
+  .job__main section { display: grid; gap: 1.25rem; justify-items: start; }
+  .job__main section > ul, .job__main section > ol { width: 100%; }
+  .job__main p:not(.lead) { color: var(--ink-soft); }
+  .job__main strong { font-weight: 650; color: var(--ink); }
+  .job__not { background: var(--paper-2); padding: clamp(1.5rem, 3vw, 2.5rem); }
+  .job__not li { padding: 0.75rem 0 0.75rem 2rem; position: relative; border-top: 1px solid var(--line); }
+  .job__not li::before { content: '×'; position: absolute; left: 0.2rem; top: 0.55rem; color: var(--plum); font-size: 1.3rem; }
+  @media (max-width: 900px) { .job__side, .job__main { grid-column: 1 / -1; position: static; } .job__main { margin-top: 3.5rem; } }
+</style>

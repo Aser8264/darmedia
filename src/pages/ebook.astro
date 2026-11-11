@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { ebooks, company } from '../data/site';
+---
+<Base title="Ebook-uri și resurse gratuite" description="eBook-uri cadou care îți oferă soluții punctuale la problemele & obiectivele de marketing din afacerea ta.">
+  <PageHero eyebrow="Resurse gratuite" title="Ebook-uri <em>cadou</em> pentru afacerea ta." lead="Soluții punctuale la problemele & obiectivele de marketing din afacerea ta: ebook-uri, template-uri și checklist-uri pe care le poți aplica singur." crumbs={[{ label: 'Resurse' }]} />
+  <section class="eb">
+    <div class="wrap">
+      <ul>
+        {ebooks.map((e, i) => (
+          <li data-reveal>
+            <a href={`/${e.slug}/`}>
+              <span class="eb__img"><img src={e.img} alt="" width="900" height="1125" loading={i < 2 ? 'eager' : 'lazy'} /></span>
+              <span class="eb__txt">
+                <span class="tag">{e.kind} · gratuit</span>
+                <span class="h2">{e.title}</span>
+                <span class="muted">{e.text}</span>
+                <span class="more">Descarcă acum <Arrow /></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="eb__also">
+        <a href="/blog/"><span class="h3">Blog</span><span class="muted">Articole educaționale scrise din experiență.</span><Arrow /></a>
+        <a href="/studii-de-caz/"><span class="h3">Studii de caz</span><span class="muted">Cum am generat concret rezultate.</span><Arrow /></a>
+        <a href={company.social[3].href} target="_blank" rel="noopener"><span class="h3">Video</span><span class="muted">Canalul nostru de YouTube.</span><Arrow dir="up-right" /></a>
+      </div>
+    </div>
+  </section>
+  <Cta title="Vrem să vedem cum afacerea ta evoluează și <em>are rezultate.</em>" text="Asta ne motivează! Cere un audit gratuit și află ce nu funcționează în strategia ta și cum poți să-ți atingi obiectivele de business." />
+</Base>
+<style>
+  .eb { padding-bottom: var(--section); }
+  .eb ul { border-top: 1px solid var(--line-strong); }
+  .eb li a { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: center; padding: clamp(1.5rem, 3vw, 2.5rem) 0; border-bottom: 1px solid var(--line); }
+  .eb__img { grid-column: 1 / span 3; background: var(--white); aspect-ratio: 4 / 4.2; overflow: hidden; display: grid; place-items: center; }
+  .eb__img img { width: 82%; mix-blend-mode: multiply; transition: transform 0.8s var(--ease); }
+  .eb li a:hover img { transform: scale(1.05) rotate(-1.5deg); }
+  .eb__txt { grid-column: 5 / span 7; display: grid; gap: 1rem; justify-items: start; }
+  .eb__txt .h2 { font-size: clamp(1.9rem, 3.8vw, 3.4rem); transition: color 0.3s; }
+  .eb__txt .muted { max-width: 34rem; }
+  .eb li a:hover .h2 { color: var(--plum); }
+  .eb li a:hover .more :global(.arrow) { transform: translateX(0.3rem); }
+  .eb li:nth-child(even) .eb__img { grid-column: 10 / span 3; grid-row: 1; }
+  .eb li:nth-child(even) .eb__txt { grid-column: 1 / span 7; grid-row: 1; }
+  .eb__also { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); margin-top: clamp(3rem, 6vw, 5rem); }
+  .eb__also a { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1rem; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; transition: color 0.3s; }
+  .eb__also a .muted { grid-column: 1; }
+  .eb__also a :global(.arrow) { grid-row: 1; grid-column: 2; align-self: center; }
+  .eb__also a:hover { color: var(--plum); }
+  @media (max-width: 800px) {
+    .eb__img, .eb li:nth-child(even) .eb__img { grid-column: 1 / span 4; grid-row: 1; aspect-ratio: 3 / 4; }
+    .eb__txt, .eb li:nth-child(even) .eb__txt { grid-column: 5 / -1; grid-row: 1; }
+    .eb__txt .muted { display: none; }
+    .eb__also { grid-template-columns: 1fr; }
+  }
+</style>

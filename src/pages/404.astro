@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+---
+<Base title="Pagina nu a fost găsită" noindex>
+  <section class="nf">
+    <div class="wrap">
+      <p class="eyebrow">Eroare 404</p>
+      <h1 class="display">Pagina asta <em>nu e un dar.</em></h1>
+      <p class="lead">Linkul pe care l-ai urmat nu mai există sau a fost mutat. Te ajutăm să găsești ce cauți.</p>
+      <div class="nf__a"><a class="btn" href="/"><span>Înapoi acasă</span><Arrow /></a><a class="btn btn--ghost" href="/servicii/"><span>Servicii</span><Arrow /></a><a class="btn btn--ghost" href="/blog/"><span>Blog</span><Arrow /></a></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { padding-block: var(--section); min-height: 70vh; display: grid; align-items: center; }
+  .nf .wrap { display: grid; gap: 2rem; }
+  .nf .display { font-size: clamp(3rem, 9vw, 8.5rem); }
+  .nf__a { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+</style>

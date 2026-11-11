@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { clients, googleReviews, caseStudies } from '../data/site';
+import { postBySlug } from '../data/posts';
+const cases = caseStudies.filter((c) => postBySlug(c.slug)).slice(0, 3);
+---
+<Base title="Portofoliu" description="Branduri care au ales DAR Media: magazine online, business-uri de servicii, HoReCa și nu numai.">
+  <PageHero eyebrow="Portofoliu" title="Afaceri care au ales <em>DAR Media.</em>" lead="DAR Media sprijină afacerile aflate în faza de creștere & scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung." crumbs={[{ label: 'Portofoliu' }]} />
+  <section class="pf">
+    <div class="wrap">
+      <ol class="pf__list">
+        {clients.map((c, i) => (
+          <li>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            {c.href ? <a href={c.href} target="_blank" rel="noopener">{c.name}<Arrow dir="up-right" /></a> : <span class="pf__name">{c.name}</span>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="section--tight pf-cases">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Rezultate</p><h2 class="h2">Câteva cifre din <em>studiile de caz.</em></h2><a class="more sec-aside" href="/studii-de-caz/">Toate studiile de caz <Arrow /></a></div>
+      <ul>{cases.map((c) => <li><a href={`/${c.slug}/`}><span class="tag">{c.channel}</span><span class="pf-fig">{c.figure}<small>{c.unit}</small></span><span class="muted">{c.line}</span></a></li>)}</ul>
+    </div>
+  </section>
+  <Testimonials />
+  <section class="section rv on-dark">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Recenzii Google</p><h2 class="h2"><em>{googleReviews.rating}</em> — pe baza a {googleReviews.count} de recenzii.</h2></div>
+      <ul class="rv__list">{googleReviews.items.map((r) => <li><blockquote>{r.text}</blockquote><p><strong>{r.name}</strong><span class="muted"> · {r.role}</span></p></li>)}</ul>
+    </div>
+  </section>
+  <Cta />
+</Base>
+<style>
+  .pf { padding-bottom: var(--section); }
+  .pf__list { columns: 3; column-gap: var(--gap); border-top: 1px solid var(--line-strong); padding-top: 0.5rem; }
+  .pf__list li { break-inside: avoid; display: grid; grid-template-columns: 2.5rem 1fr; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+  .pf__list a, .pf__name { font-family: var(--serif); font-size: clamp(1.4rem, 2.1vw, 1.9rem); line-height: 1.15; }
+  .pf__list a { display: inline-flex; align-items: center; justify-content: space-between; gap: 0.75rem; transition: color 0.25s, padding 0.35s var(--ease); }
+  .pf__list a :global(.arrow) { opacity: 0.35; transition: opacity 0.25s; }
+  .pf__list a:hover { color: var(--plum); padding-left: 0.4rem; }
+  .pf__list a:hover :global(.arrow) { opacity: 1; }
+  .pf-cases { background: var(--white); }
+  .pf-cases ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .pf-cases a { display: grid; gap: 0.9rem; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; }
+  .pf-fig { font-family: var(--serif); font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.9; letter-spacing: -0.03em; transition: color 0.3s; }
+  .pf-fig small { font-size: 0.28em; font-style: italic; color: var(--plum); margin-left: 0.3em; letter-spacing: 0; }
+  .pf-cases a:hover .pf-fig { color: var(--plum); }
+  .rv__list { columns: 2; column-gap: calc(var(--gap) * 2); }
+  .rv__list li { break-inside: avoid; padding: 1.75rem 0; border-top: 1px solid var(--line); display: grid; gap: 1rem; }
+  .rv__list blockquote { font-size: 1.0625rem; line-height: 1.6; }
+  .rv__list p { font-size: 0.9375rem; }
+  @media (max-width: 900px) { .pf__list { columns: 2; } .pf-cases ul { grid-template-columns: 1fr; } .rv__list { columns: 1; } }
+  @media (max-width: 560px) { .pf__list { columns: 1; } }
+</style>

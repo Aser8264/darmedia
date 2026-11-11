@@ -1,0 +1,40 @@
+---
+import Arrow from './Arrow.astro';
+import { company } from '../data/site';
+interface Props { title?: string; text?: string }
+const { title = 'Ce zici, ne apucăm <em>de treabă?</em>', text = 'Spune-ne care e principala ta provocare în online acum. Noi îți vom oferi apoi claritatea de care ai nevoie ca să o depășești.' } = Astro.props;
+---
+<section class="cta on-plum">
+  <div class="wrap cta__in">
+    <div class="cta__main" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2 class="h1" set:html={title} />
+    </div>
+    <div class="cta__side" data-reveal style="--d:120ms">
+      <p class="lead">{text}</p>
+      <div class="cta__actions">
+        <a class="btn" href="/contact/"><span>Contactează-ne</span><Arrow /></a>
+        <a class="btn btn--line" href="/audit-gratuit/"><span>Cere un audit gratuit</span><Arrow /></a>
+      </div>
+      <ul class="cta__direct">
+        <li><span>Email</span><a class="link" href={`mailto:${company.email}`}>{company.email}</a></li>
+        <li><span>Telefon</span><a class="link" href={company.phoneHref}>{company.phone}</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<style>
+  .cta { padding-block: clamp(4.5rem, 10vw, 9rem); }
+  .cta__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2.5rem var(--gap); align-items: end; }
+  .cta__main { grid-column: 1 / span 7; }
+  .cta__main .eyebrow { margin-bottom: 1.5rem; }
+  .cta__side { grid-column: 9 / -1; display: grid; gap: 2rem; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .btn--line { background: transparent !important; color: var(--white) !important; border-color: rgba(255, 252, 248, 0.6) !important; }
+  .btn--line:hover { background: var(--white) !important; color: var(--plum-deep) !important; border-color: var(--white) !important; }
+  .cta__direct { display: grid; gap: 0.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .cta__direct li { display: grid; grid-template-columns: 5.5rem 1fr; font-size: 1.1rem; }
+  .cta__direct span { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; opacity: 0.8; align-self: center; }
+  .cta .link:hover { color: var(--white); }
+  @media (max-width: 900px) { .cta__main, .cta__side { grid-column: 1 / -1; } }
+</style>

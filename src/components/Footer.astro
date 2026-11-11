@@ -1,0 +1,83 @@
+---
+import Logo from './Logo.astro';
+import { company, aboutNav } from '../data/site';
+import { services } from '../data/services';
+const year = new Date().getFullYear();
+---
+<footer class="ftr on-dark">
+  <div class="wrap">
+    <p class="ftr__sign" aria-hidden="true">What’s your <em>gift?</em></p>
+    <div class="ftr__grid">
+      <div class="ftr__brand">
+        <a href="/" aria-label="DAR Media — acasă"><Logo size={38} /></a>
+        <p class="muted small">Agenție de digital marketing din Cluj-Napoca. Din {company.since}, strategii de omnichannel marketing care aduc leaduri și vânzări profitabile.</p>
+        <ul class="ftr__social">
+          {company.social.map((s) => <li><a class="link" href={s.href} target="_blank" rel="noopener">{s.name}</a></li>)}
+        </ul>
+      </div>
+      <nav aria-label="Servicii">
+        <p class="eyebrow">Servicii</p>
+        <ul>{services.filter((s) => !s.parent).map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}</ul>
+      </nav>
+      <nav aria-label="Agenție">
+        <p class="eyebrow">Agenție</p>
+        <ul>
+          {aboutNav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/portofoliu/">Portofoliu</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Resurse">
+        <p class="eyebrow">Resurse</p>
+        <ul>
+          <li><a href="/audit-gratuit/">Audit gratuit</a></li>
+          <li><a href="/ebook/">Ebook-uri gratuite</a></li>
+          <li><a href="/studii-de-caz/">Studii de caz</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href={company.social[3].href} target="_blank" rel="noopener">Video</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="eyebrow">Contact</p>
+        <ul>
+          <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+          <li><a href={company.phoneHref}>{company.phone}</a></li>
+          <li class="muted">{company.office.line}<br />{company.office.city}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__legal small">
+      <p class="muted">{company.legalName} · CUI {company.cui} · {company.reg} · {company.hq.city}, {company.hq.line}</p>
+      <ul>
+        <li><a href="/termeni-si-conditii/">Termeni și condiții</a></li>
+        <li><a href="/politica-de-confidentialitate/">Confidențialitate</a></li>
+        <li><a href="/politica-de-cookies/">Cookies</a></li>
+        <li><a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">ANPC — SAL</a></li>
+        <li><a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank" rel="noopener">ANPC — SOL</a></li>
+      </ul>
+      <p class="muted">© 2017 – {year} DAR Media Marketing. Toate drepturile sunt rezervate.</p>
+    </div>
+  </div>
+</footer>
+<style>
+  .ftr { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: 2rem; }
+  .ftr__sign { font-family: var(--serif); font-size: clamp(3.2rem, 12.5vw, 13rem); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-bottom: clamp(3rem, 7vw, 6rem); }
+  .ftr__sign em { color: var(--rose); }
+  .ftr__grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 2.5rem var(--gap); padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .ftr__brand { display: grid; gap: 1.5rem; align-content: start; max-width: 22rem; }
+  .ftr__social { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.9375rem; }
+  .ftr .eyebrow { margin-bottom: 1.2rem; }
+  .ftr nav li, .ftr__grid > div:last-child li { padding: 0.28rem 0; font-size: 0.9875rem; }
+  .ftr nav a, .ftr__grid > div:last-child a { transition: color 0.2s; }
+  .ftr nav a:hover, .ftr__grid > div:last-child a:hover, .ftr__legal a:hover { color: var(--rose); }
+  .ftr__legal { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 2rem; padding-top: 1.75rem; border-top: 1px solid var(--line); align-items: baseline; }
+  .ftr__legal ul { display: flex; flex-wrap: wrap; gap: 0.3rem 1.5rem; justify-content: flex-end; }
+  .ftr__legal p:last-child { grid-column: 1 / -1; }
+  @media (max-width: 1000px) {
+    .ftr__grid { grid-template-columns: 1fr 1fr; }
+    .ftr__brand { grid-column: 1 / -1; }
+    .ftr__legal { grid-template-columns: 1fr; }
+    .ftr__legal ul { justify-content: flex-start; }
+  }
+  @media (max-width: 520px) { .ftr__sign { white-space: normal; } }
+</style>

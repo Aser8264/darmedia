@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../Arrow.astro';
+interface Props { title: string; text: string[]; file?: string; label?: string }
+const { title, text, file, label } = Astro.props;
+---
+<Base title={title} noindex>
+  <section class="thx on-dark">
+    <div class="wrap">
+      <p class="eyebrow">DAR Media</p>
+      <h1 class="h1">{title}</h1>
+      {text.map((t) => <p class="lead">{t}</p>)}
+      <div class="thx__actions">
+        {file && <a class="btn" href={file} download><span>{label}</span><Arrow dir="down" /></a>}
+        <a class="btn btn--ghost" href="/blog/"><span>Citește blogul</span><Arrow /></a>
+        <a class="btn btn--ghost" href="/ebook/"><span>Ebook-uri gratuite</span><Arrow /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .thx { min-height: 70vh; display: grid; align-items: center; padding-block: var(--section); }
+  .thx .wrap { display: grid; gap: 1.75rem; }
+  .thx .h1 { max-width: 14em; }
+  .thx__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+</style>

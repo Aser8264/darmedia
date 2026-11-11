@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import BrevoForm from '../components/BrevoForm.astro';
+import Arrow from '../components/Arrow.astro';
+import { company } from '../data/site';
+---
+<Base title="Contact" description="Timpul și atenția noastră sunt limitate și de aceea ne alegem cu atenție proiectele. Scrie-ne și hai să vedem cum te putem ajuta.">
+  <PageHero eyebrow="Contact" title="Ce zici, ne apucăm <em>de treabă?</em>" crumbs={[{ label: 'Contact' }]} />
+  <section class="ct">
+    <div class="wrap grid">
+      <div class="ct__info">
+        <div class="stack">
+          <p class="lead">Timpul și atenția noastră sunt limitate și de aceea ne alegem cu atenție proiectele!</p>
+          <p class="muted">Echipa noastră te ajută să-ți dezvolți în mod accelerat afacerea prin strategii și tactici de marketing omnichannel.</p>
+          <p class="muted">Solicităm la rândul nostru o atitudine potrivită, răbdare și disponibilitatea de a aloca resursele necesare atingerii obiectivelor tale de business.</p>
+        </div>
+        <dl class="ct__dl">
+          <div><dt>Email</dt><dd><a class="link" href={`mailto:${company.email}`}>{company.email}</a></dd></div>
+          <div><dt>Telefon</dt><dd><a class="link" href={company.phoneHref}>{company.phone}</a></dd></div>
+          <div><dt>Vizitează-ne</dt><dd>{company.office.line}<br />{company.office.city}<br /><a class="link small" href="https://www.google.com/maps/search/?api=1&query=Strada+Eroilor+25+Floresti+Cluj" target="_blank" rel="noopener">Vezi pe hartă</a></dd></div>
+          <div><dt>Call</dt><dd><a class="link" href={company.calendly} target="_blank" rel="noopener">Programează o discuție</a></dd></div>
+          <div><dt>Social</dt><dd class="ct__social">{company.social.map((s) => <a class="link" href={s.href} target="_blank" rel="noopener">{s.name}</a>)}</dd></div>
+        </dl>
+      </div>
+      <div class="ct__form on-dark">
+        <p class="eyebrow">Scrie-ne</p>
+        <h2 class="h3">Spune-ne care e principala ta provocare în online acum.</h2>
+        <BrevoForm formKey="contact" submitLabel="Trimite mesajul" />
+      </div>
+    </div>
+  </section>
+  <section class="ct-alt">
+    <div class="wrap">
+      <a href="/audit-gratuit/"><span class="tag">Nu știi de unde să începi?</span><span class="h2">Cere un <em>audit gratuit</em></span><Arrow /></a>
+    </div>
+  </section>
+</Base>
+<style>
+  .ct { padding-bottom: var(--section); }
+  .ct__info { grid-column: 1 / span 5; display: grid; gap: 3rem; align-content: start; }
+  .ct__dl { margin: 0; border-top: 1px solid var(--line-strong); }
+  .ct__dl > div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+  .ct__dl dt { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+  .ct__dl dd { margin: 0; font-size: 1.15rem; line-height: 1.5; }
+  .ct__social { display: flex; flex-wrap: wrap; gap: 0.3rem 1.25rem; font-size: 1rem !important; }
+  .ct__form { grid-column: 7 / -1; padding: clamp(1.75rem, 4vw, 3.5rem); display: grid; gap: 1.5rem; align-content: start; }
+  .ct__form .h3 { margin-bottom: 0.5rem; }
+  .ct-alt { border-top: 1px solid var(--line); }
+  .ct-alt a { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 2rem; align-items: end; padding-block: clamp(2.5rem, 5vw, 4rem); transition: color 0.3s; }
+  .ct-alt .tag { grid-column: 1 / -1; }
+  .ct-alt :global(.arrow) { width: 2.5rem; height: 2.5rem; transition: transform 0.4s var(--ease); }
+  .ct-alt a:hover { color: var(--plum); }
+  .ct-alt a:hover :global(.arrow) { transform: translateX(0.5rem); }
+  @media (max-width: 900px) { .ct__info, .ct__form { grid-column: 1 / -1; } .ct__form { margin-top: 3rem; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); } }
+</style>

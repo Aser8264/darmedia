@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { caseStudies } from '../data/site';
+import { postBySlug, formatDate } from '../data/posts';
+const cases = caseStudies.map((c) => ({ ...c, post: postBySlug(c.slug) })).filter((c) => c.post);
+---
+<Base title="Studii de caz" description="Povestiri din lumea marketingului. Află cum am generat concret rezultate pentru clienții DAR Media.">
+  <PageHero eyebrow="Studii de caz" title="Povestiri din lumea marketingului, <em>cu cifre.</em>" lead="Află cum am generat concret rezultate pentru clienții DAR Media! Oferim și alte exemple relevante în call, în funcție de industrie." crumbs={[{ label: 'Studii de caz' }]} />
+  <section class="cs">
+    <div class="wrap">
+      <ol>
+        {cases.map((c, i) => (
+          <li data-reveal>
+            <a href={`/${c.slug}/`}>
+              <span class="cs__n num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="cs__fig">{c.figure}<small>{c.unit}</small></span>
+              <span class="cs__body">
+                <span class="tag">{c.channel} · {formatDate(c.post!.date)}</span>
+                <span class="h3">{c.post!.title.replace(/^Studiu de caz\s*[:\-–]?\s*/i, '')}</span>
+                <span class="more">Citește studiul de caz <Arrow /></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <Testimonials />
+  <Cta title="Vrei să fii <em>următorul</em> studiu de caz?" />
+</Base>
+<style>
+  .cs { padding-bottom: var(--section); }
+  .cs ol { border-top: 1px solid var(--line-strong); }
+  .cs a { display: grid; grid-template-columns: 3rem minmax(0, 5fr) minmax(0, 6fr); gap: var(--gap); align-items: center; padding: clamp(1.75rem, 3.5vw, 3rem) 0; border-bottom: 1px solid var(--line); transition: padding 0.45s var(--ease); }
+  .cs__n { align-self: start; margin-top: 0.6rem; }
+  .cs__fig { font-family: var(--serif); font-size: clamp(3.5rem, 9.5vw, 9rem); line-height: 0.85; letter-spacing: -0.035em; transition: color 0.3s; white-space: nowrap; }
+  .cs__fig small { font-size: 0.24em; font-style: italic; color: var(--plum); margin-left: 0.3em; letter-spacing: 0; }
+  .cs__body { display: grid; gap: 0.9rem; justify-items: start; }
+  .cs a:hover { padding-left: 1rem; }
+  .cs a:hover .cs__fig { color: var(--plum); }
+  .cs a:hover .more :global(.arrow) { transform: translateX(0.3rem); }
+  @media (max-width: 900px) { .cs a { grid-template-columns: 2.25rem 1fr; } .cs__body { grid-column: 2; } .cs a:hover { padding-left: 0; } }
+</style>

@@ -1,0 +1,368 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import ServiceList from '../components/ServiceList.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import { company, partners, keyResults, stats, caseStudies, founders, clients, faq, googleReviews } from '../data/site';
+import { posts, formatDate, postBySlug } from '../data/posts';
+const latest = posts.slice(0, 3);
+const cases = caseStudies.filter((c) => postBySlug(c.slug));
+---
+<Base title="DAR Media — Agenție de digital marketing, Cluj-Napoca">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero__meta">
+        <p class="eyebrow">Agenție de digital marketing</p>
+        <p class="eyebrow hero__meta-r">Cluj-Napoca · din {company.since}</p>
+      </div>
+      <h1 class="display hero__title">
+        <span data-reveal>Darul tău,</span>
+        <span class="hero__title-2" data-reveal style="--d:120ms"><em>darul nostru.</em></span>
+      </h1>
+      <div class="hero__grid">
+        <div class="hero__copy" data-reveal style="--d:200ms">
+          <dl class="gifts">
+            <div>
+              <dt>Darul tău</dt>
+              <dd>O afacere cu potențial de creștere, care livrează produse și servicii excelente.</dd>
+            </div>
+            <div>
+              <dt>Darul nostru</dt>
+              <dd>Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.</dd>
+            </div>
+          </dl>
+          <div class="hero__actions">
+            <a class="btn" href="/audit-gratuit/"><span>Cere un audit gratuit</span><Arrow /></a>
+            <a class="more" href="/servicii/">Vezi serviciile <Arrow /></a>
+          </div>
+        </div>
+        <figure class="hero__fig" data-reveal style="--d:280ms">
+          <div class="hero__img"><img src="/media/site/fondatori.webp" width="1600" height="1093" alt="Dumitru, Adelina și Radu, fondatorii DAR Media, cu mâinile unite" fetchpriority="high" /></div>
+          <figcaption><span><b>D</b>umitru, <b>A</b>delina &amp; <b>R</b>adu</span><span>Fondatorii DAR Media</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parteneri -->
+  <section class="partners" aria-label="Parteneri și certificări">
+    <div class="wrap partners__in">
+      <p class="eyebrow">Parteneri &amp; certificări</p>
+      <ul>{partners.map((p) => <li>{p === 'Google Partner' ? <a href={company.googlePartner} target="_blank" rel="noopener">{p}</a> : p}</li>)}</ul>
+    </div>
+  </section>
+
+  <!-- Manifest -->
+  <section class="section manifest">
+    <div class="wrap">
+      <div class="grid">
+        <p class="eyebrow manifest__eye">Ce facem</p>
+        <h2 class="h2 manifest__text" data-reveal>
+          Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze <em>vânzări profitabile, clienți mulțumiți</em> și impact pe termen lung.
+        </h2>
+      </div>
+      <ol class="results">
+        {keyResults.map((k, i) => (
+          <li data-reveal style={`--d:${i * 90}ms`}>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="h3">{k.title}</h3>
+            <p class="muted">{k.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Servicii -->
+  <section class="section section--services" id="servicii">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Servicii</p>
+        <h2 class="h2">Crește-ți afacerea cu servicii de marketing digital, focusate pe <em>rezultate concrete.</em></h2>
+        <a class="more sec-aside" href="/servicii/">Toate serviciile <Arrow /></a>
+      </div>
+      <ServiceList />
+    </div>
+  </section>
+
+  <!-- Cifre -->
+  <section class="section numbers on-dark">
+    <div class="wrap grid">
+      <div class="numbers__head">
+        <p class="eyebrow">Numerele vorbesc</p>
+        <h2 class="h2">Suntem mereu pregătiți pentru o <em>nouă provocare.</em></h2>
+        <p class="numbers__g">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span><strong>{googleReviews.rating}</strong> pe Google, pe baza a {googleReviews.count} de recenzii.</span>
+        </p>
+      </div>
+      <dl class="numbers__list">
+        {stats.map((s, i) => (
+          <div data-reveal style={`--d:${i * 100}ms`}>
+            <dd class="numbers__val">{s.value}{s.unit && <small>{s.unit}</small>}</dd>
+            <dt><strong>{s.label}</strong><span>{s.note}</span></dt>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Studii de caz -->
+  <section class="section cases">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Studii de caz</p>
+        <h2 class="h2">Cum am generat, concret, <em>rezultate</em> pentru clienții DAR Media.</h2>
+        <a class="more sec-aside" href="/studii-de-caz/">Toate studiile de caz <Arrow /></a>
+      </div>
+      <ul class="cases__grid">
+        {cases.slice(0, 5).map((c, i) => (
+          <li class:list={{ 'is-lead': i === 0 }} data-reveal style={`--d:${(i % 2) * 90}ms`}>
+            <a href={`/${c.slug}/`}>
+              <span class="tag">{c.channel}</span>
+              <span class="cases__fig">{c.figure}<small>{c.unit}</small></span>
+              <span class="cases__line">{c.line}</span>
+              <span class="more">Citește studiul <Arrow /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <!-- Fondatori -->
+  <section class="section team">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Despre noi</p>
+        <h2 class="h2">Echipa ta creativă de marketing, care îți aduce <em>rezultate măsurate.</em></h2>
+        <a class="more sec-aside" href="/echipa-darmedia/">Vezi echipa <Arrow /></a>
+      </div>
+      <div class="team__grid">
+        {founders.map((f, i) => (
+          <figure data-reveal style={`--d:${i * 110}ms`}>
+            <div class="team__pic">
+              <span class="team__letter" aria-hidden="true">{f.initial}</span>
+              <img src={f.img} alt={f.name} width="450" height="452" loading="lazy" />
+            </div>
+            <figcaption>
+              <strong>{f.name}</strong>
+              <span class="muted">{f.role}</span>
+              <a class="link small" href={f.links.LinkedIn} target="_blank" rel="noopener">LinkedIn</a>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="grid team__note">
+        <p class="lead">Numele a apărut de la inițialele prenumelor noastre — Dumitru, Adelina, Radu — și de la ideea că orice om și orice business are un dar prețios de oferit celorlalți.</p>
+        <p class="muted">Credem cu tărie în forța echipei noastre, formată din colegi tineri, creativi și orientați spre rezultate. Atuurile noastre sunt comunicarea, transparența, evoluția continuă și relațiile solide construite între noi. <a class="link" href="/povestea-noastra/">Povestea noastră</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clienți -->
+  <section class="section clients">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Au încredere în noi</p>
+        <h2 class="h2">Afaceri care au ales <em>DAR Media.</em></h2>
+        <a class="more sec-aside" href="/portofoliu/">Portofoliu <Arrow /></a>
+      </div>
+      <ul class="clients__list">
+        {clients.slice(0, 26).map((c) => <li>{c.href ? <a href={c.href} target="_blank" rel="noopener">{c.name}</a> : <span>{c.name}</span>}</li>)}
+        <li class="clients__more"><a href="/portofoliu/">+ {clients.length - 26} alte branduri</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faqs">
+    <div class="wrap grid">
+      <div class="faqs__head">
+        <p class="eyebrow">Întrebări frecvente</p>
+        <h2 class="h2">Răspunsuri <em>directe,</em> înainte de primul call.</h2>
+        <p class="muted">Nu ai găsit răspunsul? <a class="link" href="/contact/">Scrie-ne</a> sau <a class="link" href={company.calendly} target="_blank" rel="noopener">programează o discuție</a>.</p>
+      </div>
+      <div class="faqs__list"><Faq items={faq} /></div>
+    </div>
+  </section>
+
+  <!-- Resurse -->
+  <section class="section learn">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Învață să te promovezi mai eficient, la un cost mai mic</p>
+        <h2 class="h2">Afacerea ta crește prin educație continuă de <em>marketing &amp; business.</em></h2>
+      </div>
+      <div class="learn__grid">
+        <ul class="learn__links">
+          <li><a href="/ebook/"><span class="h3">Ebook-uri gratuite</span><Arrow /></a></li>
+          <li><a href="/blog/"><span class="h3">Blog</span><Arrow /></a></li>
+          <li><a href={company.social[3].href} target="_blank" rel="noopener"><span class="h3">Video</span><Arrow dir="up-right" /></a></li>
+        </ul>
+        <ul class="learn__posts">
+          {latest.map((p) => (
+            <li>
+              <a href={`/${p.slug}/`}>
+                {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} alt="" loading="lazy" />}
+                <span class="tag">{p.categories[0]} · {formatDate(p.date)}</span>
+                <span class="learn__title">{p.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Cta />
+</Base>
+
+<style>
+  /* hero */
+  .hero { padding-top: clamp(2rem, 4vw, 3.5rem); padding-bottom: clamp(3.5rem, 7vw, 6rem); }
+  .hero__meta { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: clamp(1.75rem, 4vw, 3.25rem); }
+  .hero__title { display: grid; }
+  .hero__title span { display: block; }
+  .hero__title-2 { padding-left: clamp(1.5rem, 17vw, 17rem); margin-top: -0.02em; }
+  .hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 2.5rem; align-items: end; margin-top: clamp(2.5rem, 5vw, 4.5rem); }
+  .hero__copy { grid-column: 1 / span 4; display: grid; gap: 2.5rem; padding-bottom: 2.9rem; }
+  .gifts { margin: 0; display: grid; }
+  .gifts > div { padding: 1.35rem 0; border-top: 1px solid var(--line-strong); display: grid; gap: 0.5rem; }
+  .gifts dt { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--plum); }
+  .gifts dd { margin: 0; font-size: 1.2rem; line-height: 1.4; text-wrap: pretty; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 1.75rem; }
+  .hero__fig { grid-column: 6 / -1; }
+  .hero__img { aspect-ratio: 16 / 10; overflow: hidden; background: #dcdcde; }
+  .hero__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; transform: scale(1.04); transition: transform 1.6s var(--ease); }
+  .hero__fig:hover img { transform: scale(1); }
+  .hero__fig figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.9rem; font-size: 0.875rem; color: var(--ink-soft); }
+  .hero__fig b { color: var(--plum); font-weight: 700; }
+
+  /* partners */
+  .partners { border-block: 1px solid var(--line); }
+  .partners__in { display: flex; align-items: baseline; gap: 1rem 3rem; padding-block: 1.6rem; flex-wrap: wrap; }
+  .partners ul { display: flex; flex-wrap: wrap; gap: 0.4rem 0; flex: 1; justify-content: space-between; min-width: min(100%, 30rem); }
+  .partners li { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.005em; padding-right: 1.5rem; }
+  .partners a:hover { color: var(--plum); }
+
+  /* manifest */
+  .manifest__eye { grid-column: 1 / span 2; align-self: start; margin-top: 0.9rem; }
+  .manifest__text { grid-column: 3 / -1; font-size: clamp(2rem, 4.9vw, 4.6rem); line-height: 1.04; }
+  .results { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 2rem; margin-top: clamp(3.5rem, 7vw, 6.5rem); counter-reset: none; }
+  .results li { border-top: 1px solid var(--line-strong); padding-top: 1.25rem; display: grid; gap: 0.9rem; align-content: start; }
+  .results .h3 { margin-top: 1.5rem; }
+
+  /* services */
+  .section--services { background: var(--white); }
+
+  /* numbers */
+  .numbers__head { grid-column: 1 / span 5; display: grid; gap: 1.5rem; align-content: start; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
+  .numbers__g { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; align-items: baseline; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 0.9875rem; }
+  .numbers__g strong { color: var(--white); }
+  .stars { color: var(--rose); letter-spacing: 0.15em; font-size: 0.9rem; }
+  .numbers__list { grid-column: 7 / -1; margin: 0; }
+  .numbers__list > div { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.5rem; align-items: end; padding: 1.75rem 0 2rem; border-top: 1px solid var(--line); }
+  .numbers__list > div:last-child { border-bottom: 1px solid var(--line); }
+  .numbers__val { margin: 0; font-family: var(--serif); font-size: clamp(4.5rem, 10vw, 9.5rem); line-height: 0.82; letter-spacing: -0.04em; }
+  .numbers__val small { font-size: 0.22em; letter-spacing: 0; margin-left: 0.4em; font-style: italic; color: var(--rose); }
+  .numbers__list dt { display: grid; gap: 0.4rem; }
+  .numbers__list dt strong { font-weight: 650; font-size: 1.0625rem; }
+  .numbers__list dt span { color: var(--ink-soft); font-size: 0.9375rem; line-height: 1.5; }
+
+  /* cases */
+  .cases__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); }
+  .cases__grid li { grid-column: span 3; }
+  .cases__grid li.is-lead { grid-column: span 12; }
+  .cases__grid a { display: grid; gap: 1rem; height: 100%; align-content: start; padding: 1.5rem 0 2rem; border-top: 1px solid var(--line-strong); transition: color 0.3s; }
+  .cases__fig { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 0.9; letter-spacing: -0.03em; margin-top: 1rem; }
+  .cases__fig small { font-size: 0.3em; font-style: italic; letter-spacing: 0; margin-left: 0.35em; color: var(--plum); }
+  .cases__line { color: var(--ink-soft); max-width: 24rem; }
+  .cases__grid .more { margin-top: 0.5rem; font-size: 0.9375rem; }
+  .cases__grid a:hover .cases__fig { color: var(--plum); }
+  .cases__grid a:hover .more :global(.arrow) { transform: translateX(0.3rem); }
+  .cases__grid li.is-lead a { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: end; padding-bottom: 3rem; }
+  .cases__grid li.is-lead .tag { grid-column: 1 / -1; }
+  .cases__grid li.is-lead .cases__fig { grid-column: 1 / span 8; font-size: clamp(4.5rem, 15vw, 15rem); margin-top: 0.5rem; }
+  .cases__grid li.is-lead .cases__line { grid-column: 9 / -1; font-size: 1.2rem; color: var(--ink); padding-bottom: 0.5rem; }
+  .cases__grid li.is-lead .more { grid-column: 9 / -1; }
+
+  /* team */
+  .team { background: var(--paper-2); }
+  .team__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .team__grid figure:nth-child(2) { margin-top: clamp(0rem, 6vw, 5rem); }
+  .team__pic { position: relative; aspect-ratio: 4 / 5; background: var(--paper); overflow: hidden; display: grid; place-items: end center; }
+  .team__letter { position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); font-family: var(--serif); font-size: clamp(14rem, 34vw, 34rem); line-height: 0.7; color: var(--plum); transition: transform 0.9s var(--ease); }
+  .team__pic img { position: relative; width: 92%; height: 86%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 20px 30px rgba(28, 18, 25, 0.18)); transition: transform 0.9s var(--ease); }
+  .team__grid figure:hover .team__letter { transform: translate(-50%, -52%) scale(1.04); }
+  .team__grid figure:hover img { transform: translateY(-0.4rem); }
+  .team__grid figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 1rem; padding-top: 1rem; }
+  .team__grid figcaption strong { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; line-height: 1.1; width: 100%; }
+  .team__grid figcaption .link { margin-left: auto; }
+  .team__note { margin-top: clamp(3rem, 6vw, 5rem); row-gap: 1.5rem; }
+  .team__note .lead { grid-column: 1 / span 6; font-family: var(--serif); font-size: clamp(1.5rem, 2.3vw, 2.1rem); line-height: 1.2; }
+  .team__note .muted { grid-column: 8 / -1; align-self: end; }
+
+  /* clients */
+  .clients__list { display: flex; flex-wrap: wrap; gap: 0.1rem 0; font-family: var(--serif); font-size: clamp(1.7rem, 3.6vw, 3.25rem); line-height: 1.22; letter-spacing: -0.015em; }
+  .clients__list li { display: inline-flex; align-items: baseline; }
+  .clients__list li:not(:last-child)::after { content: '/'; color: var(--plum); margin-inline: 0.45em; font-style: italic; opacity: 0.7; }
+  .clients__list a { transition: color 0.25s; }
+  .clients__list a:hover { color: var(--plum); font-style: italic; }
+  .clients__more a { font-style: italic; color: var(--plum); }
+
+  /* faq */
+  .faqs { background: var(--white); }
+  .faqs__head { grid-column: 1 / span 4; display: grid; gap: 1.5rem; align-content: start; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; padding-bottom: 2rem; }
+  .faqs__list { grid-column: 6 / -1; }
+
+  /* learn */
+  .learn__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3rem var(--gap); }
+  .learn__links { grid-column: 1 / span 4; border-top: 1px solid var(--line-strong); align-self: start; }
+  .learn__links a { display: flex; justify-content: space-between; align-items: center; padding: 1.4rem 0; border-bottom: 1px solid var(--line); transition: padding 0.4s var(--ease), color 0.3s; }
+  .learn__links a:hover { padding-left: 0.75rem; color: var(--plum); }
+  .learn__posts { grid-column: 6 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+  .learn__posts a { display: grid; gap: 0.75rem; align-content: start; }
+  .learn__posts img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--paper-2); filter: saturate(0.9); transition: filter 0.4s, transform 0.8s var(--ease); }
+  .learn__posts a:hover img { filter: none; }
+  .learn__title { font-family: var(--serif); font-size: 1.4rem; line-height: 1.15; transition: color 0.25s; }
+  .learn__posts a:hover .learn__title { color: var(--plum); }
+
+  @media (max-width: 1040px) {
+    .hero__copy { grid-column: 1 / span 5; }
+    .results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cases__grid li { grid-column: span 6; }
+    .learn__links { grid-column: 1 / -1; }
+    .learn__posts { grid-column: 1 / -1; }
+  }
+  @media (max-width: 900px) {
+    .hero__meta-r { display: none; }
+    .hero__copy, .hero__fig { grid-column: 1 / -1; padding-bottom: 0; }
+    .hero__fig { order: -1; }
+    .hero__title-2 { padding-left: 12vw; }
+    .manifest__eye, .manifest__text { grid-column: 1 / -1; }
+    .manifest__eye { margin: 0 0 1.25rem; }
+    .numbers__head, .numbers__list, .faqs__head, .faqs__list { grid-column: 1 / -1; position: static; }
+    .numbers__list { margin-top: 2.5rem; }
+    .cases__grid li.is-lead .cases__fig, .cases__grid li.is-lead .cases__line, .cases__grid li.is-lead .more { grid-column: 1 / -1; }
+    .team__note .lead, .team__note .muted { grid-column: 1 / -1; }
+    .partners ul { justify-content: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .results { grid-template-columns: 1fr; }
+    .results .h3 { margin-top: 0.25rem; }
+    .cases__grid li { grid-column: span 12; }
+    .numbers__list > div { grid-template-columns: 1fr; gap: 1rem; }
+    .team__grid { grid-template-columns: 1fr 1fr; }
+    .team__grid figure:nth-child(2) { margin-top: 2.5rem; }
+    .team__grid figure:nth-child(3) { grid-column: 1 / span 1; }
+    .learn__posts { grid-template-columns: 1fr; }
+    .learn__posts a { grid-template-columns: 7rem 1fr; column-gap: 1rem; }
+    .learn__posts img { grid-row: 1 / span 2; }
+  }
+</style>

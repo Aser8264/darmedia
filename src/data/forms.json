@@ -1,0 +1,1500 @@
+{
+ "forms": {
+  "contact": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEAEuaTkBX1ElQmxOxQRokD9T5FRxKUNR-7QJpDS-y1qasCWNzSkctn3FcVAOuRTO0LsgGOykDVwUx1gpeMQZioZ3ds6rpmovxQex_oDqlSoD-NtZIz74zbQOQled3Z7Vh_3BKjKYI1D71SR93UFxCGghbp9AVONddb7JbUqrCbgrzEbHDzS4x2Ocb11Q6qSszvO6ZZ2NULI3_",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "",
+     "placeholder": "Email",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "text",
+     "name": "FIRSTNAME",
+     "label": "",
+     "placeholder": "Prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "COMPANYNAME",
+     "label": "",
+     "placeholder": "Companie",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Telefon",
+     "placeholder": "Telefon",
+     "required": false
+    },
+    {
+     "kind": "text",
+     "name": "MESAJ",
+     "label": "",
+     "placeholder": "Lasa-ne mesajul tau",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu termenii si conditiile Dar Media Marketing.",
+     "required": false
+    }
+   ],
+   "submit": "Contacteaza-ne",
+   "hidden": {
+    "locale": "en"
+   }
+  },
+  "audit": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEAMELLp8YbFAYb3PMj7--wm6SkP5C40VEQK58ToVu2BYhW5Gdxy2OgE4Yxmg37CMOPpvk1gEFIX8NhuzkMJtHtI5OYD5zFp1VdNx4M1OFdlNYM58ptawxVnKiGjv6cUMlwmiUIR-d6i6q7U3lbRpUKWfzwOb4WjIKnl4-yrGHdWpNAczBMBaVAT6jEiLhDF6q1OlADWqe8jvD",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "",
+     "placeholder": "Email",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "text",
+     "name": "FIRSTNAME",
+     "label": "",
+     "placeholder": "Prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Număr de telefon",
+     "placeholder": "SMS",
+     "required": true
+    },
+    {
+     "kind": "text",
+     "name": "MESAJ",
+     "label": "Adresă web (magazin online)",
+     "placeholder": "www.",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "COMPANYNAME",
+     "label": "",
+     "placeholder": "Companie",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "radio",
+     "name": "AUDIT_GRATUIT",
+     "label": "Solicită Audit Gratuit pentru:",
+     "options": [
+      {
+       "value": "1",
+       "label": "Content Social media"
+      },
+      {
+       "value": "2",
+       "label": "Magazin Online (site)"
+      },
+      {
+       "value": "3",
+       "label": "Conturi de reclamă - Social media"
+      },
+      {
+       "value": "4",
+       "label": "Email marketing"
+      }
+     ],
+     "required": true
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu termenii si conditiile Dar Media Marketing.",
+     "required": false
+    }
+   ],
+   "submit": "Solicită audit!",
+   "hidden": {
+    "locale": "en"
+   }
+  },
+  "newsletter": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIFAEwe2j2HTrhvV6RGzUxTmHzt6i9M4fuD8AW_mMT19SbNrFJUtFnHrvEatM1AwHOsnv7QU3nkMQDH9q5Cqi3IdgB_K68g9tv9_JNYNRW_r9MT5NWBSsS-SXDcGcwOSiRasM4Fv5WLY521GVOLQBAzat8jNneUDCn4w88A3YP1dVf1fLgAgx-mjqjCwTahZuUELzqGGDhSZcyS",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresă de email",
+     "placeholder": "EMAIL",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord să mă abonez la newsletter-ul DAR MEDIA.",
+     "required": false
+    }
+   ],
+   "submit": "Mă abonez!",
+   "hidden": {
+    "locale": "en",
+    "html_type": "simple"
+   }
+  },
+  "retentie-ebook": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIFAE1UaBuV0Sp4NuUqV73d2M4mS38Zz2W1v7HkRe_lF5ulf-FLyqBW4rPRIHnKxPKsN9PLNye894wFD5ZtiT0o-_k7iRZT9aQERGBUIB4uBUCiW1_k2KWZuZHLmKbQT4U-oScWfcSrIT63Wj-e3am6z4z8OJJDCL6x4AhrJ1VOuPcv5wKwCxB5lIl-kNZoXhpGr_F6rNb92-10",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "LASTNAME",
+     "label": "Nume și prenume:",
+     "placeholder": "Pop Andrei",
+     "required": false,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "SITE",
+     "label": "Website:",
+     "placeholder": "www.xyz.com",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Număr de telefon:",
+     "placeholder": "SMS",
+     "required": true
+    },
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresa de email:",
+     "placeholder": "xyz@email.com",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "radio",
+     "name": "RETENTIE",
+     "label": "Folosești în prezent o strategie pentru retenția clienților?",
+     "options": [
+      {
+       "value": "1",
+       "label": "Da"
+      },
+      {
+       "value": "2",
+       "label": "Nu"
+      },
+      {
+       "value": "3",
+       "label": "Parțial"
+      }
+     ],
+     "required": true
+    },
+    {
+     "kind": "radio",
+     "name": "NIVEL_VANZARI",
+     "label": "Care este nivelul actual de vânzări lunare?",
+     "options": [
+      {
+       "value": "1",
+       "label": "Sub 10.000 €"
+      },
+      {
+       "value": "2",
+       "label": "10.000 – 50.000 €"
+      },
+      {
+       "value": "3",
+       "label": "50.000 – 200.000 €"
+      },
+      {
+       "value": "4",
+       "label": "200.000 – 500.000 €"
+      },
+      {
+       "value": "5",
+       "label": "Peste 1.000.000 €"
+      }
+     ],
+     "required": true
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu termenii si conditiile Dar Media Marketing.",
+     "required": true
+    }
+   ],
+   "submit": "Vreau ebook-ul!",
+   "hidden": {
+    "locale": "en",
+    "html_type": "simple"
+   }
+  },
+  "automatizari-email-ghid-ecommerce": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIFAGufVzRz7YMfWkBCEuEQ7xYRLA-XEM7_cJEXa45Oy268UCposvuAbfYv19c3YmCn_YXqwcETV5sTS20jUBP2pVIhHKKPRajeZyKVbcT00pZfE348_9_Ornmb355BFBQH6dHA3V0JuAL6kOef3bhqAk53SKIFuO0D9smSPqPXCLlSypTFDIrjwCkfJRoQGzhPqbiVlWwN_HBb",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "LASTNAME",
+     "label": "Nume și prenume",
+     "placeholder": "Nume și prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "SITE",
+     "label": "Website",
+     "placeholder": "www.xsfr.ro",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "radio",
+     "name": "FUNCTIE",
+     "label": "Funcție",
+     "options": [
+      {
+       "value": "1",
+       "label": "CEO/ Founder"
+      },
+      {
+       "value": "2",
+       "label": "Manager departament"
+      },
+      {
+       "value": "3",
+       "label": "Specialist marketing"
+      },
+      {
+       "value": "4",
+       "label": "Freelancer"
+      }
+     ],
+     "required": true
+    },
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresa de email",
+     "placeholder": "EMAIL",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu termenii si conditiile Dar Media Marketing.",
+     "required": false
+    }
+   ],
+   "submit": "Vreau ebook-ul!",
+   "hidden": {
+    "locale": "en"
+   }
+  },
+  "buyer-journey-template": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEADoOIvSFuJFMD2gkTkXlw_2Dnce4Kle4MKxVwW7UCt3RfY7SmBS2Eg8CnwMJsxvHUEHNol7IDr-73f6LsLzcT4u0FcKbjacRkjwrmgcgo_uiQPumr0j6JB2IytpszPZydpEAkNT6upsLoN9gW_yThdiGyzRn4040GVP51MS084SjTg9PJJGRuqXUCvjmMIGGhY8K0TQB7q-V",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "",
+     "placeholder": "Adresa de email",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu termenii si conditiile Dar Media Marketing.",
+     "required": true
+    }
+   ],
+   "submit": "Vreau ghidul!",
+   "hidden": {
+    "locale": "en",
+    "html_type": "simple"
+   }
+  },
+  "de-la-vizitator-la-client": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEAKmYiaBFAKUjEZ5i1y5GHPXjuXxtn9gm8knPdOVKkfjHN3Gq57ug8g-D0c2Hk03wuLuvEKIyCZ2jXf8GADCBiDC6ZIJ8j9gWDjHIbZP_1s5BWuO5kAnuX4H4kY-YQLS-vWdsk8ofC4CTA8eVPOqGkEdsols2nKXf56wuN9oDYTlF1wWNdxxHGcnitK84dragYmfDPilwZsUh",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "LASTNAME",
+     "label": "Nume",
+     "placeholder": "Nume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "FIRSTNAME",
+     "label": "Prenume",
+     "placeholder": "Prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresa de email",
+     "placeholder": "EMAIL",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Telefon",
+     "placeholder": "SMS",
+     "required": true
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu prelucrarea informațiilor oferite, în conformitate cu termenii și condițiile prezentate aici.",
+     "required": false
+    }
+   ],
+   "submit": "Descarcă",
+   "hidden": {
+    "locale": "en"
+   }
+  },
+  "cum-sa-iti-calculezi-bugetul-de-reclama": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEADJv4mxQsZ7Olya0Ua2yzBC32zPmgn7Wv0YwS5I4U0gzo9YMAtHvKN0vQ3V8eHeB7Pt4tFeF829WzAScPB6OJInF2QphS6d7vLU1JObXNQ5Vv1qQvT2TbfSnXDJVekxbYGKiI2VzF3LROwpHu1S2J98qoGm60q7kVyr_YM_a4RC7LpAZtxiet4Qo5CUHJ3JJ_Tw1BtE_znw5",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "LASTNAME",
+     "label": "Nume",
+     "placeholder": "Nume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "FIRSTNAME",
+     "label": "Prenume",
+     "placeholder": "Prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresa de email",
+     "placeholder": "EMAIL",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Telefon",
+     "placeholder": "SMS",
+     "required": true
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu prelucrarea informațiilor oferite, în conformitate cu termenii și condițiile prezentate aici.",
+     "required": false
+    }
+   ],
+   "submit": "Descarcă",
+   "hidden": {
+    "locale": "en"
+   }
+  },
+  "digital-marketing-la-tinta": {
+   "action": "https://2981bb06.sibforms.com/serve/MUIEAA0RRcOqCUPCTrC0HGBaIR8NgzXMna97ptZTY5psgwFLsjFXFd8ML9HC_2Vahv-Bmdc0cb4Pa_XzVh9HENimNXjjmuSH67cvnx97vbwvu_yHwR2zNhvO7E0qZyOKTCvF4hA6-sSZ5NAz00kxXkaUE1u_dP7DmBedED6WFAYswcUmqERkDLoFJOF__5LzIg3cwX89woE18cFC",
+   "fields": [
+    {
+     "kind": "text",
+     "name": "LASTNAME",
+     "label": "Nume",
+     "placeholder": "Nume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "FIRSTNAME",
+     "label": "Prenume",
+     "placeholder": "Prenume",
+     "required": true,
+     "maxlength": "200"
+    },
+    {
+     "kind": "text",
+     "name": "EMAIL",
+     "label": "Adresa de email",
+     "placeholder": "EMAIL",
+     "required": true,
+     "maxlength": null
+    },
+    {
+     "kind": "sms",
+     "name": "SMS",
+     "label": "Telefon",
+     "placeholder": "SMS",
+     "required": true
+    },
+    {
+     "kind": "optin",
+     "name": "OPT_IN",
+     "value": "1",
+     "label": "Sunt de acord cu prelucrarea informațiilor oferite, în conformitate cu termenii și condițiile prezentate aici.",
+     "required": false
+    }
+   ],
+   "submit": "Descarcă",
+   "hidden": {
+    "locale": "en"
+   }
+  }
+ },
+ "countryCodes": [
+  [
+   "+93",
+   "+93 AF"
+  ],
+  [
+   "+358",
+   "+358 AX"
+  ],
+  [
+   "+355",
+   "+355 AL"
+  ],
+  [
+   "+213",
+   "+213 DZ"
+  ],
+  [
+   "+1684",
+   "+1684 AS"
+  ],
+  [
+   "+376",
+   "+376 AD"
+  ],
+  [
+   "+244",
+   "+244 AO"
+  ],
+  [
+   "+1264",
+   "+1264 AI"
+  ],
+  [
+   "+672",
+   "+672 AQ"
+  ],
+  [
+   "+1268",
+   "+1268 AG"
+  ],
+  [
+   "+54",
+   "+54 AR"
+  ],
+  [
+   "+374",
+   "+374 AM"
+  ],
+  [
+   "+297",
+   "+297 AW"
+  ],
+  [
+   "+61",
+   "+61 AU"
+  ],
+  [
+   "+43",
+   "+43 AT"
+  ],
+  [
+   "+994",
+   "+994 AZ"
+  ],
+  [
+   "+1242",
+   "+1242 BS"
+  ],
+  [
+   "+973",
+   "+973 BH"
+  ],
+  [
+   "+880",
+   "+880 BD"
+  ],
+  [
+   "+1246",
+   "+1246 BB"
+  ],
+  [
+   "+375",
+   "+375 BY"
+  ],
+  [
+   "+32",
+   "+32 BE"
+  ],
+  [
+   "+501",
+   "+501 BZ"
+  ],
+  [
+   "+229",
+   "+229 BJ"
+  ],
+  [
+   "+1441",
+   "+1441 BM"
+  ],
+  [
+   "+975",
+   "+975 BT"
+  ],
+  [
+   "+591",
+   "+591 BO"
+  ],
+  [
+   "+599",
+   "+599 BQ"
+  ],
+  [
+   "+387",
+   "+387 BA"
+  ],
+  [
+   "+267",
+   "+267 BW"
+  ],
+  [
+   "+47",
+   "+47 BV"
+  ],
+  [
+   "+55",
+   "+55 BR"
+  ],
+  [
+   "+246",
+   "+246 IO"
+  ],
+  [
+   "+673",
+   "+673 BN"
+  ],
+  [
+   "+359",
+   "+359 BG"
+  ],
+  [
+   "+226",
+   "+226 BF"
+  ],
+  [
+   "+257",
+   "+257 BI"
+  ],
+  [
+   "+855",
+   "+855 KH"
+  ],
+  [
+   "+237",
+   "+237 CM"
+  ],
+  [
+   "+1",
+   "+1 CA"
+  ],
+  [
+   "+238",
+   "+238 CV"
+  ],
+  [
+   "+1345",
+   "+1345 KY"
+  ],
+  [
+   "+236",
+   "+236 CF"
+  ],
+  [
+   "+235",
+   "+235 TD"
+  ],
+  [
+   "+56",
+   "+56 CL"
+  ],
+  [
+   "+86",
+   "+86 CN"
+  ],
+  [
+   "+61",
+   "+61 CX"
+  ],
+  [
+   "+61",
+   "+61 CC"
+  ],
+  [
+   "+57",
+   "+57 CO"
+  ],
+  [
+   "+269",
+   "+269 KM"
+  ],
+  [
+   "+242",
+   "+242 CG"
+  ],
+  [
+   "+243",
+   "+243 CD"
+  ],
+  [
+   "+682",
+   "+682 CK"
+  ],
+  [
+   "+506",
+   "+506 CR"
+  ],
+  [
+   "+225",
+   "+225 CI"
+  ],
+  [
+   "+385",
+   "+385 HR"
+  ],
+  [
+   "+53",
+   "+53 CU"
+  ],
+  [
+   "+599",
+   "+599 CW"
+  ],
+  [
+   "+357",
+   "+357 CY"
+  ],
+  [
+   "+420",
+   "+420 CZ"
+  ],
+  [
+   "+45",
+   "+45 DK"
+  ],
+  [
+   "+253",
+   "+253 DJ"
+  ],
+  [
+   "+1767",
+   "+1767 DM"
+  ],
+  [
+   "+1809",
+   "+1809 DO"
+  ],
+  [
+   "+1829",
+   "+1829 DO"
+  ],
+  [
+   "+1849",
+   "+1849 DO"
+  ],
+  [
+   "+593",
+   "+593 EC"
+  ],
+  [
+   "+20",
+   "+20 EG"
+  ],
+  [
+   "+503",
+   "+503 SV"
+  ],
+  [
+   "+240",
+   "+240 GQ"
+  ],
+  [
+   "+291",
+   "+291 ER"
+  ],
+  [
+   "+372",
+   "+372 EE"
+  ],
+  [
+   "+251",
+   "+251 ET"
+  ],
+  [
+   "+500",
+   "+500 FK"
+  ],
+  [
+   "+298",
+   "+298 FO"
+  ],
+  [
+   "+679",
+   "+679 FJ"
+  ],
+  [
+   "+358",
+   "+358 FI"
+  ],
+  [
+   "+33",
+   "+33 FR"
+  ],
+  [
+   "+594",
+   "+594 GF"
+  ],
+  [
+   "+689",
+   "+689 PF"
+  ],
+  [
+   "+262",
+   "+262 TF"
+  ],
+  [
+   "+241",
+   "+241 GA"
+  ],
+  [
+   "+220",
+   "+220 GM"
+  ],
+  [
+   "+995",
+   "+995 GE"
+  ],
+  [
+   "+49",
+   "+49 DE"
+  ],
+  [
+   "+233",
+   "+233 GH"
+  ],
+  [
+   "+350",
+   "+350 GI"
+  ],
+  [
+   "+30",
+   "+30 GR"
+  ],
+  [
+   "+299",
+   "+299 GL"
+  ],
+  [
+   "+1473",
+   "+1473 GD"
+  ],
+  [
+   "+590",
+   "+590 GP"
+  ],
+  [
+   "+1671",
+   "+1671 GU"
+  ],
+  [
+   "+502",
+   "+502 GT"
+  ],
+  [
+   "+44",
+   "+44 GG"
+  ],
+  [
+   "+224",
+   "+224 GN"
+  ],
+  [
+   "+245",
+   "+245 GW"
+  ],
+  [
+   "+592",
+   "+592 GY"
+  ],
+  [
+   "+509",
+   "+509 HT"
+  ],
+  [
+   "+672",
+   "+672 HM"
+  ],
+  [
+   "+379",
+   "+379 VA"
+  ],
+  [
+   "+504",
+   "+504 HN"
+  ],
+  [
+   "+852",
+   "+852 HK"
+  ],
+  [
+   "+36",
+   "+36 HU"
+  ],
+  [
+   "+354",
+   "+354 IS"
+  ],
+  [
+   "+91",
+   "+91 IN"
+  ],
+  [
+   "+62",
+   "+62 ID"
+  ],
+  [
+   "+98",
+   "+98 IR"
+  ],
+  [
+   "+964",
+   "+964 IQ"
+  ],
+  [
+   "+353",
+   "+353 IE"
+  ],
+  [
+   "+44",
+   "+44 IM"
+  ],
+  [
+   "+972",
+   "+972 IL"
+  ],
+  [
+   "+39",
+   "+39 IT"
+  ],
+  [
+   "+1876",
+   "+1876 JM"
+  ],
+  [
+   "+81",
+   "+81 JP"
+  ],
+  [
+   "+44",
+   "+44 JE"
+  ],
+  [
+   "+962",
+   "+962 JO"
+  ],
+  [
+   "+7",
+   "+7 KZ"
+  ],
+  [
+   "+254",
+   "+254 KE"
+  ],
+  [
+   "+686",
+   "+686 KI"
+  ],
+  [
+   "+850",
+   "+850 KP"
+  ],
+  [
+   "+82",
+   "+82 KR"
+  ],
+  [
+   "+965",
+   "+965 KW"
+  ],
+  [
+   "+996",
+   "+996 KG"
+  ],
+  [
+   "+856",
+   "+856 LA"
+  ],
+  [
+   "+371",
+   "+371 LV"
+  ],
+  [
+   "+961",
+   "+961 LB"
+  ],
+  [
+   "+266",
+   "+266 LS"
+  ],
+  [
+   "+231",
+   "+231 LR"
+  ],
+  [
+   "+218",
+   "+218 LY"
+  ],
+  [
+   "+423",
+   "+423 LI"
+  ],
+  [
+   "+370",
+   "+370 LT"
+  ],
+  [
+   "+352",
+   "+352 LU"
+  ],
+  [
+   "+853",
+   "+853 MO"
+  ],
+  [
+   "+389",
+   "+389 MK"
+  ],
+  [
+   "+261",
+   "+261 MG"
+  ],
+  [
+   "+265",
+   "+265 MW"
+  ],
+  [
+   "+60",
+   "+60 MY"
+  ],
+  [
+   "+960",
+   "+960 MV"
+  ],
+  [
+   "+223",
+   "+223 ML"
+  ],
+  [
+   "+356",
+   "+356 MT"
+  ],
+  [
+   "+692",
+   "+692 MH"
+  ],
+  [
+   "+596",
+   "+596 MQ"
+  ],
+  [
+   "+222",
+   "+222 MR"
+  ],
+  [
+   "+230",
+   "+230 MU"
+  ],
+  [
+   "+262",
+   "+262 YT"
+  ],
+  [
+   "+52",
+   "+52 MX"
+  ],
+  [
+   "+691",
+   "+691 FM"
+  ],
+  [
+   "+373",
+   "+373 MD"
+  ],
+  [
+   "+377",
+   "+377 MC"
+  ],
+  [
+   "+976",
+   "+976 MN"
+  ],
+  [
+   "+382",
+   "+382 ME"
+  ],
+  [
+   "+1664",
+   "+1664 MS"
+  ],
+  [
+   "+212",
+   "+212 MA"
+  ],
+  [
+   "+258",
+   "+258 MZ"
+  ],
+  [
+   "+95",
+   "+95 MM"
+  ],
+  [
+   "+264",
+   "+264 NA"
+  ],
+  [
+   "+674",
+   "+674 NR"
+  ],
+  [
+   "+977",
+   "+977 NP"
+  ],
+  [
+   "+31",
+   "+31 NL"
+  ],
+  [
+   "+687",
+   "+687 NC"
+  ],
+  [
+   "+64",
+   "+64 NZ"
+  ],
+  [
+   "+505",
+   "+505 NI"
+  ],
+  [
+   "+227",
+   "+227 NE"
+  ],
+  [
+   "+234",
+   "+234 NG"
+  ],
+  [
+   "+683",
+   "+683 NU"
+  ],
+  [
+   "+672",
+   "+672 NF"
+  ],
+  [
+   "+1670",
+   "+1670 MP"
+  ],
+  [
+   "+47",
+   "+47 NO"
+  ],
+  [
+   "+968",
+   "+968 OM"
+  ],
+  [
+   "+92",
+   "+92 PK"
+  ],
+  [
+   "+680",
+   "+680 PW"
+  ],
+  [
+   "+970",
+   "+970 PS"
+  ],
+  [
+   "+507",
+   "+507 PA"
+  ],
+  [
+   "+675",
+   "+675 PG"
+  ],
+  [
+   "+595",
+   "+595 PY"
+  ],
+  [
+   "+51",
+   "+51 PE"
+  ],
+  [
+   "+63",
+   "+63 PH"
+  ],
+  [
+   "+64",
+   "+64 PN"
+  ],
+  [
+   "+48",
+   "+48 PL"
+  ],
+  [
+   "+351",
+   "+351 PT"
+  ],
+  [
+   "+1787",
+   "+1787 PR"
+  ],
+  [
+   "+974",
+   "+974 QA"
+  ],
+  [
+   "+383",
+   "+383 XK"
+  ],
+  [
+   "+262",
+   "+262 RE"
+  ],
+  [
+   "+40",
+   "+40 RO"
+  ],
+  [
+   "+7",
+   "+7 RU"
+  ],
+  [
+   "+250",
+   "+250 RW"
+  ],
+  [
+   "+590",
+   "+590 BL"
+  ],
+  [
+   "+290",
+   "+290 SH"
+  ],
+  [
+   "+1869",
+   "+1869 KN"
+  ],
+  [
+   "+1758",
+   "+1758 LC"
+  ],
+  [
+   "+599",
+   "+599 MF"
+  ],
+  [
+   "+508",
+   "+508 PM"
+  ],
+  [
+   "+1784",
+   "+1784 VC"
+  ],
+  [
+   "+685",
+   "+685 WS"
+  ],
+  [
+   "+378",
+   "+378 SM"
+  ],
+  [
+   "+239",
+   "+239 ST"
+  ],
+  [
+   "+966",
+   "+966 SA"
+  ],
+  [
+   "+221",
+   "+221 SN"
+  ],
+  [
+   "+381",
+   "+381 RS"
+  ],
+  [
+   "+248",
+   "+248 SC"
+  ],
+  [
+   "+232",
+   "+232 SL"
+  ],
+  [
+   "+65",
+   "+65 SG"
+  ],
+  [
+   "+599",
+   "+599 SX"
+  ],
+  [
+   "+421",
+   "+421 SK"
+  ],
+  [
+   "+386",
+   "+386 SI"
+  ],
+  [
+   "+677",
+   "+677 SB"
+  ],
+  [
+   "+252",
+   "+252 SO"
+  ],
+  [
+   "+27",
+   "+27 ZA"
+  ],
+  [
+   "+500",
+   "+500 GS"
+  ],
+  [
+   "+211",
+   "+211 SS"
+  ],
+  [
+   "+34",
+   "+34 ES"
+  ],
+  [
+   "+94",
+   "+94 LK"
+  ],
+  [
+   "+249",
+   "+249 SD"
+  ],
+  [
+   "+597",
+   "+597 SR"
+  ],
+  [
+   "+47",
+   "+47 SJ"
+  ],
+  [
+   "+268",
+   "+268 SZ"
+  ],
+  [
+   "+46",
+   "+46 SE"
+  ],
+  [
+   "+41",
+   "+41 CH"
+  ],
+  [
+   "+963",
+   "+963 SY"
+  ],
+  [
+   "+886",
+   "+886 TW"
+  ],
+  [
+   "+992",
+   "+992 TJ"
+  ],
+  [
+   "+255",
+   "+255 TZ"
+  ],
+  [
+   "+66",
+   "+66 TH"
+  ],
+  [
+   "+670",
+   "+670 TL"
+  ],
+  [
+   "+228",
+   "+228 TG"
+  ],
+  [
+   "+690",
+   "+690 TK"
+  ],
+  [
+   "+676",
+   "+676 TO"
+  ],
+  [
+   "+1868",
+   "+1868 TT"
+  ],
+  [
+   "+216",
+   "+216 TN"
+  ],
+  [
+   "+90",
+   "+90 TR"
+  ],
+  [
+   "+993",
+   "+993 TM"
+  ],
+  [
+   "+1649",
+   "+1649 TC"
+  ],
+  [
+   "+688",
+   "+688 TV"
+  ],
+  [
+   "+256",
+   "+256 UG"
+  ],
+  [
+   "+380",
+   "+380 UA"
+  ],
+  [
+   "+971",
+   "+971 AE"
+  ],
+  [
+   "+44",
+   "+44 GB"
+  ],
+  [
+   "+1",
+   "+1 US"
+  ],
+  [
+   "+246",
+   "+246 UM"
+  ],
+  [
+   "+598",
+   "+598 UY"
+  ],
+  [
+   "+998",
+   "+998 UZ"
+  ],
+  [
+   "+678",
+   "+678 VU"
+  ],
+  [
+   "+58",
+   "+58 VE"
+  ],
+  [
+   "+84",
+   "+84 VN"
+  ],
+  [
+   "+1284",
+   "+1284 VG"
+  ],
+  [
+   "+1340",
+   "+1340 VI"
+  ],
+  [
+   "+681",
+   "+681 WF"
+  ],
+  [
+   "+212",
+   "+212 EH"
+  ],
+  [
+   "+967",
+   "+967 YE"
+  ],
+  [
+   "+260",
+   "+260 ZM"
+  ],
+  [
+   "+263",
+   "+263 ZW"
+  ]
+ ],
+ "checklistUrl": "https://2981bb06.sibforms.com/serve/MUIEAGz2-zP4Mky_sisMBul9nZ48bTKTGoJpBFcNTHMGTKVQ1sqeZoVVvjCKfJ-j8tELBEpMQ3GmrNtHPXhgjfD_4CQO9CcvJO7X2yc06kbWmh-qb25y-Q__g344Lqslqc0zvLhOaFiFIOtBtGlnQRajjOOgwk4pLuIkEuPcMUOv5dS_bG0hXTxpwaahp08WOJssTn8BGB3tPNlj"
+}

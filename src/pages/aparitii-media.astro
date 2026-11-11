@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import Arrow from '../components/Arrow.astro';
+import { mediaAppearances, eventImages } from '../data/site';
+---
+<Base title="Apariții media" description="Pe unde am mai fost? Cu cine am mai vorbit? Podcasturi, articole și evenimente cu echipa DAR Media.">
+  <PageHero eyebrow="Apariții media" title="Ce am împărtășit <em>cu publicul.</em>" lead="Pe unde am mai fost? Cu cine am mai vorbit? Podcasturi, articole și evenimente la care am fost invitați." crumbs={[{ label: 'Despre noi', href: '/despre-noi/' }, { label: 'Apariții media' }]} />
+  <section class="md">
+    <div class="wrap">
+      <ol>
+        {mediaAppearances.map((m, i) => (
+          <li data-reveal>
+            <a href={m.href} target="_blank" rel="noopener">
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="md__img"><img src={m.img} alt="" loading={i < 2 ? 'eager' : 'lazy'} /></span>
+              <span class="md__txt"><span class="tag">{m.kind}</span><span class="h3">{m.title}</span></span>
+              <span class="more">{m.kind === 'Podcast' ? 'Vezi podcastul' : 'Vezi articolul'} <Arrow dir="up-right" /></span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <section class="section ev on-dark">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Evenimente</p><h2 class="h2">Pe scenă, la <em>conferințe și workshopuri.</em></h2></div>
+      <ul>{eventImages.map((src) => <li><img src={src} alt="Afiș de eveniment la care a participat echipa DAR Media" loading="lazy" /></li>)}</ul>
+    </div>
+  </section>
+  <Cta />
+</Base>
+<style>
+  .md { padding-bottom: var(--section); }
+  .md ol { border-top: 1px solid var(--line-strong); }
+  .md a { display: grid; grid-template-columns: 3rem 14rem minmax(0, 1fr) auto; gap: var(--gap); align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--line); transition: color 0.3s; }
+  .md__img { aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-2); }
+  .md__img img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: grayscale(1); transition: filter 0.5s, transform 0.8s var(--ease); }
+  .md a:hover img { filter: none; transform: scale(1.04); }
+  .md__txt { display: grid; gap: 0.6rem; max-width: 44rem; }
+  .md a:hover .h3 { color: var(--plum); }
+  .ev ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+  .ev li:nth-child(even) { margin-top: 3rem; }
+  .ev img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  @media (max-width: 900px) {
+    .md a { grid-template-columns: 7rem 1fr; gap: 1rem; }
+    .md .num, .md .more { display: none; }
+    .ev ul { grid-template-columns: 1fr 1fr; }
+  }
+</style>

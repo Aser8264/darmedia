@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../Arrow.astro';
+import Cta from '../Cta.astro';
+import { posts, formatDate, readingTime, type Post } from '../../data/posts';
+interface Props { post: Post }
+const { post } = Astro.props;
+const related = posts.filter((p) => p.slug !== post.slug && p.categories.some((c) => post.categories.includes(c))).slice(0, 3);
+---
+<Base title={post.title} description={post.description} image={post.cover?.src} article>
+  <article class="post">
+    <header class="wrap post__head">
+      <nav class="post__crumbs" aria-label="Breadcrumb"><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>{post.categories[0]}</span></nav>
+      <h1 class="h1 post__title">{post.title}</h1>
+      <p class="post__meta"><time datetime={post.date}>{formatDate(post.date)}</time><span>{readingTime(post.words)} min de citit</span><span>Echipa DAR Media</span></p>
+    </header>
+    {post.cover && (
+      <div class="wrap post__cover"><img src={post.cover.src} width={post.cover.width} height={post.cover.height} alt="" fetchpriority="high" /></div>
+    )}
+    <div class="wrap post__body">
+      <aside class="post__aside">
+        <p class="eyebrow">Categorii</p>
+        <ul>{post.categories.map((c) => <li><a class="link" href={`/blog/?categorie=${encodeURIComponent(c)}`}>{c}</a></li>)}</ul>
+        <a class="more" href="/audit-gratuit/">Cere un audit gratuit <Arrow /></a>
+      </aside>
+      <div class="prose" set:html={post.html} />
+    </div>
+  </article>
+  {related.length > 0 && (
+    <section class="section--tight rel">
+      <div class="wrap">
+        <p class="eyebrow">Citește și</p>
+        <ul>
+          {related.map((p) => (
+            <li><a href={`/${p.slug}/`}><span class="tag">{p.categories[0]} · {formatDate(p.date)}</span><span class="h3">{p.title}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+  <Cta title="Vrei rezultate ca acestea <em>în afacerea ta?</em>" />
+</Base>
+<style>
+  .post__head { padding-top: clamp(3rem, 7vw, 6rem); padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .post__crumbs { display: flex; gap: 0.5rem; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1.75rem; }
+  .post__crumbs a:hover { color: var(--plum); }
+  .post__title { font-size: clamp(2.3rem, 5.6vw, 5rem); max-width: 18em; line-height: 1; }
+  .post__meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0; margin-top: 2rem; color: var(--ink-soft); font-size: 0.9375rem; }
+  .post__meta > * + *::before { content: '·'; margin-inline: 0.7rem; }
+  .post__cover img { width: 100%; max-height: 38rem; object-fit: cover; background: var(--paper-2); }
+  .post__body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem); }
+  .post__aside { grid-column: 1 / span 3; align-self: start; position: sticky; top: calc(var(--header-h) + 2rem); display: grid; gap: 1rem; font-size: 0.9375rem; }
+  .post__aside ul { display: grid; gap: 0.4rem; justify-items: start; padding-bottom: 1.5rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--line); }
+  .post__body .prose { grid-column: 5 / span 7; }
+  .rel { border-top: 1px solid var(--line); }
+  .rel ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin-top: 2rem; }
+  .rel a { display: grid; gap: 0.75rem; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; transition: color 0.3s; }
+  .rel a:hover { color: var(--plum); }
+  @media (max-width: 900px) {
+    .post__aside { display: none; }
+    .post__body .prose { grid-column: 1 / -1; }
+    .rel ul { grid-template-columns: 1fr; }
+  }
+</style>

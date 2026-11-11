@@ -1,0 +1,30 @@
+---
+// O singură rută pentru toate paginile de la rădăcină care vin din date: servicii, articole, resurse, pagini legale, mulțumiri.
+import ServicePage from '../components/pages/ServicePage.astro';
+import PostPage from '../components/pages/PostPage.astro';
+import ResourcePage from '../components/pages/ResourcePage.astro';
+import TextPage from '../components/pages/TextPage.astro';
+import ThanksPage from '../components/pages/ThanksPage.astro';
+import { services } from '../data/services';
+import { posts } from '../data/posts';
+import { resources, downloads } from '../data/resources';
+import { thanks } from '../data/site';
+
+export function getStaticPaths() {
+  const legal = import.meta.glob<{ default: { title: string; description: string; html: string } }>('../data/pages/*.json', { eager: true });
+  return [
+    ...services.map((s) => ({ params: { slug: s.slug }, props: { kind: 'service', service: s } })),
+    ...posts.map((p) => ({ params: { slug: p.slug }, props: { kind: 'post', post: p } })),
+    ...resources.map((r) => ({ params: { slug: r.slug }, props: { kind: 'resource', resource: r } })),
+    ...Object.entries(legal).map(([path, m]) => ({ params: { slug: path.split('/').pop()!.replace('.json', '') }, props: { kind: 'text', page: m.default } })),
+    ...Object.entries(thanks).map(([slug, t]) => ({ params: { slug }, props: { kind: 'thanks', thanks: t } })),
+    ...Object.entries(downloads).map(([slug, t]) => ({ params: { slug }, props: { kind: 'thanks', thanks: t } })),
+  ];
+}
+const p = Astro.props as any;
+---
+{p.kind === 'service' && <ServicePage service={p.service} />}
+{p.kind === 'post' && <PostPage post={p.post} />}
+{p.kind === 'resource' && <ResourcePage resource={p.resource} />}
+{p.kind === 'text' && <TextPage title={p.page.title} description={p.page.description} html={p.page.html} />}
+{p.kind === 'thanks' && <ThanksPage {...p.thanks} />}

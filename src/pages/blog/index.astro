@@ -1,0 +1,122 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import BrevoForm from '../../components/BrevoForm.astro';
+import Arrow from '../../components/Arrow.astro';
+import { posts, formatDate, categories } from '../../data/posts';
+const [lead, ...rest] = posts;
+const featured = rest.slice(0, 4);
+const archive = rest.slice(4);
+const counts = Object.fromEntries(categories.map((c) => [c, posts.filter((p) => p.categories.includes(c)).length]));
+const cats = categories.filter((c) => counts[c] >= 2);
+---
+<Base title="Blog — articole de marketing & eCommerce" description="Articole educaționale scrise din experiență, pentru antreprenorii, managerii și specialiștii care vor să-și atingă obiectivele de business & marketing.">
+  <PageHero eyebrow="Blog" title="Articole scrise <em>din experiență.</em>" lead="Pentru antreprenorii, managerii și specialiștii care vor să-și atingă obiectivele de business & marketing." crumbs={[{ label: 'Blog' }]} />
+  <section class="bl">
+    <div class="wrap">
+      <div class="bl__top" data-top>
+        <a class="bl__lead" href={`/${lead.slug}/`}>
+          {lead.cover && <img src={lead.cover.src} width={lead.cover.width} height={lead.cover.height} alt="" />}
+          <span class="tag">{lead.categories[0]} · {formatDate(lead.date)}</span>
+          <span class="h2">{lead.title}</span>
+          <span class="muted">{lead.description}</span>
+        </a>
+        <ul class="bl__feat">
+          {featured.map((p) => (
+            <li><a href={`/${p.slug}/`}>
+              {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} alt="" loading="lazy" />}
+              <span><span class="tag">{p.categories[0]} · {formatDate(p.date)}</span><span class="h3">{p.title}</span></span>
+            </a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="bl__bar">
+        <h2 class="h2">Toate <em>articolele</em></h2>
+        <div class="bl__filters" role="group" aria-label="Filtrează după categorie">
+          <button type="button" class="is-on" data-cat="">Toate <sup>{posts.length}</sup></button>
+          {cats.map((c) => <button type="button" data-cat={c}>{c} <sup>{counts[c]}</sup></button>)}
+        </div>
+      </div>
+      <ol class="bl__list" data-list>
+        {posts.map((p) => (
+          <li data-cats={p.categories.join('|')}>
+            <a href={`/${p.slug}/`}>
+              <time datetime={p.date}>{formatDate(p.date)}</time>
+              <span class="bl__title">{p.title}</span>
+              <span class="tag">{p.categories[0]}</span>
+              <Arrow />
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p class="bl__empty muted" hidden>Niciun articol în această categorie.</p>
+    </div>
+  </section>
+  <section class="section nl on-dark">
+    <div class="wrap grid">
+      <div class="nl__head"><p class="eyebrow">Newsletter</p><h2 class="h2">Idei de marketing &amp; eCommerce, <em>direct pe email.</em></h2></div>
+      <div class="nl__form"><BrevoForm formKey="newsletter" /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .bl { padding-bottom: var(--section); }
+  .bl__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3rem var(--gap); border-top: 1px solid var(--line); padding-top: clamp(2rem, 4vw, 3.5rem); }
+  .bl__lead { grid-column: 1 / span 7; display: grid; gap: 1rem; align-content: start; }
+  .bl__lead img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--paper-2); margin-bottom: 0.75rem; }
+  .bl__lead .h2 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); transition: color 0.3s; }
+  .bl__lead:hover .h2, .bl__feat a:hover .h3 { color: var(--plum); }
+  .bl__feat { grid-column: 9 / -1; display: grid; align-content: start; }
+  .bl__feat li { border-top: 1px solid var(--line); }
+  .bl__feat li:first-child { border-top: 0; }
+  .bl__feat li:first-child a { padding-top: 0; }
+  .bl__feat a { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1.25rem; padding: 1.4rem 0; align-items: start; }
+  .bl__feat img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--paper-2); }
+  .bl__feat a > span { display: grid; gap: 0.5rem; }
+  .bl__feat .h3 { font-size: 1.35rem; transition: color 0.3s; }
+  .bl__bar { display: grid; gap: 1.75rem; margin-top: clamp(4rem, 8vw, 7rem); margin-bottom: 2rem; }
+  .bl__filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .bl__filters button { padding: 0.5rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: none; cursor: pointer; font-size: 0.9375rem; font-weight: 500; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+  .bl__filters button sup { font-size: 0.7em; color: var(--ink-soft); margin-left: 0.15em; }
+  .bl__filters button:hover { border-color: var(--ink); }
+  .bl__filters button.is-on { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .bl__filters button.is-on sup { color: inherit; opacity: 0.7; }
+  .bl__list { border-top: 1px solid var(--line-strong); }
+  .bl__list a { display: grid; grid-template-columns: 10rem minmax(0, 1fr) 11rem 1.25rem; gap: 1.5rem; align-items: baseline; padding: 1.15rem 0; border-bottom: 1px solid var(--line); transition: padding 0.4s var(--ease), color 0.25s; }
+  .bl__list time { font-size: 0.875rem; color: var(--ink-soft); }
+  .bl__title { font-family: var(--serif); font-size: clamp(1.3rem, 1.9vw, 1.65rem); line-height: 1.15; }
+  .bl__list .tag { text-align: right; }
+  .bl__list :global(.arrow) { align-self: center; opacity: 0; transition: opacity 0.25s; }
+  .bl__list a:hover { padding-left: 0.75rem; color: var(--plum); }
+  .bl__list a:hover :global(.arrow) { opacity: 1; }
+  .nl__head { grid-column: 1 / span 6; display: grid; gap: 1.25rem; align-content: start; }
+  .nl__form { grid-column: 8 / -1; }
+  @media (max-width: 900px) {
+    .bl__lead, .bl__feat, .nl__head, .nl__form { grid-column: 1 / -1; }
+    .bl__list a { grid-template-columns: 1fr; gap: 0.35rem; }
+    .bl__list .tag { text-align: left; order: -1; }
+    .bl__list time { order: -2; }
+    .bl__list :global(.arrow) { display: none; }
+    .nl__form { margin-top: 2rem; }
+  }
+</style>
+<script>
+  const list = document.querySelector<HTMLElement>('[data-list]')!;
+  const items = [...list.querySelectorAll<HTMLElement>('li')];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('.bl__filters button')];
+  const empty = document.querySelector<HTMLElement>('.bl__empty')!;
+  const apply = (cat: string) => {
+    let n = 0;
+    items.forEach((li) => { const show = !cat || li.dataset.cats!.split('|').includes(cat); li.hidden = !show; if (show) n++; });
+    buttons.forEach((b) => b.classList.toggle('is-on', (b.dataset.cat ?? '') === cat));
+    empty.hidden = n > 0;
+  };
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    const cat = b.dataset.cat ?? '';
+    apply(cat);
+    const url = new URL(location.href); cat ? url.searchParams.set('categorie', cat) : url.searchParams.delete('categorie'); history.replaceState(null, '', url);
+  }));
+  const initial = new URL(location.href).searchParams.get('categorie');
+  if (initial) { apply(initial); document.querySelector('.bl__bar')?.scrollIntoView(); }
+</script>
