@@ -7,7 +7,7 @@ const raf = (fn: () => void) => requestAnimationFrame(fn);
 /* ---------- intro: marcat ca văzut, scos din DOM după cortină */
 const intro = document.querySelector<HTMLElement>('[data-intro]');
 if (intro) {
-  const done = () => { try { sessionStorage.setItem('dm-intro', '1'); } catch {} intro.remove(); };
+  const done = () => intro.remove();
   if (root.classList.contains('no-intro')) intro.remove();
   else { intro.addEventListener('animationend', (e) => { if ((e as AnimationEvent).animationName.includes('intro-wipe')) done(); }); setTimeout(done, 2400); }
 }
@@ -83,3 +83,26 @@ document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((m) => {
   m.addEventListener('focusin', () => m.classList.add('is-paused'));
   m.addEventListener('focusout', () => m.classList.remove('is-paused'));
 });
+
+/* ---------- apariție la scroll, cu decalaj automat între copii ([data-stagger]) */
+document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((list) => {
+  [...list.children].forEach((el, i) => {
+    const c = el as HTMLElement;
+    if (!c.hasAttribute('data-reveal')) c.setAttribute('data-reveal', '');
+    c.style.setProperty('--d', `${Math.min(i, 8) * 70}ms`);
+  });
+});
+const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+if (!reduce && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+  reveals.forEach((el) => io.observe(el));
+} else reveals.forEach((el) => el.classList.add('is-in'));
+
+/* ---------- bara de progres a paginii */
+const bar = document.querySelector<HTMLElement>('[data-progress]');
+if (bar && !reduce) {
+  let ticking = false;
+  const upd = () => { ticking = false; const max = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty('--p', String(max > 0 ? Math.min(1, scrollY / max) : 0)); };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; raf(upd); } }, { passive: true });
+  upd();
+}

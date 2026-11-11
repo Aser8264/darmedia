@@ -87,7 +87,8 @@ const groupIcon = { fundament: 'compass', achizitie: 'magnet', retentie: 'repeat
   .hdr__link { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.75rem; background: none; border: 0; padding: 0 0.6rem; cursor: pointer; font-size: 0.9375rem; font-weight: 550; color: var(--c-plum); border-radius: var(--r-sm); transition: color 0.15s ease; }
   .hdr__link:hover, .hdr__link[aria-expanded='true'] { color: var(--mark); }
   .hdr__link.is-active { color: var(--mark); }
-  .hdr__link.is-active::after { content: ''; position: absolute; left: 0.6rem; right: 0.6rem; bottom: 0.5rem; height: 1.5px; background: var(--magenta); }
+  .hdr__link::after { content: ''; position: absolute; left: 0.6rem; right: 0.6rem; bottom: 0.5rem; height: 1.5px; background: var(--magenta); transform: scaleX(0); transform-origin: right; transition: transform 0.3s var(--ease-out); }
+  .hdr__link:hover::after, .hdr__link.is-active::after, .hdr__link[aria-expanded='true']::after { transform: scaleX(1); transform-origin: left; }
   .hdr__link svg { transition: transform 0.2s var(--ease-out); }
   .hdr__link[aria-expanded='true'] svg { transform: rotate(180deg); }
   .hdr__end { display: flex; align-items: center; gap: 0.35rem; }
@@ -110,7 +111,10 @@ const groupIcon = { fundament: 'compass', achizitie: 'magnet', retentie: 'repeat
   .mega__label small { display: block; font-size: 0.8125rem; color: #5e4a57; line-height: 1.35; }
   .mega__col li a { display: flex; align-items: center; min-height: 2.25rem; font-size: 0.9375rem; transition: color 0.15s ease; }
   .mega__col li.sub a { padding-left: 0.9rem; color: #5e4a57; font-size: 0.875rem; min-height: 2rem; }
-  .mega__col li a:hover { color: var(--mark); }
+  .mega__col li a { transition: color 0.15s ease, transform 0.25s var(--ease-out); }
+  .mega__col li a:hover { color: var(--mark); transform: translateX(4px); }
+  .mega:not([hidden]) { animation: mega-in 0.22s var(--ease-out); }
+  @keyframes mega-in { from { opacity: 0; transform: translateY(-6px); } }
 
   .menu { position: fixed; inset: 0; z-index: 40; padding-top: var(--header-h); overflow-y: auto; background: var(--cream); color: var(--c-plum); opacity: 0; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.25s var(--ease-out); }
   .menu.is-open { opacity: 1; transform: none; }

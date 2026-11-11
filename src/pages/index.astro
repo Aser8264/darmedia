@@ -17,12 +17,13 @@ import fRadu from '../assets/site/f-radu.webp';
 const portraits: Record<string, ImageMetadata> = { 'Dumitru Pascariu': fDumitru, 'Adelina Elena Ababei': fAdelina, 'Radu Dascălul': fRadu };
 const latest = posts.slice(0, 3);
 const cases = caseStudies.filter((c) => c.featured && postBySlug(c.slug));
-// 350+ proiecte · 4+ mil. € · 9+ ani — valoarea și unitatea sunt afișate la aceeași mărime, cu spațiu real între ele
-const statOrder = [stats[1], stats[2], stats[0]];
+const statOrder = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € · 9+ ani
 ---
-<Base title="DAR Media — Agenție de digital marketing, Cluj-Napoca">
-  <!-- Hero: titlul, dovada, acțiunea, fotografia fondatorilor întreagă (fără decupaj) -->
+<Base title="DAR Media — Agenție de digital marketing, Cluj-Napoca" intro>
+  <!-- Hero: roz cald, forme estompate care plutesc, titlu care apare rând cu rând, fotografia întreagă -->
   <section class="hero" aria-labelledby="hero-h">
+    <span class="blob hero__blob hero__blob--a" aria-hidden="true"></span>
+    <span class="blob hero__blob hero__blob--b" aria-hidden="true"></span>
     <div class="wrap">
       <h1 class="hero__title lines is-anim" id="hero-h">
         <span style="--i:0"><span>Strategii de omnichannel</span></span>
@@ -30,7 +31,7 @@ const statOrder = [stats[1], stats[2], stats[0]];
         <span style="--i:2"><span>leaduri și vânzări <em>profitabile.</em></span></span>
       </h1>
       <div class="hero__grid">
-        <div class="hero__copy">
+        <div class="hero__copy" data-stagger>
           <p class="hero__sub">Agenție de digital marketing din Cluj-Napoca, din {company.since}. Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung.</p>
           <ul class="hero__proof" aria-label="DAR Media în cifre">
             <li><strong>350+</strong> proiecte</li>
@@ -43,38 +44,39 @@ const statOrder = [stats[1], stats[2], stats[0]];
           </div>
         </div>
         <figure class="hero__photo">
-          <Picture src={fondatori} formats={['avif', 'webp']} fallbackFormat="webp" widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) calc(100vw - 2.5rem), 52vw" quality={82} alt="Dumitru, Adelina și Radu, fondatorii DAR Media, cu mâinile unite" loading="eager" fetchpriority="high" decoding="async" />
+          <div class="hero__frame">
+            <Picture src={fondatori} formats={['avif', 'webp']} fallbackFormat="webp" widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) calc(100vw - 2.5rem), 52vw" quality={82} alt="Dumitru, Adelina și Radu, fondatorii DAR Media, cu mâinile unite" loading="eager" fetchpriority="high" decoding="async" />
+            <span class="hero__curtain" aria-hidden="true"></span>
+          </div>
           <figcaption>Dumitru, Adelina și Radu — fondatorii DAR Media</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- Parteneri -->
+  <!-- Parteneri: bandă care curge continuu -->
   <section class="partners" aria-labelledby="partners-h">
-    <div class="wrap partners__in">
-      <h2 class="partners__h" id="partners-h">Parteneri și certificări</h2>
-      <LogoWall items={partners} variant="row" tone="dark" label="Parteneri și certificări" links />
-    </div>
+    <h2 class="partners__h wrap" id="partners-h">Parteneri și certificări</h2>
+    <LogoWall items={partners} variant="marquee" rows={1} tone="dark" label="Parteneri și certificări" />
   </section>
 
-  <!-- Rezultate: listă editorială, două coloane -->
+  <!-- Rezultate -->
   <section class="section results" id="rezultate" aria-labelledby="cases-h">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head" data-reveal>
         <h2 class="h2" id="cases-h">Rezultate concrete, nu promisiuni.</h2>
         <a class="more sec-aside" href="/studii-de-caz/">Toate cele {caseStudies.length} studii de caz <Arrow /></a>
       </div>
-      <ul class="results__list">
+      <ul class="results__list" data-stagger>
         {cases.map((c) => <li><CaseCard c={c} /></li>)}
       </ul>
     </div>
   </section>
 
-  <!-- Ce facem -->
-  <section class="section manifest t-pink" aria-labelledby="man-h">
+  <!-- Ce facem: prună -->
+  <section class="section manifest t-plum" aria-labelledby="man-h">
     <div class="wrap manifest__in">
-      <div class="manifest__intro">
+      <div class="manifest__intro" data-stagger>
         <h2 class="h2" id="man-h">Darul tău, darul nostru.</h2>
         <dl class="gifts">
           <div><dt>Darul tău</dt><dd>O afacere cu potențial de creștere, care livrează produse și servicii excelente.</dd></div>
@@ -82,8 +84,8 @@ const statOrder = [stats[1], stats[2], stats[0]];
         </dl>
       </div>
       <div class="manifest__body">
-        <p class="manifest__lead">Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung, prin patru rezultate cheie:</p>
-        <dl class="pillars">
+        <p class="manifest__lead" data-reveal>Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung, prin patru rezultate cheie:</p>
+        <dl class="pillars" data-stagger>
           {keyResults.map((k) => <div><dt>{k.title}</dt><dd>{k.text}</dd></div>)}
         </dl>
       </div>
@@ -93,19 +95,19 @@ const statOrder = [stats[1], stats[2], stats[0]];
   <!-- Servicii -->
   <section class="section services" id="servicii" aria-labelledby="svc-h">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head" data-reveal>
         <h2 class="h2" id="svc-h">Servicii de marketing digital, focusate pe rezultate concrete.</h2>
         <a class="more sec-aside" href="/servicii/">Toate serviciile <Arrow /></a>
       </div>
-      <ServiceList />
+      <div data-reveal><ServiceList /></div>
     </div>
   </section>
 
-  <!-- Cifre -->
-  <section class="section numbers" aria-labelledby="num-h">
+  <!-- Cifre: bandă magenta, numere care cresc -->
+  <section class="section numbers t-magenta" aria-labelledby="num-h">
     <div class="wrap">
-      <h2 class="h2 numbers__h" id="num-h">Suntem mereu pregătiți pentru o nouă provocare.</h2>
-      <dl class="numbers__list">
+      <h2 class="h2 numbers__h" id="num-h" data-reveal>Suntem mereu pregătiți pentru o nouă provocare.</h2>
+      <dl class="numbers__list" data-stagger>
         {statOrder.map((s) => (
           <div>
             <dt>{s.label}</dt>
@@ -114,7 +116,7 @@ const statOrder = [stats[1], stats[2], stats[0]];
           </div>
         ))}
       </dl>
-      <p class="numbers__g"><strong>{googleReviews.rating}</strong> pe Google, pe baza a {googleReviews.count} de recenzii. <a class="link" href="/portofoliu/#recenzii">Citește recenziile</a></p>
+      <p class="numbers__g" data-reveal><strong>{googleReviews.rating}</strong> pe Google, pe baza a {googleReviews.count} de recenzii. <a class="link" href="/portofoliu/#recenzii">Citește recenziile</a></p>
     </div>
   </section>
 
@@ -124,14 +126,14 @@ const statOrder = [stats[1], stats[2], stats[0]];
   <section class="section team" aria-labelledby="team-h">
     <div class="wrap">
       <div class="team__top">
-        <h2 class="h2" id="team-h">Echipa ta creativă de marketing, care îți aduce rezultate măsurate.</h2>
-        <div class="team__note">
+        <h2 class="h2" id="team-h" data-reveal>Echipa ta creativă de marketing, care îți aduce rezultate măsurate.</h2>
+        <div class="team__note" data-stagger>
           <p>Numele a apărut de la inițialele prenumelor noastre — Dumitru, Adelina, Radu — și de la ideea că orice om și orice business are un dar prețios de oferit celorlalți.</p>
           <p class="muted">Credem cu tărie în forța echipei noastre, formată din colegi tineri, creativi și orientați spre rezultate. Atuurile noastre sunt comunicarea, transparența, evoluția continuă și relațiile solide construite între noi.</p>
           <p class="team__links"><a class="more" href="/povestea-noastra/">Povestea noastră <Arrow /></a><a class="more" href="/echipa-darmedia/">Vezi echipa <Arrow /></a></p>
         </div>
       </div>
-      <ul class="team__grid">
+      <ul class="team__grid" data-stagger>
         {founders.map((f) => (
           <li>
             <div class="team__pic">
@@ -146,44 +148,44 @@ const statOrder = [stats[1], stats[2], stats[0]];
     </div>
   </section>
 
-  <!-- Clienți -->
-  <section class="clients" aria-labelledby="cl-h">
-    <div class="wrap clients__head">
+  <!-- Clienți: bandă prună, logouri care curg -->
+  <section class="clients t-plum" aria-labelledby="cl-h">
+    <div class="wrap clients__head" data-reveal>
       <h2 class="h3" id="cl-h">Afaceri care au ales DAR Media</h2>
       <a class="more" href="/portofoliu/">Portofoliu · {clients.length} branduri <Arrow /></a>
     </div>
-    <LogoWall items={clients} variant="marquee" tone="dark" label={`Logourile celor ${clients.length} de clienți DAR Media`} />
+    <LogoWall items={clients} variant="marquee" label={`Logourile celor ${clients.length} de clienți DAR Media`} />
   </section>
 
   <!-- FAQ -->
-  <section class="section faqs t-pink" aria-labelledby="faq-h">
+  <section class="section faqs" aria-labelledby="faq-h">
     <div class="wrap faqs__in">
-      <div class="faqs__head">
+      <div class="faqs__head" data-reveal>
         <h2 class="h2" id="faq-h">Răspunsuri directe, înainte de primul call.</h2>
         <p class="muted">Nu ai găsit răspunsul? <a class="link" href="/contact/">Scrie-ne</a> sau <a class="link" href={company.calendly} target="_blank" rel="noopener noreferrer">programează o discuție</a>.</p>
       </div>
-      <div class="faqs__list"><Faq items={faq} /></div>
+      <div class="faqs__list" data-reveal><Faq items={faq} /></div>
     </div>
   </section>
 
   <!-- Resurse -->
-  <section class="section learn" aria-labelledby="learn-h">
+  <section class="section learn t-pink" aria-labelledby="learn-h">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head" data-reveal>
         <h2 class="h2" id="learn-h">Afacerea ta crește prin educație continuă de marketing &amp; business.</h2>
         <p class="lead">Învață să te promovezi mai eficient, la un cost mai mic.</p>
       </div>
       <div class="learn__grid">
-        <ul class="learn__links">
+        <ul class="learn__links" data-stagger>
           <li><a href="/ebook/">Ebook-uri gratuite <Arrow /></a></li>
           <li><a href="/blog/">Blog <Arrow /></a></li>
           <li><a href={company.social[3].href} target="_blank" rel="noopener noreferrer">Video<span class="sr-only"> (YouTube, se deschide într-o filă nouă)</span> <Arrow dir="up-right" /></a></li>
         </ul>
-        <ul class="learn__posts">
+        <ul class="learn__posts" data-stagger>
           {latest.map((p) => (
             <li>
               <a href={`/${p.slug}/`}>
-                {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} srcset={coverSrcset(p.cover)} sizes="(max-width: 900px) 92vw, 26vw" alt="" loading="lazy" decoding="async" />}
+                <span class="learn__img">{p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} srcset={coverSrcset(p.cover)} sizes="(max-width: 900px) 92vw, 26vw" alt="" loading="lazy" decoding="async" />}</span>
                 <span class="tag">{p.categories[0]} · {formatDate(p.date)}</span>
                 <span class="learn__title">{p.title}</span>
               </a>
@@ -199,66 +201,79 @@ const statOrder = [stats[1], stats[2], stats[0]];
 
 <style>
   /* hero */
-  .hero { padding-block: clamp(2.75rem, 6vw, 5rem) clamp(3.5rem, 7vw, 6rem); }
+  .hero { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(3rem, 6vw, 5rem); background: linear-gradient(180deg, var(--pink) 0%, var(--cream) 100%); }
+  .hero__blob--a { width: clamp(20rem, 42vw, 38rem); height: clamp(20rem, 42vw, 38rem); right: -8rem; top: -10rem; background: #ff8fc0; animation: drift-a 20s ease-in-out infinite; }
+  .hero__blob--b { width: clamp(16rem, 30vw, 28rem); height: clamp(16rem, 30vw, 28rem); left: -10rem; bottom: -8rem; background: #f7b6d2; animation: drift-b 24s ease-in-out infinite; }
   .hero__title { font-size: clamp(2.4rem, 1.15rem + 4.3vw, 5rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.036em; }
   .hero__title em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; color: var(--mark); padding-right: 0.04em; }
-  .hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 2.5rem; align-items: start; margin-top: clamp(2rem, 4vw, 3.25rem); }
+  .hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 2.5rem; align-items: start; margin-top: clamp(1.75rem, 3.5vw, 3rem); }
   .hero__copy { grid-column: 1 / span 5; display: grid; gap: 1.75rem; justify-items: start; }
   .hero__sub { font-size: var(--fs-lg); line-height: 1.55; color: var(--fg-2); max-width: 32rem; }
   .hero__proof { display: grid; grid-template-columns: repeat(3, auto); gap: 0.5rem clamp(1.25rem, 3vw, 2.25rem); padding-top: 1.25rem; border-top: 1px solid var(--line-2); color: var(--fg-2); font-size: var(--fs-sm); }
   .hero__proof li { display: grid; gap: 0.15rem; }
-  .hero__proof strong { color: var(--fg); font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.85rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; font-variant-numeric: lining-nums; }
+  .hero__proof strong { color: var(--fg); font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.85rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
   .hero__photo { grid-column: 7 / -1; }
-  .hero__photo :global(img) { width: 100%; height: auto; aspect-ratio: 1600 / 1093; border-radius: var(--r-md); background: #e7e3e4; }
+  .hero__frame { position: relative; overflow: hidden; border-radius: var(--r-md); box-shadow: var(--shadow-2); }
+  .hero__frame :global(img) { width: 100%; height: auto; aspect-ratio: 1600 / 1093; background: #e7e3e4; transition: transform 0.8s var(--ease-out); }
+  .hero__curtain { position: absolute; inset: 0; background: var(--magenta-ink); transform-origin: right; transform: scaleX(0); }
+  .js .hero__curtain { animation: curtain 1s var(--ease-in-out) var(--cd, 0.2s) both; }
+  html.has-intro .hero__curtain { --cd: 1s; }
+  @keyframes curtain { 0% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
   .hero__photo figcaption { margin-top: 0.75rem; font-size: var(--fs-sm); color: var(--fg-2); }
+  @media (hover: hover) and (pointer: fine) { .hero__frame:hover :global(img) { transform: scale(1.03); } }
 
   /* parteneri */
-  .partners { border-block: 1px solid var(--line); }
-  .partners__in { display: grid; grid-template-columns: 12rem minmax(0, 1fr); align-items: center; gap: 1.5rem var(--gap); padding-block: 1.75rem; }
-  .partners__h { font-size: var(--fs-sm); font-weight: 600; color: var(--fg-2); }
+  .partners { padding-block: 1.5rem 1.25rem; border-block: 1px solid var(--line); }
+  .partners__h { font-size: var(--fs-sm); font-weight: 600; color: var(--fg-2); margin-bottom: 0.5rem; }
 
   /* rezultate */
-  .results__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 5vw, 5rem); }
+  .results__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1.5rem, 4vw, 3.5rem); }
 
   /* ce facem */
   .manifest__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2.5rem var(--gap); }
   .manifest__intro { grid-column: 1 / span 5; display: grid; gap: 2rem; align-content: start; }
   .gifts { display: grid; gap: 1.25rem; }
-  .gifts dt { font-size: var(--fs-sm); font-weight: 700; color: var(--mark); }
+  .gifts dt { font-size: var(--fs-sm); font-weight: 700; color: var(--accent-text); }
   .gifts dd { font-size: var(--fs-lg); line-height: 1.45; margin-top: 0.2rem; }
   .manifest__body { grid-column: 7 / -1; display: grid; gap: 2rem; align-content: start; }
   .manifest__lead { font-size: var(--fs-lg); line-height: 1.55; }
   .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gap); }
-  .pillars > div { padding-block: 1.25rem 1.5rem; border-top: 1px solid var(--line-2); }
+  .pillars > div { position: relative; padding-block: 1.25rem 1.5rem; border-top: 1px solid var(--line-2); }
+  .pillars > div::before { content: ''; position: absolute; left: 0; top: -1px; width: 100%; height: 2px; background: var(--magenta); transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease-out); }
   .pillars dt { font-size: var(--fs-h4); font-weight: 700; letter-spacing: -0.02em; }
   .pillars dd { margin-top: 0.4rem; color: var(--fg-2); }
+  @media (hover: hover) and (pointer: fine) { .pillars > div:hover::before { transform: scaleX(1); } }
 
   /* cifre */
-  .numbers__h { max-width: 18ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .numbers { position: relative; overflow: hidden; }
+  .numbers__h { max-width: 18ch; margin-bottom: clamp(2rem, 4vw, 3.25rem); }
   .numbers__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem var(--gap); }
   .numbers__list > div { display: flex; flex-direction: column; gap: 0.6rem; padding-top: 1.25rem; border-top: 1px solid var(--line-2); }
   .numbers__list dt { order: 1; font-weight: 650; }
-  .numbers__val { order: 0; font-size: clamp(3rem, 2rem + 3.6vw, 5.25rem); font-weight: 700; line-height: 1; letter-spacing: -0.035em; font-variant-numeric: lining-nums; white-space: nowrap; }
-  .numbers__unit { font-weight: 400; color: var(--mark); letter-spacing: -0.03em; }
-  .numbers__note { order: 2; color: var(--fg-2); font-size: var(--fs-sm); max-width: 30ch; }
-  .numbers__g { margin-top: clamp(2rem, 4vw, 3rem); color: var(--fg-2); }
-  .numbers__g strong { color: var(--fg); }
+  .numbers__val { order: 0; font-size: clamp(3rem, 2rem + 3.6vw, 5.25rem); font-weight: 700; line-height: 1; letter-spacing: -0.035em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .numbers__unit { font-weight: 400; letter-spacing: -0.03em; }
+  .numbers__note { order: 2; font-size: var(--fs-sm); max-width: 30ch; }
+  .numbers__g { margin-top: clamp(2rem, 4vw, 3rem); }
 
   /* echipa */
-  .team__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.5rem var(--gap); margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .team__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.5rem var(--gap); margin-bottom: clamp(2.25rem, 4.5vw, 3.5rem); }
   .team__top .h2 { grid-column: 1 / span 6; }
-  .team__note { grid-column: 8 / -1; display: grid; gap: 1rem; font-size: var(--fs-base); }
+  .team__note { grid-column: 8 / -1; display: grid; gap: 1rem; }
   .team__note p:first-child { font-size: var(--fs-lg); line-height: 1.5; }
   .team__links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
   .team__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .team__grid li { display: grid; gap: 0.2rem; justify-items: start; }
-  .team__pic { width: 100%; aspect-ratio: 1; display: grid; place-items: end center; overflow: hidden; border-radius: var(--r-md); background: var(--pink); margin-bottom: 0.9rem; }
-  .team__pic :global(img) { width: 86%; height: auto; }
+  .team__pic { position: relative; width: 100%; aspect-ratio: 1; display: grid; place-items: end center; overflow: hidden; border-radius: var(--r-md); background: var(--pink); margin-bottom: 0.9rem; transition: background-color 0.4s ease, transform 0.4s var(--ease-out), box-shadow 0.4s ease; }
+  .team__pic :global(img) { width: 86%; height: auto; transition: transform 0.5s var(--ease-out); transform-origin: bottom; }
   .team__name { font-size: var(--fs-h4); font-weight: 650; letter-spacing: -0.015em; }
+  @media (hover: hover) and (pointer: fine) {
+    .team__grid li:hover .team__pic { background: var(--pink-2); transform: translateY(-4px); box-shadow: var(--shadow-2); }
+    .team__grid li:hover .team__pic :global(img) { transform: scale(1.05); }
+  }
 
   /* clienți */
-  .clients { padding-block: clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--line); }
+  .clients { padding-block: clamp(3rem, 6vw, 4.5rem); }
   .clients__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 0.75rem 1.5rem; margin-bottom: 2rem; }
 
   /* faq */
@@ -269,24 +284,23 @@ const statOrder = [stats[1], stats[2], stats[0]];
   /* resurse */
   .learn__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2.5rem var(--gap); }
   .learn__links { grid-column: 1 / span 4; border-top: 1px solid var(--line-2); align-self: start; }
-  .learn__links a { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 4rem; border-bottom: 1px solid var(--line); font-size: var(--fs-h4); font-weight: 650; letter-spacing: -0.015em; }
-  .learn__links :global(.arrow) { color: var(--mark); transition: transform 0.2s var(--ease-out); }
+  .learn__links a { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 4rem; border-bottom: 1px solid var(--line); font-size: var(--fs-h4); font-weight: 650; letter-spacing: -0.015em; transition: color 0.15s ease, padding-left 0.3s var(--ease-out); }
+  .learn__links :global(.arrow) { color: var(--mark); transition: transform 0.25s var(--ease-out); }
   .learn__posts { grid-column: 6 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .learn__posts a { display: grid; gap: 0.6rem; align-content: start; }
-  .learn__posts img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-md); background: var(--pink); margin-bottom: 0.3rem; }
-  .learn__title { font-size: 1.0625rem; font-weight: 650; line-height: 1.35; letter-spacing: -0.01em; }
+  .learn__img { display: block; overflow: hidden; border-radius: var(--r-md); background: var(--pink-2); margin-bottom: 0.3rem; }
+  .learn__img img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.6s var(--ease-out); }
+  .learn__title { font-size: 1.0625rem; font-weight: 650; line-height: 1.35; letter-spacing: -0.01em; transition: color 0.15s ease; }
   @media (hover: hover) and (pointer: fine) {
-    .learn__links a:hover { color: var(--mark); }
-    .learn__links a:hover :global(.arrow) { transform: translateX(3px); }
+    .learn__links a:hover { color: var(--mark); padding-left: 0.5rem; }
+    .learn__links a:hover :global(.arrow) { transform: translateX(4px); }
+    .learn__posts a:hover img { transform: scale(1.06); }
     .learn__posts a:hover .learn__title { color: var(--mark); }
   }
 
-  @media (max-width: 1040px) {
-    .learn__links, .learn__posts { grid-column: 1 / -1; }
-  }
+  @media (max-width: 1040px) { .learn__links, .learn__posts { grid-column: 1 / -1; } }
   @media (max-width: 900px) {
     .hero__copy, .hero__photo { grid-column: 1 / -1; }
-    .partners__in { grid-template-columns: 1fr; }
     .results__list { grid-template-columns: 1fr; }
     .manifest__intro, .manifest__body { grid-column: 1 / -1; }
     .numbers__list { grid-template-columns: 1fr; }
@@ -300,6 +314,8 @@ const statOrder = [stats[1], stats[2], stats[0]];
     .team__grid li:first-child .team__pic { aspect-ratio: 4 / 3; }
     .learn__posts { grid-template-columns: 1fr; }
     .learn__posts a { grid-template-columns: 7.5rem 1fr; column-gap: 1rem; }
-    .learn__posts img { grid-row: 1 / span 2; aspect-ratio: 4 / 3; margin: 0; }
+    .learn__img { grid-row: 1 / span 2; margin: 0; }
+    .learn__img img { aspect-ratio: 4 / 3; }
   }
+  @media (prefers-reduced-motion: reduce) { .hero__curtain { display: none; } }
 </style>
