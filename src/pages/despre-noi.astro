@@ -60,7 +60,7 @@ import fondatori from '../assets/site/fondatori.webp';
 <style>
   .ab-partners { margin: 2.5rem 0 1.25rem; }
   .ab-intro { padding-bottom: var(--section); }
-  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: var(--surface); clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 93%); margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .ab-fig { grid-column: 1 / -1; width: min(100%, 60rem); aspect-ratio: 1600 / 1093; overflow: hidden; background: var(--surface); border-radius: var(--r-md); margin-bottom: clamp(3rem, 6vw, 5rem); }
   .ab-fig :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
   .ab-name { grid-column: 1 / span 5; display: grid; gap: 1rem; align-content: start; }
   .ab-letters { font-size: clamp(6rem, 17vw, 16rem); line-height: 0.8; letter-spacing: -0.06em; font-weight: 800; color: var(--plum); display: flex; gap: 0.06em; }
@@ -69,7 +69,7 @@ import fondatori from '../assets/site/fondatori.webp';
   .ab-links { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-top: 1.5rem; margin-top: 2rem !important; border-top: 1px solid var(--line); }
   .proc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .proc li { border-top: 1px solid var(--line); padding-top: 1.5rem; display: grid; gap: 1rem; align-content: start; }
-  .proc__n { font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; font-weight: 800; letter-spacing: -0.05em; color: var(--rose); margin-bottom: 1.5rem; }
+  .proc__n { display: none; }
   .help { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .help a { display: grid; gap: 1rem; align-content: start; height: 100%; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; transition: color 0.3s; }
   .help a .h3 { margin-top: 2rem; }

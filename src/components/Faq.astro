@@ -13,23 +13,20 @@ const { items } = Astro.props;
   ))}
 </div>
 <style>
-  /* rânduri deschise, fără cutii; înălțimea se animă lin unde browserul suportă ::details-content (altfel se deschide instant) */
-  .faq { border-top: 2px solid var(--fg); counter-reset: q; }
-  details { border-bottom: 1px solid var(--line-2); counter-increment: q; }
-  summary { display: grid; grid-template-columns: 2.5rem 1fr 2.25rem; align-items: center; gap: 1rem; min-height: 4.5rem; padding-block: 1rem; cursor: pointer; list-style: none; font-size: var(--fs-h4); font-weight: 750; letter-spacing: -0.02em; line-height: 1.25; }
-  summary::before { content: counter(q, decimal-leading-zero); font-size: var(--fs-xs); font-weight: 800; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+  .faq { border-top: 1px solid var(--line-2); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { display: grid; grid-template-columns: 1fr 2rem; align-items: center; gap: 1rem; min-height: 4rem; padding-block: 0.9rem; cursor: pointer; list-style: none; font-size: var(--fs-h4); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
   summary::-webkit-details-marker { display: none; }
-  summary span { transition: transform 0.4s var(--ease-out); }
-  summary:hover span { transform: translateX(0.4rem); }
-  summary i { position: relative; justify-self: end; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--fg); color: var(--bg); transition: transform 0.45s var(--ease-out), background-color 0.3s; }
-  summary i::before, summary i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.8rem; height: 2px; background: currentColor; transform: translate(-50%, -50%); }
+  summary i { position: relative; justify-self: end; width: 2rem; height: 2rem; border: 1px solid var(--line-2); border-radius: 50%; transition: transform 0.25s var(--ease-out), border-color 0.15s ease; }
+  summary i::before, summary i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
   summary i::after { transform: translate(-50%, -50%) rotate(90deg); }
-  details[open] summary i { transform: rotate(135deg); background: var(--magenta); color: #fff; }
-  .faq__a { padding: 0 3.5rem 1.6rem 3.5rem; max-width: 48rem; color: var(--fg-2); }
+  details[open] summary i { transform: rotate(45deg); border-color: var(--magenta); color: var(--mark); }
+  @media (hover: hover) and (pointer: fine) { summary:hover { color: var(--accent-text); } }
+  .faq__a { padding: 0 3rem 1.5rem 0; max-width: 46rem; color: var(--fg-2); }
   @supports selector(::details-content) {
     @media (prefers-reduced-motion: no-preference) {
       .faq { interpolate-size: allow-keywords; }
-      details::details-content { block-size: 0; overflow: clip; transition: block-size 0.45s var(--ease-out), content-visibility 0.45s allow-discrete; }
+      details::details-content { block-size: 0; overflow: clip; transition: block-size 0.3s var(--ease-out), content-visibility 0.3s allow-discrete; }
       details[open]::details-content { block-size: auto; }
     }
   }
@@ -38,8 +35,8 @@ const { items } = Astro.props;
   .faq__a :global(ul) { list-style: disc; }
   .faq__a :global(ol) { list-style: decimal; }
   .faq__a :global(li) { margin-top: 0.3rem; }
-  .faq__a :global(li::marker) { color: var(--accent-text); }
-  .faq__a :global(strong) { color: var(--fg); font-weight: 750; }
+  .faq__a :global(li::marker) { color: var(--magenta); }
+  .faq__a :global(strong) { color: var(--fg); font-weight: 650; }
   .faq__a :global(a) { color: var(--accent-text); text-decoration: underline; text-underline-offset: 0.2em; }
-  @media (max-width: 640px) { summary { grid-template-columns: 2rem 1fr 2.25rem; } .faq__a { padding: 0 0 1.4rem 3rem; } }
+  @media (max-width: 640px) { .faq__a { padding-right: 0; } }
 </style>

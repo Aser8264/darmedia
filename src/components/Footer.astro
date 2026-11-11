@@ -5,7 +5,7 @@ import { company, aboutNav, legal } from '../data/site';
 import { services } from '../data/services';
 const year = new Date().getFullYear();
 ---
-<footer class="ftr t-plum" data-footer data-lock>
+<footer class="ftr t-plum" data-footer>
   <div class="wrap">
     <p class="ftr__sign" aria-hidden="true">What’s your <em>gift?</em></p>
     <div class="ftr__grid">
@@ -73,9 +73,8 @@ const year = new Date().getFullYear();
 </footer>
 <style>
   .ftr { padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: 2rem; }
-  .ftr__sign { font-weight: 850; font-size: clamp(3rem, 12vw, 12rem); line-height: 0.88; letter-spacing: -0.065em; margin: 0 0 clamp(2.5rem, 6vw, 5rem) -0.04em; color: transparent; -webkit-text-stroke: 2px var(--hot); white-space: nowrap; }
-  .ftr__sign em { -webkit-text-stroke: 0; }
-  .ftr__sign em { font-family: var(--serif); font-weight: 400; color: var(--hot); letter-spacing: -0.02em; }
+  .ftr__sign { font-weight: 700; font-size: clamp(2.25rem, 1.4rem + 4vw, 4.5rem); line-height: 1.05; letter-spacing: -0.035em; margin-bottom: clamp(2.5rem, 5vw, 4rem); color: #fff; }
+  .ftr__sign em { font-family: var(--serif); font-weight: 400; color: #ff7ab3; letter-spacing: -0.01em; }
   .ftr__grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 2.5rem var(--gap); padding-bottom: clamp(2.5rem, 5vw, 4rem); }
   .ftr__brand { display: grid; gap: 1.25rem; align-content: start; max-width: 22rem; }
   .ftr__logo { justify-self: start; display: inline-flex; min-height: 2.75rem; align-items: center; }
@@ -102,5 +101,4 @@ const year = new Date().getFullYear();
     .ftr__anpc { justify-content: flex-start; }
   }
   @media (max-width: 400px) { .ftr__grid { grid-template-columns: 1fr; } }
-  @media (max-width: 640px) { .ftr__sign { white-space: normal; } }
 </style>

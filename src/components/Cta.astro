@@ -1,41 +1,39 @@
 ---
 import Arrow from './Arrow.astro';
-import Mark from './Mark.astro';
 import { company } from '../data/site';
 interface Props { title?: string; text?: string }
 const { title = 'Ce zici, ne apucăm <em>de treabă?</em>', text = 'Spune-ne care e principala ta provocare în online acum. Noi îți vom oferi apoi claritatea de care ai nevoie ca să o depășești.' } = Astro.props;
 ---
-<section class="cta t-magenta" data-theme="magenta" aria-labelledby="cta-h">
-  <div class="cta__deco" aria-hidden="true" data-speed="0.12"><Mark size={520} outline class="cta__mark spin" /></div>
+<section class="cta t-magenta" aria-labelledby="cta-h">
   <div class="wrap cta__in">
-    <p class="eyebrow">Contact</p>
-    <h2 class="cta__title" id="cta-h" set:html={title} />
-    <div class="cta__row">
+    <div class="cta__main">
+      <h2 class="cta__title" id="cta-h" set:html={title} />
       <p class="cta__text">{text}</p>
+    </div>
+    <div class="cta__side">
       <div class="cta__actions">
-        <a class="btn" href="/audit-gratuit/" data-magnetic>Cere un audit gratuit <Arrow /></a>
+        <a class="btn" href="/audit-gratuit/">Cere un audit gratuit <Arrow /></a>
         <a class="btn btn--ghost" href="/contact/">Contactează-ne</a>
       </div>
+      <ul class="cta__direct">
+        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+        <li><a href={company.phoneHref}>{company.phone}</a></li>
+      </ul>
     </div>
-    <ul class="cta__direct">
-      <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
-      <li><a href={company.phoneHref}>{company.phone}</a></li>
-    </ul>
   </div>
 </section>
 <style>
-  .cta { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(5rem, 12vw, 10rem); }
-  .cta__deco { position: absolute; z-index: -1; right: -9rem; top: -6rem; width: clamp(18rem, 45vw, 34rem); pointer-events: none; }
-  .cta__deco :global(.cta__mark) { width: 100%; height: auto; color: #fff; opacity: 0.35; }
-  .cta__in { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); }
-  .cta__title { font-size: clamp(3rem, 1.5rem + 7vw, 8.5rem); font-weight: 850; line-height: 0.9; letter-spacing: -0.06em; max-width: 12ch; }
-  .cta__title :global(em) { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; }
-  .cta__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem var(--gap); align-items: end; }
-  .cta__text { font-size: var(--fs-lg); max-width: 32rem; font-weight: 500; }
-  .cta__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .cta__actions .btn { transition: box-shadow var(--dur) var(--ease), transform 0.25s var(--ease-out); }
-  .cta__direct { display: flex; flex-wrap: wrap; gap: 0.5rem 2.5rem; padding-top: 1.5rem; border-top: 2px solid #fff; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 750; letter-spacing: -0.02em; }
-  .cta__direct a { display: inline-flex; min-height: 2.75rem; align-items: center; background: linear-gradient(#fff, #fff) 0 100% / 0 2px no-repeat; transition: background-size 0.4s var(--ease-out); }
-  .cta__direct a:hover { background-size: 100% 2px; }
-  @media (max-width: 900px) { .cta__row { grid-template-columns: 1fr; } .cta__actions .btn { flex: 1 1 100%; } }
+  .cta { padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .cta__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: end; }
+  .cta__main { grid-column: 1 / span 7; display: grid; gap: 1.25rem; }
+  .cta__title { font-size: var(--fs-h1); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; text-wrap: balance; }
+  .cta__title :global(em) { font-style: normal; }
+  .cta__text { font-size: var(--fs-lg); max-width: 34rem; }
+  .cta__side { grid-column: 9 / -1; display: grid; gap: 1.5rem; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cta__actions .btn--ghost { border-color: rgba(255, 255, 255, 0.7); color: #fff; }
+  .cta__direct { display: grid; gap: 0.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.4); font-size: 1.0625rem; font-weight: 600; }
+  .cta__direct a { display: inline-flex; min-height: 2.5rem; align-items: center; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.5); text-underline-offset: 0.25em; }
+  .cta__direct a:hover { text-decoration-color: #fff; }
+  @media (max-width: 900px) { .cta__main, .cta__side { grid-column: 1 / -1; } .cta__actions .btn { flex: 1 1 100%; } }
 </style>

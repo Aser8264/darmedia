@@ -8,9 +8,12 @@ const { size = 32 } = Astro.props;
   <span class="logo__word">dar<span>media</span></span>
 </span>
 <style>
-  .logo { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--fg); }
-  .logo :global(.logo__mark) { color: var(--accent-text); transition: transform 0.6s var(--ease); }
-  .logo:hover :global(.logo__mark) { transform: rotate(-8deg); }
-  .logo__word { font-family: var(--sans); font-weight: 750; font-size: 1.3rem; letter-spacing: -0.045em; line-height: 1; }
-  .logo__word span { font-weight: 400; margin-left: 0.14em; color: var(--accent-text); }
+  /* culorile exacte ale logo-ului original: emblema #9A1766, „dar” #9E005D, „media” #ED1E79 */
+  .logo { display: inline-flex; align-items: center; gap: 0.5rem; color: #9e005d; }
+  .logo :global(.logo__mark) { color: #9a1766; }
+  .logo__word { font-family: var(--sans); font-weight: 750; font-size: 1.3rem; letter-spacing: -0.04em; line-height: 1; }
+  .logo__word span { font-weight: 450; margin-left: 0.12em; color: #c40f63; } /* #ED1E79 dă 3.6:1 pe crem; nuanța mai adâncă trece AA */
+  :global(.t-plum) .logo, :global(.on-dark) .logo { color: #fff; }
+  :global(.t-plum) .logo :global(.logo__mark), :global(.on-dark) .logo :global(.logo__mark) { color: #ff7ab3; }
+  :global(.t-plum) .logo__word span, :global(.on-dark) .logo__word span { color: #ff7ab3; }
 </style>
