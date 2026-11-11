@@ -5,50 +5,41 @@ interface Props { title?: string; text?: string }
 const { title = 'Ce zici, ne apucăm <em>de treabă?</em>', text = 'Spune-ne care e principala ta provocare în online acum. Noi îți vom oferi apoi claritatea de care ai nevoie ca să o depășești.' } = Astro.props;
 ---
 <section class="cta t-magenta" aria-labelledby="cta-h">
-  <span class="blob cta__blob cta__blob--a" aria-hidden="true"></span>
-  <span class="blob cta__blob cta__blob--b" aria-hidden="true"></span>
-  <div class="ticker cta__ticker" aria-hidden="true">
-    {[0, 1].map(() => (
-      <div class="ticker__track">
-        {[0, 1, 2].map(() => <><span>Cere un audit gratuit</span><span class="cta__dot"></span><span>Hai să vorbim</span><span class="cta__dot"></span></>)}
-      </div>
-    ))}
-  </div>
   <div class="wrap cta__in">
-    <div class="cta__main">
-      <h2 class="cta__title" id="cta-h" set:html={title} />
+    <h2 class="cta__title" id="cta-h" set:html={title} data-reveal />
+    <div class="cta__row">
       <p class="cta__text">{text}</p>
-    </div>
-    <div class="cta__side">
       <div class="cta__actions">
         <a class="btn" href="/audit-gratuit/">Cere un audit gratuit <Arrow /></a>
-        <a class="btn btn--ghost" href="/contact/">Contactează-ne</a>
+        <a class="cta__link" href="/contact/">Contactează-ne <Arrow /></a>
       </div>
-      <ul class="cta__direct">
-        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
-        <li><a href={company.phoneHref}>{company.phone}</a></li>
-      </ul>
+      <dl class="cta__direct">
+        <div><dt>Email</dt><dd><a href={`mailto:${company.email}`}>{company.email}</a></dd></div>
+        <div><dt>Telefon</dt><dd><a href={company.phoneHref}>{company.phone}</a></dd></div>
+      </dl>
     </div>
   </div>
 </section>
 <style>
-  .cta { position: relative; overflow: hidden; isolation: isolate; padding-block: 0 clamp(3.5rem, 7vw, 5.5rem); }
-  .cta__ticker { padding-block: clamp(1.25rem, 3vw, 2rem); margin-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid rgba(255, 255, 255, 0.3); font-size: clamp(2rem, 1.2rem + 3.5vw, 4.5rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1; }
-  .cta__ticker span { display: inline-block; }
-  .cta__dot { width: 0.28em; height: 0.28em; border-radius: 50%; background: #ffd1e4; align-self: center; }
-  .ticker__track { align-items: center; }
-  .cta__blob--a { width: 34rem; height: 34rem; right: -10rem; top: 20%; background: #ff5aa0; animation: drift-a 18s ease-in-out infinite; }
-  .cta__blob--b { width: 26rem; height: 26rem; left: -8rem; bottom: -10rem; background: #9e005d; animation: drift-b 22s ease-in-out infinite; }
-  .cta__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: end; }
-  .cta__main { grid-column: 1 / span 7; display: grid; gap: 1.25rem; }
-  .cta__title { font-size: var(--fs-h1); font-weight: 700; line-height: 1.04; letter-spacing: -0.035em; text-wrap: balance; }
-  .cta__title :global(em) { font-style: normal; }
-  .cta__text { font-size: var(--fs-lg); max-width: 34rem; }
-  .cta__side { grid-column: 9 / -1; display: grid; gap: 1.5rem; }
-  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .cta__actions .btn--ghost { border-color: rgba(255, 255, 255, 0.7); color: #fff; }
-  .cta__direct { display: grid; gap: 0.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.4); font-size: 1.0625rem; font-weight: 600; }
-  .cta__direct a { display: inline-flex; min-height: 2.5rem; align-items: center; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.5); text-underline-offset: 0.25em; }
-  .cta__direct a:hover { text-decoration-color: #fff; }
-  @media (max-width: 900px) { .cta__main, .cta__side { grid-column: 1 / -1; } .cta__actions .btn { flex: 1 1 100%; } }
+  .cta { padding-block: clamp(4.5rem, 9vw, 7.5rem) clamp(3.5rem, 6vw, 5rem); }
+  .cta__in { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); }
+  .cta__title { font-size: clamp(2.75rem, 1.4rem + 5.4vw, 6rem); font-weight: 700; line-height: 1; letter-spacing: -0.04em; max-width: 13ch; text-wrap: balance; }
+  .cta__title :global(em) { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.015em; }
+  .cta__row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: end; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.45); }
+  .cta__text { grid-column: 1 / span 4; font-size: var(--fs-lg); line-height: 1.5; }
+  .cta__actions { grid-column: 6 / span 3; display: grid; gap: 0.75rem; justify-items: start; }
+  .cta__link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; font-weight: 650; }
+  .cta__link :global(.arrow) { transition: transform 0.2s var(--ease-out); }
+  .cta__direct { grid-column: 10 / -1; display: grid; gap: 1rem; }
+  .cta__direct dt { font-size: var(--fs-xs); }
+  .cta__direct dd { font-size: var(--fs-lg); font-weight: 650; letter-spacing: -0.01em; }
+  .cta__direct a { display: inline-flex; min-height: 2.25rem; align-items: center; background: linear-gradient(#fff, #fff) 0 100% / 100% 1px no-repeat; transition: background-size 0.35s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .cta__direct a:hover { background-size: 0 1px; background-position: 100% 100%; }
+    .cta__link:hover :global(.arrow) { transform: translateX(3px); }
+  }
+  @media (max-width: 900px) {
+    .cta__text, .cta__actions, .cta__direct { grid-column: 1 / -1; }
+    .cta__actions { grid-template-columns: 1fr; justify-items: stretch; }
+  }
 </style>
