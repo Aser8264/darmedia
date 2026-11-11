@@ -39,10 +39,6 @@ const { title = 'Ce spun <em>clienții</em> noștri' } = Astro.props;
   .tst__tabs button:hover { color: var(--fg); }
   .tst__tabs button { position: relative; transition: color 0.15s ease, padding-left 0.3s var(--ease-out); }
   .tst__tabs button[aria-selected='true'] { color: var(--fg); font-weight: 700; box-shadow: inset 2px 0 0 var(--magenta); padding-left: 0.85rem; }
-  .tst__tabs button::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--magenta); transform: scaleX(0); transform-origin: left; }
-  :global(.is-timing) .tst__tabs button[aria-selected='true']::after { animation: tst-timer 7s linear forwards; }
-  :global(.is-paused) .tst__tabs button[aria-selected='true']::after { animation-play-state: paused; }
-  @keyframes tst-timer { to { transform: scaleX(1); } }
   .tst__panels { grid-column: 5 / -1; }
   .tst__first { font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem); font-weight: 600; line-height: 1.32; letter-spacing: -0.02em; max-width: 40rem; }
   .tst__first::before { content: '„'; color: var(--magenta); }
@@ -61,36 +57,20 @@ const { title = 'Ce spun <em>clienții</em> noștri' } = Astro.props;
   }
 </style>
 <script>
-  // Taburi accesibile + rotire automată la 7s (oprită la hover/focus și la prefers-reduced-motion).
-  const reduceTst = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll<HTMLElement>('[data-tst]').forEach((root) => {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
     const panels = [...root.querySelectorAll<HTMLElement>('[role=tabpanel]')];
-    let cur = 0;
     const select = (i: number, focus = false) => {
-      cur = i;
       tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
       panels.forEach((p, j) => (p.hidden = i !== j));
       if (focus) tabs[i].focus();
-      root.classList.remove('is-timing'); void root.offsetWidth; if (!paused && !reduceTst) root.classList.add('is-timing');
     };
-    let paused = false; let timer = 0;
-    const start = () => { if (reduceTst) return; clearInterval(timer); timer = window.setInterval(() => !paused && select((cur + 1) % tabs.length), 7000); root.classList.add('is-timing'); };
-    const pause = (v: boolean) => { paused = v; root.classList.toggle('is-paused', v); };
-    root.addEventListener('pointerenter', () => pause(true));
-    root.addEventListener('pointerleave', () => pause(false));
-    root.addEventListener('focusin', () => pause(true));
-    root.addEventListener('focusout', () => pause(false));
     tabs.forEach((t, i) => {
-      t.addEventListener('click', () => { select(i); start(); });
+      t.addEventListener('click', () => select(i));
       t.addEventListener('keydown', (e) => {
         if (['ArrowDown', 'ArrowRight'].includes(e.key)) { e.preventDefault(); select((i + 1) % tabs.length, true); }
         if (['ArrowUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
       });
     });
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { start(); io.disconnect(); } }, { threshold: 0.3 });
-      io.observe(root);
-    }
   });
 </script>

@@ -89,7 +89,7 @@ document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((list) => {
   [...list.children].forEach((el, i) => {
     const c = el as HTMLElement;
     if (!c.hasAttribute('data-reveal')) c.setAttribute('data-reveal', '');
-    c.style.setProperty('--d', `${Math.min(i, 8) * 70}ms`);
+    c.style.setProperty('--d', `${Math.min(i, 6) * 60}ms`);
   });
 });
 const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
@@ -97,12 +97,3 @@ if (!reduce && 'IntersectionObserver' in window) {
   const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
   reveals.forEach((el) => io.observe(el));
 } else reveals.forEach((el) => el.classList.add('is-in'));
-
-/* ---------- bara de progres a paginii */
-const bar = document.querySelector<HTMLElement>('[data-progress]');
-if (bar && !reduce) {
-  let ticking = false;
-  const upd = () => { ticking = false; const max = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty('--p', String(max > 0 ? Math.min(1, scrollY / max) : 0)); };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; raf(upd); } }, { passive: true });
-  upd();
-}
