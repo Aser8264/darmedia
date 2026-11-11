@@ -30,13 +30,13 @@ import { timeline } from '../data/site';
 <style>
   .story { padding-bottom: var(--section); border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 5rem); }
   .story__text { grid-column: 1 / span 6; display: grid; gap: 1.4rem; align-content: start; justify-items: start; font-size: 1.125rem; line-height: 1.7; }
-  .story__first { font-family: var(--serif); font-size: clamp(1.6rem, 2.6vw, 2.3rem); line-height: 1.18; letter-spacing: -0.01em; }
-  .story__text blockquote { font-family: var(--serif); font-style: italic; font-size: clamp(1.8rem, 3.2vw, 2.8rem); line-height: 1.1; color: var(--plum); margin-block: 1.5rem; }
+  .story__first { font-size: clamp(1.6rem, 2.6vw, 2.3rem); line-height: 1.18; letter-spacing: -0.01em; }
+  .story__text blockquote { font-size: clamp(1.8rem, 3.2vw, 2.8rem); line-height: 1.1; color: var(--plum); margin-block: 1.5rem; }
   .story__text .btn { margin-top: 1rem; }
   .story__time { grid-column: 8 / -1; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
   .story__time ol { margin-top: 1.5rem; border-top: 1px solid var(--line-strong); }
   .story__time li { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; align-items: baseline; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
-  .story__year { font-family: var(--serif); font-size: 2rem; line-height: 1; color: var(--plum); }
+  .story__year { font-size: 2rem; line-height: 1; font-weight: 800; letter-spacing: -0.03em; color: var(--plum); }
   .story__time p { font-size: 0.9875rem; line-height: 1.5; }
   @media (max-width: 900px) { .story__text, .story__time { grid-column: 1 / -1; position: static; } .story__time { margin-top: 3.5rem; } }
 </style>

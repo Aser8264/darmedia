@@ -5,12 +5,15 @@ import Testimonials from '../components/Testimonials.astro';
 import Cta from '../components/Cta.astro';
 import Arrow from '../components/Arrow.astro';
 import { process, stats, aboutNav, partners } from '../data/site';
+import LogoWall from '../components/LogoWall.astro';
+import { Picture } from 'astro:assets';
+import fondatori from '../assets/site/fondatori.webp';
 ---
 <Base title="Despre noi" description="DAR Media Marketing: numele vine de la inițialele celor trei fondatori — Dumitru, Adelina, Radu — și de la ideea că orice om sau business are un dar prețios de oferit celorlalți.">
   <PageHero eyebrow="Despre noi" title="Orice business are un <em>dar</em> prețios de oferit." crumbs={[{ label: 'Despre noi' }]} />
   <section class="ab-intro">
     <div class="wrap grid">
-      <figure class="ab-fig" data-reveal><img src="/media/site/fondatori.webp" width="1600" height="1093" alt="Fondatorii DAR Media: Dumitru, Adelina și Radu" /></figure>
+      <figure class="ab-fig"><Picture src={fondatori} formats={['avif', 'webp']} fallbackFormat="webp" widths={[480, 800, 1200, 1600]} sizes="(max-width: 1400px) 92vw, 1300px" alt="Fondatorii DAR Media: Dumitru, Adelina și Radu" loading="eager" fetchpriority="high" /></figure>
       <div class="ab-name" data-reveal>
         <p class="eyebrow">De unde numele</p>
         <p class="ab-letters" aria-hidden="true"><span>D</span><span>A</span><span>R</span></p>
@@ -47,24 +50,26 @@ import { process, stats, aboutNav, partners } from '../data/site';
   <section class="ab-stats">
     <div class="wrap">
       <dl>{stats.map((s) => <div><dd>{s.value}{s.unit && <small>{s.unit}</small>}</dd><dt>{s.label}</dt></div>)}</dl>
-      <p class="muted small">Parteneri &amp; certificări: {partners.join(' · ')}</p>
+      <p class="eyebrow ab-partners">Parteneri &amp; certificări</p>
+      <LogoWall items={partners} variant="row" label="Parteneri și certificări" links />
     </div>
   </section>
   <Testimonials title="Clienții ne <em>vorbesc de bine</em>" />
   <Cta title="Ți-ar plăcea să <em>lucrăm împreună?</em>" />
 </Base>
 <style>
+  .ab-partners { margin: 2.5rem 0 1.25rem; }
   .ab-intro { padding-bottom: var(--section); }
-  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: #dcdcde; margin-bottom: clamp(3rem, 6vw, 5rem); }
-  .ab-fig img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: var(--surface); border-radius: var(--r-lg); margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .ab-fig :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
   .ab-name { grid-column: 1 / span 5; display: grid; gap: 1rem; align-content: start; }
-  .ab-letters { font-family: var(--serif); font-size: clamp(6rem, 17vw, 16rem); line-height: 0.8; letter-spacing: -0.02em; color: var(--plum); display: flex; gap: 0.06em; }
-  .ab-letters span:nth-child(2) { font-style: italic; }
+  .ab-letters { font-size: clamp(6rem, 17vw, 16rem); line-height: 0.8; letter-spacing: -0.06em; font-weight: 800; color: var(--plum); display: flex; gap: 0.06em; }
+  .ab-letters span:nth-child(2) { }
   .ab-text { grid-column: 7 / -1; }
   .ab-links { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; padding-top: 1.5rem; margin-top: 2rem !important; border-top: 1px solid var(--line); }
   .proc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .proc li { border-top: 1px solid var(--line); padding-top: 1.5rem; display: grid; gap: 1rem; align-content: start; }
-  .proc__n { font-family: var(--serif); font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; color: var(--rose); margin-bottom: 1.5rem; }
+  .proc__n { font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; font-weight: 800; letter-spacing: -0.05em; color: var(--rose); margin-bottom: 1.5rem; }
   .help { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .help a { display: grid; gap: 1rem; align-content: start; height: 100%; border-top: 1px solid var(--line-strong); padding-top: 1.25rem; transition: color 0.3s; }
   .help a .h3 { margin-top: 2rem; }
@@ -72,8 +77,8 @@ import { process, stats, aboutNav, partners } from '../data/site';
   .help a:hover .more :global(.arrow) { transform: translateX(0.3rem); }
   .ab-stats { background: var(--paper-2); padding-block: clamp(3rem, 6vw, 5rem); }
   .ab-stats dl { margin: 0 0 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
-  .ab-stats dd { margin: 0; font-family: var(--serif); font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; }
-  .ab-stats dd small { font-size: 0.25em; font-style: italic; color: var(--plum); margin-left: 0.3em; letter-spacing: 0; }
+  .ab-stats dd { margin: 0; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.055em; font-weight: 800; }
+  .ab-stats dd small { font-size: 0.25em; font-weight: 750; color: var(--plum); margin-left: 0.3em; letter-spacing: 0; }
   .ab-stats dt { margin-top: 0.75rem; font-weight: 600; }
   @media (max-width: 900px) {
     .ab-fig { aspect-ratio: 3 / 2; }

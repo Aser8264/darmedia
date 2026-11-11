@@ -19,9 +19,13 @@ npm run preview  # servește build-ul local
 - `src/data/forms.json` — formularele Brevo (aceleași endpoint-uri ca pe vechiul site)
 - `src/content/posts/*.json` — articolele de blog importate
 - `src/data/pages/*.json` — paginile legale
-- `src/styles/global.css` — design tokens (culori, tipografie, spațiere) și stiluri de bază
+- `src/styles/global.css` — design tokens (culori, tipografie fluidă, spațiere, radius, umbre) și stiluri de bază. Bază aproape neagră, un singur accent: magenta din logo `#ED1E79`
+- `src/data/logos.ts` + `public/media/logos/` — logourile reale ale clienților/partenerilor (de pe darmedia.ro), monocrome
+- `src/assets/site/` — imaginile optimizate de Astro (`<Picture>`, AVIF/WebP + srcset); `public/media/covers/640/` — coperți la 640px pentru srcset
 - `src/components/` — componente; `src/components/pages/` — șabloane pentru paginile generate din date
 - `src/pages/[slug].astro` — ruta comună pentru servicii, articole, resurse, pagini legale
 - `public/media/` — imagini optimizate (WebP); `public/wp-content/uploads/` — PDF-urile ebook-urilor, la aceleași adrese ca înainte
 
-Adresele paginilor sunt păstrate identic cu cele de pe vechiul site.
+Adresele paginilor sunt păstrate identic cu cele de pe vechiul site. Excepție: `studiu-de-caz-newsletttere-ecommerce` → `studiu-de-caz-newslettere-ecommerce` (redirect 301 în `astro.config.mjs` și `vercel.json`).
+
+Numărul WhatsApp e setat în `company.whatsapp` (`src/data/site.ts`); `null` ascunde butonul.

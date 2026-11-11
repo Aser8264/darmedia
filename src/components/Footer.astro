@@ -1,26 +1,27 @@
 ---
 import Logo from './Logo.astro';
-import { company, aboutNav } from '../data/site';
+import Icon from './Icon.astro';
+import { company, aboutNav, legal } from '../data/site';
 import { services } from '../data/services';
 const year = new Date().getFullYear();
 ---
-<footer class="ftr on-dark">
+<footer class="ftr" data-footer>
   <div class="wrap">
     <p class="ftr__sign" aria-hidden="true">What’s your <em>gift?</em></p>
     <div class="ftr__grid">
       <div class="ftr__brand">
-        <a href="/" aria-label="DAR Media — acasă"><Logo size={38} /></a>
+        <a href="/" class="ftr__logo"><Logo size={36} /><span class="sr-only"> — acasă</span></a>
         <p class="muted small">Agenție de digital marketing din Cluj-Napoca. Din {company.since}, strategii de omnichannel marketing care aduc leaduri și vânzări profitabile.</p>
-        <ul class="ftr__social">
-          {company.social.map((s) => <li><a class="link" href={s.href} target="_blank" rel="noopener">{s.name}</a></li>)}
+        <ul class="ftr__social" aria-label="Rețele sociale">
+          {company.social.map((s) => <li><a href={s.href} target="_blank" rel="noopener noreferrer">{s.name}<span class="sr-only"> (se deschide într-o filă nouă)</span></a></li>)}
         </ul>
       </div>
       <nav aria-label="Servicii">
-        <p class="eyebrow">Servicii</p>
+        <p class="ftr__h">Servicii</p>
         <ul>{services.filter((s) => !s.parent).map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}</ul>
       </nav>
       <nav aria-label="Agenție">
-        <p class="eyebrow">Agenție</p>
+        <p class="ftr__h">Agenție</p>
         <ul>
           {aboutNav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
           <li><a href="/portofoliu/">Portofoliu</a></li>
@@ -28,56 +29,76 @@ const year = new Date().getFullYear();
         </ul>
       </nav>
       <nav aria-label="Resurse">
-        <p class="eyebrow">Resurse</p>
+        <p class="ftr__h">Resurse</p>
         <ul>
           <li><a href="/audit-gratuit/">Audit gratuit</a></li>
           <li><a href="/ebook/">Ebook-uri gratuite</a></li>
           <li><a href="/studii-de-caz/">Studii de caz</a></li>
           <li><a href="/blog/">Blog</a></li>
-          <li><a href={company.social[3].href} target="_blank" rel="noopener">Video</a></li>
+          <li><a href={company.social[3].href} target="_blank" rel="noopener noreferrer">Video<span class="sr-only"> (YouTube, se deschide într-o filă nouă)</span></a></li>
         </ul>
       </nav>
-      <div>
-        <p class="eyebrow">Contact</p>
+      <div class="ftr__contact">
+        <p class="ftr__h">Contact</p>
         <ul>
           <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
           <li><a href={company.phoneHref}>{company.phone}</a></li>
-          <li class="muted">{company.office.line}<br />{company.office.city}</li>
         </ul>
+        <dl class="ftr__addr">
+          <div><dt>Birou</dt><dd>{company.office.line}, {company.office.city}</dd></div>
+          <div><dt>Sediu social</dt><dd>{company.hq.line}, {company.hq.city}</dd></div>
+        </dl>
       </div>
     </div>
-    <div class="ftr__legal small">
-      <p class="muted">{company.legalName} · CUI {company.cui} · {company.reg} · {company.hq.city}, {company.hq.line}</p>
-      <ul>
-        <li><a href="/termeni-si-conditii/">Termeni și condiții</a></li>
-        <li><a href="/politica-de-confidentialitate/">Confidențialitate</a></li>
-        <li><a href="/politica-de-cookies/">Cookies</a></li>
-        <li><a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener">ANPC — SAL</a></li>
-        <li><a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO" target="_blank" rel="noopener">ANPC — SOL</a></li>
+
+    <div class="ftr__legal">
+      <nav aria-label="Informații legale" class="ftr__legal-nav">
+        <ul>
+          {legal.pages.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+      <ul class="ftr__anpc" aria-label="ANPC — soluționarea litigiilor">
+        {legal.anpc.map((b) => (
+          <li>
+            <a href={b.href} target="_blank" rel="noopener noreferrer">
+              <img src={b.img} alt={b.alt} width="250" height="62" loading="lazy" decoding="async" />
+              <span class="sr-only"> (se deschide într-o filă nouă)</span>
+            </a>
+          </li>
+        ))}
       </ul>
-      <p class="muted">© 2017 – {year} DAR Media Marketing. Toate drepturile sunt rezervate.</p>
+      <p class="ftr__co">{company.legalName} · CUI {company.cui} · {company.reg} · © 2017 – {year} DAR Media Marketing. Toate drepturile sunt rezervate.</p>
     </div>
   </div>
 </footer>
 <style>
-  .ftr { padding-top: clamp(4rem, 8vw, 7rem); padding-bottom: 2rem; }
-  .ftr__sign { font-family: var(--serif); font-size: clamp(3.2rem, 12.5vw, 13rem); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-bottom: clamp(3rem, 7vw, 6rem); }
-  .ftr__sign em { color: var(--rose); }
-  .ftr__grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 2.5rem var(--gap); padding-bottom: clamp(3rem, 6vw, 5rem); }
-  .ftr__brand { display: grid; gap: 1.5rem; align-content: start; max-width: 22rem; }
-  .ftr__social { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.9375rem; }
-  .ftr .eyebrow { margin-bottom: 1.2rem; }
-  .ftr nav li, .ftr__grid > div:last-child li { padding: 0.28rem 0; font-size: 0.9875rem; }
-  .ftr nav a, .ftr__grid > div:last-child a { transition: color 0.2s; }
-  .ftr nav a:hover, .ftr__grid > div:last-child a:hover, .ftr__legal a:hover { color: var(--rose); }
-  .ftr__legal { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 2rem; padding-top: 1.75rem; border-top: 1px solid var(--line); align-items: baseline; }
-  .ftr__legal ul { display: flex; flex-wrap: wrap; gap: 0.3rem 1.5rem; justify-content: flex-end; }
-  .ftr__legal p:last-child { grid-column: 1 / -1; }
-  @media (max-width: 1000px) {
+  .ftr { background: var(--bg-2); border-top: 1px solid var(--line); padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: 2rem; }
+  .ftr__sign { font-weight: 800; font-size: clamp(2.75rem, 10vw, 9.5rem); line-height: 0.95; letter-spacing: -0.055em; margin-bottom: clamp(2.5rem, 6vw, 5rem); color: var(--text); }
+  .ftr__sign em { font-family: var(--serif); font-weight: 400; color: var(--accent-text); letter-spacing: -0.02em; }
+  .ftr__grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 2.5rem var(--gap); padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .ftr__brand { display: grid; gap: 1.25rem; align-content: start; max-width: 22rem; }
+  .ftr__logo { justify-self: start; display: inline-flex; min-height: 2.75rem; align-items: center; }
+  .ftr__social { display: flex; flex-wrap: wrap; gap: 0 1rem; font-size: var(--fs-sm); }
+  .ftr__social a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--text-2); }
+  .ftr__h { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); margin-bottom: 0.75rem; }
+  .ftr nav li a, .ftr__contact li a { display: inline-flex; align-items: center; min-height: 2.5rem; font-size: var(--fs-sm); color: var(--text-2); transition: color var(--dur); }
+  .ftr a:hover { color: var(--accent-text) !important; }
+  .ftr__addr { display: grid; gap: 0.75rem; margin-top: 0.75rem; font-size: var(--fs-sm); color: var(--text-2); }
+  .ftr__addr dt { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
+  .ftr__addr dd { margin: 0.15rem 0 0; }
+  .ftr__legal { display: grid; grid-template-columns: 1fr auto; gap: 1.25rem 2rem; padding-top: 1.75rem; border-top: 1px solid var(--line); align-items: center; }
+  .ftr__legal-nav ul { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
+  .ftr__legal-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: var(--fs-sm); font-weight: 600; color: var(--text); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 0.25em; }
+  .ftr__anpc { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-end; }
+  .ftr__anpc a { display: block; border-radius: 10px; }
+  /* insignele ANPC rămân la dimensiunea standard (250×62), pe fundal alb, exact ca pe site-ul original */
+  .ftr__anpc img { width: 250px; height: auto; max-width: none; background: #fff; border-radius: 10px; }
+  .ftr__co { grid-column: 1 / -1; font-size: var(--fs-xs); color: var(--text-2); line-height: 1.6; }
+  @media (max-width: 1040px) {
     .ftr__grid { grid-template-columns: 1fr 1fr; }
     .ftr__brand { grid-column: 1 / -1; }
     .ftr__legal { grid-template-columns: 1fr; }
-    .ftr__legal ul { justify-content: flex-start; }
+    .ftr__anpc { justify-content: flex-start; }
   }
-  @media (max-width: 520px) { .ftr__sign { white-space: normal; } }
+  @media (max-width: 400px) { .ftr__grid { grid-template-columns: 1fr; } }
 </style>

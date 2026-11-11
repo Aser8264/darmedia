@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Arrow from '../Arrow.astro';
 import Cta from '../Cta.astro';
-import { posts, formatDate, readingTime, type Post } from '../../data/posts';
+import { posts, formatDate, readingTime, type Post , coverSrcset } from '../../data/posts';
 interface Props { post: Post }
 const { post } = Astro.props;
 const related = posts.filter((p) => p.slug !== post.slug && p.categories.some((c) => post.categories.includes(c))).slice(0, 3);
@@ -15,7 +15,7 @@ const related = posts.filter((p) => p.slug !== post.slug && p.categories.some((c
       <p class="post__meta"><time datetime={post.date}>{formatDate(post.date)}</time><span>{readingTime(post.words)} min de citit</span><span>Echipa DAR Media</span></p>
     </header>
     {post.cover && (
-      <div class="wrap post__cover"><img src={post.cover.src} width={post.cover.width} height={post.cover.height} alt="" fetchpriority="high" /></div>
+      <div class="wrap post__cover"><img src={post.cover.src} width={post.cover.width} height={post.cover.height} srcset={coverSrcset(post.cover)} sizes="(max-width: 1400px) 92vw, 1300px" alt="" fetchpriority="high" /></div>
     )}
     <div class="wrap post__body">
       <aside class="post__aside">

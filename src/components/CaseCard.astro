@@ -1,0 +1,39 @@
+---
+import Arrow from './Arrow.astro';
+import Icon from './Icon.astro';
+import { logoSize } from '../data/logos';
+import type { CaseStudy } from '../data/site';
+interface Props { c: CaseStudy; title?: string; date?: string; headingLevel?: 'h3' | 'h2' }
+const { c, title, date, headingLevel: H = 'h3' } = Astro.props;
+const isWord = !/\d/.test(c.figure);
+---
+<a href={`/${c.slug}/`} class="cc card card--link">
+  <span class="cc__top">
+    <span class="pill"><Icon name={c.icon} class="icon cc__ico" />{c.channel}</span>
+    {c.logo && <img class="cc__logo" src={`/media/logos/${c.logo}.webp`} alt={c.client ?? ''} width={logoSize[c.logo].w} height={logoSize[c.logo].h} loading="lazy" decoding="async" />}
+  </span>
+  <span class:list={['cc__fig', { 'cc__fig--word': isWord }]}>
+    <span class="cc__num">{c.figure}</span>
+    {c.unit && <span class="cc__unit">{c.unit}</span>}
+  </span>
+  <H class="cc__line">{c.line}</H>
+  {title && <span class="cc__title">{title}{date && <> · {date}</>}</span>}
+  <span class="cc__more">Citește studiul de caz <Arrow /></span>
+</a>
+<style>
+  .cc { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: clamp(1.5rem, 3vw, 2.25rem); min-height: 100%; overflow: hidden; isolation: isolate; container-type: inline-size; }
+  .cc::before { content: ''; position: absolute; z-index: -1; right: -30%; top: -40%; width: 80%; aspect-ratio: 1; background: radial-gradient(closest-side, rgba(237, 30, 121, 0.16), transparent); opacity: 0.6; transition: opacity var(--dur) var(--ease), transform 0.6s var(--ease); }
+  .cc:hover::before { opacity: 1; transform: scale(1.1); }
+  .cc__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.5rem; }
+  .cc__ico { width: 1rem; height: 1rem; color: var(--accent-text); }
+  .cc__logo { max-height: 2.25rem; width: auto; opacity: 0.85; }
+  .cc__fig { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.5rem; margin-top: clamp(1rem, 3vw, 2.5rem); }
+  .cc__num { font-size: min(var(--fs-mega), 20cqi); font-weight: 800; line-height: 0.95; letter-spacing: -0.055em; font-variant-numeric: tabular-nums; }
+  .cc__fig--word .cc__num { letter-spacing: -0.04em; }
+  .cc__unit { font-size: clamp(1.1rem, 0.9rem + 0.9vw, 1.6rem); font-weight: 750; color: var(--accent-text); letter-spacing: -0.01em; }
+  .cc__line { font-size: var(--fs-lg); font-weight: 500; line-height: 1.4; color: var(--text); max-width: 26em; text-wrap: pretty; letter-spacing: -0.005em; }
+  .cc__title { font-size: var(--fs-sm); color: var(--text-2); }
+  .cc__more { margin-top: auto; padding-top: 0.75rem; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: var(--fs-sm); color: var(--text); }
+  .cc__more :global(.arrow) { color: var(--accent-text); transition: transform var(--dur) var(--ease); }
+  .cc:hover .cc__more :global(.arrow) { transform: translateX(0.25rem); }
+</style>

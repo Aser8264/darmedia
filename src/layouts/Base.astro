@@ -1,21 +1,57 @@
 ---
-import '@fontsource-variable/hanken-grotesk/wght.css';
-import '@fontsource-variable/hanken-grotesk/wght-italic.css';
-import '@fontsource/instrument-serif/400.css';
-import '@fontsource/instrument-serif/400-italic.css';
+// Fonturi self-hosted (subseturi latin + latin-ext din @fontsource), font-display: swap. Preîncărcăm doar greutatea variabilă Hanken (latin) — critică pentru titluri.
+import hankenLatin from '@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url';
+import hankenLatinExt from '@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-ext-wght-normal.woff2?url';
+import serifLatin from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+import serifLatinExt from '@fontsource/instrument-serif/files/instrument-serif-latin-ext-400-italic.woff2?url';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StickyCta from '../components/StickyCta.astro';
 import { company } from '../data/site';
 
-interface Props { title: string; description?: string; image?: string; article?: boolean; noindex?: boolean }
-const { title, description = 'DAR Media — agenție de digital marketing din Cluj-Napoca. Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.', image = '/media/site/fondatori.webp', article = false, noindex = false } = Astro.props;
+interface Props { title: string; description?: string; image?: string; imageAlt?: string; article?: boolean; noindex?: boolean }
+const {
+  title,
+  description = 'DAR Media — agenție de digital marketing din Cluj-Napoca. Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.',
+  image = '/media/site/fondatori.webp',
+  imageAlt = 'Dumitru, Adelina și Radu, fondatorii DAR Media',
+  article = false,
+  noindex = false,
+} = Astro.props;
 const fullTitle = title.includes('DAR Media') ? title : `${title} — DAR Media`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const SITE = 'https://darmedia.ro'; // canonicalul e mereu domeniul real, indiferent unde e găzduit build-ul
+const canonical = new URL(Astro.url.pathname, SITE).href;
+const ogImage = new URL(image, SITE).href;
+
+const LATIN = 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD';
+const LATIN_EXT = 'U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF';
+const fontCss = `
+@font-face{font-family:'Hanken Grotesk Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(${hankenLatin}) format('woff2');unicode-range:${LATIN}}
+@font-face{font-family:'Hanken Grotesk Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(${hankenLatinExt}) format('woff2');unicode-range:${LATIN_EXT}}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-display:swap;font-weight:400;src:url(${serifLatin}) format('woff2');unicode-range:${LATIN}}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-display:swap;font-weight:400;src:url(${serifLatinExt}) format('woff2');unicode-range:${LATIN_EXT}}
+@font-face{font-family:'Hanken Fallback';src:local('Arial'),local('Helvetica'),local('Roboto');size-adjust:93%;ascent-override:107%;descent-override:32%;line-gap-override:0%}`;
+
+// Date structurate — doar informații reale de pe site.
+const orgId = `${SITE}/#organization`;
 const ld = {
-  '@context': 'https://schema.org', '@type': 'Organization', name: 'DAR Media Marketing', legalName: company.legalName, url: 'https://darmedia.ro/',
-  email: company.email, telephone: '+40736702107', foundingDate: '2017', sameAs: company.social.map((s) => s.href),
-  address: { '@type': 'PostalAddress', streetAddress: company.office.line, addressLocality: 'Florești', addressRegion: 'Cluj', addressCountry: 'RO' },
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization', '@id': orgId, name: company.name, alternateName: 'DAR Media Marketing', legalName: company.legalName,
+      url: `${SITE}/`, logo: `${SITE}/favicon.svg`, email: company.email, telephone: '+40736702107', foundingDate: String(company.since),
+      vatID: company.cui, sameAs: company.social.map((s) => s.href),
+      address: { '@type': 'PostalAddress', streetAddress: company.hq.line, addressLocality: company.hq.city, addressRegion: 'Cluj', addressCountry: 'RO' },
+    },
+    {
+      '@type': 'LocalBusiness', '@id': `${SITE}/#localbusiness`, name: company.name, parentOrganization: { '@id': orgId },
+      url: `${SITE}/`, image: `${SITE}/media/site/fondatori.webp`, email: company.email, telephone: '+40736702107',
+      address: { '@type': 'PostalAddress', streetAddress: company.office.line, addressLocality: 'Florești', addressRegion: 'Cluj', addressCountry: 'RO' },
+      areaServed: 'RO', sameAs: company.social.map((s) => s.href),
+    },
+    { '@type': 'WebSite', '@id': `${SITE}/#website`, url: `${SITE}/`, name: company.name, inLanguage: 'ro-RO', publisher: { '@id': orgId } },
+  ],
 };
 ---
 <!doctype html>
@@ -27,28 +63,37 @@ const ld = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
+    <link rel="preload" href={hankenLatin} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontCss}></style>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" hreflang="ro" href={canonical} />
     <link rel="alternate" hreflang="en" href={company.english} />
-    <meta name="theme-color" content="#f4efe8" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#0b0a0c" />
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:locale" content="ro_RO" />
     <meta property="og:site_name" content="DAR Media" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <script is:inline>document.documentElement.classList.add('js');</script>
+    <slot name="head" />
   </head>
   <body>
     <a class="skip" href="#main">Sari la conținut</a>
     <Header />
-    <main id="main"><slot /></main>
+    <main id="main" tabindex="-1"><slot /></main>
     <Footer />
+    <StickyCta />
     <script>
-      // Header: shadow on scroll, services panel, mobile menu.
+      // Header: bordură la scroll, meniu servicii (disclosure accesibil), meniu mobil.
       const header = document.querySelector<HTMLElement>('[data-header]')!;
       const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
       onScroll();
@@ -56,21 +101,42 @@ const ld = {
 
       const megaBtn = document.querySelector<HTMLButtonElement>('[data-mega-toggle]');
       const mega = document.querySelector<HTMLElement>('[data-mega]');
-      const setMega = (open: boolean) => { if (!megaBtn || !mega) return; megaBtn.setAttribute('aria-expanded', String(open)); mega.hidden = !open; };
+      const setMega = (open: boolean, focusBtn = false) => {
+        if (!megaBtn || !mega) return;
+        megaBtn.setAttribute('aria-expanded', String(open));
+        mega.hidden = !open;
+        if (!open && focusBtn) megaBtn.focus();
+      };
       megaBtn?.addEventListener('click', () => setMega(megaBtn.getAttribute('aria-expanded') !== 'true'));
       document.addEventListener('click', (e) => { if (mega && !mega.hidden && !header.contains(e.target as Node)) setMega(false); });
+      header.addEventListener('focusout', (e) => {
+        const to = e.relatedTarget as Node | null;
+        if (mega && !mega.hidden && to && !mega.contains(to) && to !== megaBtn) setMega(false);
+      });
 
       const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
       const menu = document.querySelector<HTMLElement>('[data-menu]');
-      const setMenu = (open: boolean) => { if (!menuBtn || !menu) return; menuBtn.setAttribute('aria-expanded', String(open)); menu.hidden = !open; document.body.classList.toggle('menu-open', open); };
+      const outside = [document.querySelector('main'), document.querySelector('[data-footer]'), document.querySelector('[data-sticky]')];
+      const setMenu = (open: boolean) => {
+        if (!menuBtn || !menu) return;
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menu.hidden = !open;
+        document.body.classList.toggle('menu-open', open);
+        outside.forEach((el) => el && ((el as HTMLElement).inert = open));
+        if (open) menu.querySelector<HTMLElement>('a')?.focus();
+      };
       menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setMega(false); setMenu(false); } });
-      window.matchMedia('(min-width: 1041px)').addEventListener('change', () => setMenu(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (mega && !mega.hidden) setMega(false, true);
+        if (menu && !menu.hidden) { setMenu(false); menuBtn?.focus(); }
+      });
+      window.matchMedia('(min-width: 1101px)').addEventListener('change', () => setMenu(false));
 
-      // Reveal on scroll.
+      // Apariție la scroll (doar transform + opacity).
       const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
         els.forEach((el) => io.observe(el));
       } else els.forEach((el) => el.classList.add('is-in'));
     </script>

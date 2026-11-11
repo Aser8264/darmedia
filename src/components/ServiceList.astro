@@ -1,57 +1,78 @@
 ---
+// Cele 11 servicii, grupate în cele 4 categorii existente. Fiecare serviciu se deschide (details/summary nativ, accesibil).
 import Arrow from './Arrow.astro';
+import Icon from './Icon.astro';
 import { services, groups } from '../data/services';
+interface Props { headingLevel?: 'h2' | 'h3' }
+const { headingLevel: H = 'h3' } = Astro.props;
+const groupIcon = { fundament: 'compass', achizitie: 'magnet', retentie: 'repeat', brand: 'spark' } as const;
 let n = 0;
 ---
-<div class="svc">
-  {groups.map((g) => (
-    <div class="svc__group">
-      <div class="svc__label"><p class="eyebrow">{g.label}</p><p class="muted small">{g.note}</p></div>
-      <ul class="svc__rows">
-        {services.filter((s) => s.group === g.id && !s.parent).map((s) => {
-          n += 1;
-          const subs = services.filter((x) => x.parent === s.slug);
-          return (
-            <li>
-              <a class="svc__row" href={`/${s.slug}/`}>
-                <span class="num">{String(n).padStart(2, '0')}</span>
-                <span class="svc__name">{s.name}</span>
-                <span class="svc__sum">{s.summary}</span>
-                <Arrow />
-              </a>
-              {subs.length > 0 && (
-                <ul class="svc__subs">{subs.map((x) => <li><a href={`/${x.slug}/`}>{x.name}</a></li>)}</ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  ))}
-</div>
+<ul class="svc">
+  {groups.map((g, gi) => {
+    const top = services.filter((s) => s.group === g.id && !s.parent);
+    return (
+      <li class="svc__card card" data-reveal style={`--d:${gi * 80}ms`}>
+        <div class="svc__head">
+          <span class="icon-badge"><Icon name={groupIcon[g.id]} /></span>
+          <div>
+            <H class="h3 svc__title">{g.label}</H>
+            <p class="muted small">{g.note}</p>
+          </div>
+          <span class="svc__count" aria-hidden="true">{String(top.length).padStart(2, '0')}</span>
+        </div>
+        <ul class="svc__items">
+          {top.map((s) => {
+            n += 1;
+            const subs = services.filter((x) => x.parent === s.slug);
+            return (
+              <li>
+                <details class="svc__item">
+                  <summary>
+                    <span class="num">{String(n).padStart(2, '0')}</span>
+                    <span class="svc__name">{s.name}</span>
+                    <span class="svc__plus" aria-hidden="true"></span>
+                  </summary>
+                  <div class="svc__body">
+                    <p>{s.summary}</p>
+                    {subs.length > 0 && (
+                      <ul class="svc__subs" aria-label={`Platforme ${s.name}`}>{subs.map((x) => <li><a href={`/${x.slug}/`}>{x.name}</a></li>)}</ul>
+                    )}
+                    <a class="more" href={`/${s.slug}/`}>Despre {s.name} <Arrow /></a>
+                  </div>
+                </details>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    );
+  })}
+</ul>
 <style>
-  .svc__group { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); border-top: 1px solid var(--line-strong); padding-top: 1.5rem; }
-  .svc__group + .svc__group { margin-top: clamp(2.5rem, 5vw, 4rem); }
-  .svc__label { grid-column: 1 / span 3; display: grid; gap: 0.5rem; align-content: start; position: sticky; top: calc(var(--header-h) + 1.5rem); align-self: start; padding-bottom: 1.5rem; }
-  .svc__rows { grid-column: 4 / -1; }
-  .svc__rows > li { border-bottom: 1px solid var(--line); }
-  .svc__rows > li:first-child .svc__row { padding-top: 0; }
-  .svc__row { display: grid; grid-template-columns: 3rem minmax(0, 1.1fr) minmax(0, 1fr) 1.5rem; gap: 1rem 1.5rem; align-items: baseline; padding: 1.5rem 0; transition: padding 0.45s var(--ease), color 0.3s; }
-  .svc__name { font-family: var(--serif); font-size: clamp(1.8rem, 3.4vw, 3.1rem); line-height: 1.02; letter-spacing: -0.02em; }
-  .svc__sum { color: var(--ink-soft); font-size: 0.9875rem; line-height: 1.45; }
-  .svc__row :global(.arrow) { align-self: center; opacity: 0; transform: translateX(-0.75rem); transition: opacity 0.3s, transform 0.45s var(--ease); color: var(--plum); }
-  .svc__row:hover { padding-left: 1rem; color: var(--plum); }
-  .svc__row:hover :global(.arrow) { opacity: 1; transform: none; }
-  .svc__subs { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0 0 1.5rem 4.5rem; }
-  .svc__subs a { display: inline-flex; padding: 0.4rem 0.95rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.875rem; font-weight: 500; transition: background 0.25s, color 0.25s, border-color 0.25s; }
-  .svc__subs a:hover { background: var(--plum); border-color: var(--plum); color: var(--white); }
-  @media (max-width: 900px) {
-    .svc__label { grid-column: 1 / -1; position: static; }
-    .svc__rows { grid-column: 1 / -1; }
-    .svc__row { grid-template-columns: 2.25rem 1fr 1.25rem; }
-    .svc__sum { grid-column: 2 / 3; grid-row: 2; }
-    .svc__row :global(.arrow) { opacity: 1; transform: none; grid-row: 1; grid-column: 3; }
-    .svc__row:hover { padding-left: 0; }
-    .svc__subs { padding-left: 3.25rem; }
+  .svc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+  .svc__card { padding: clamp(1.25rem, 2.5vw, 2rem); display: flex; flex-direction: column; gap: 1.25rem; }
+  .svc__head { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: start; }
+  .svc__title { font-size: var(--fs-h3); }
+  .svc__count { font-weight: 700; font-size: var(--fs-sm); color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .svc__items { border-top: 1px solid var(--line); }
+  .svc__items > li { border-bottom: 1px solid var(--line); }
+  .svc__items > li:last-child { border-bottom: 0; }
+  .svc__item summary { display: grid; grid-template-columns: 2.25rem 1fr 1.5rem; align-items: center; gap: 0.5rem; min-height: 3.5rem; padding-block: 0.5rem; cursor: pointer; list-style: none; border-radius: var(--r-sm); }
+  .svc__item summary::-webkit-details-marker { display: none; }
+  .svc__name { font-size: var(--fs-h4); font-weight: 650; letter-spacing: -0.015em; line-height: 1.25; transition: color var(--dur); }
+  .svc__item summary:hover .svc__name { color: var(--accent-text); }
+  .svc__plus { position: relative; width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 1px solid var(--line-2); }
+  .svc__plus::before, .svc__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.6rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); transition: transform var(--dur) var(--ease); }
+  .svc__plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .svc__item[open] .svc__plus::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .svc__item[open] .svc__plus { border-color: var(--accent); color: var(--accent-text); }
+  .svc__body { display: grid; gap: 0.9rem; justify-items: start; padding: 0 0 1.25rem 2.75rem; color: var(--text-2); }
+  .svc__subs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .svc__subs a { display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0 1rem; border: 1px solid var(--line-2); border-radius: var(--r-pill); font-size: var(--fs-sm); font-weight: 600; color: var(--text); transition: border-color var(--dur), color var(--dur); }
+  .svc__subs a:hover { border-color: var(--accent); color: var(--accent-text); }
+  @media (max-width: 860px) {
+    .svc { grid-template-columns: 1fr; }
+    .svc__body { padding-left: 0; }
   }
 </style>

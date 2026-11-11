@@ -115,13 +115,13 @@ const crumbs = [{ label: 'Servicii', href: '/servicii/' }, ...(parent ? [{ label
   .sv-main { grid-column: 7 / -1; }
   .sv-what { border-top: 1px solid var(--line); padding-top: clamp(3rem, 6vw, 5rem); }
   .sv-first { font-size: clamp(1.2rem, 1.7vw, 1.45rem); line-height: 1.5; }
-  .sv-why { background: var(--white); }
+  .sv-why { background: var(--bg-2); }
   .sv-how__head { display: grid; gap: 1.5rem; max-width: 56rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
   .sv-how__list { columns: 2; column-gap: calc(var(--gap) * 2); }
   .sv-how__list > li { break-inside: avoid; }
   .sv-how__list > li:last-child { border-bottom: 0; }
   .sv-fit { background: var(--paper-2); }
-  .sv-outro { font-family: var(--serif); font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.2; margin: 2.25rem 0; font-style: italic; color: var(--plum); }
+  .sv-outro { font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.2; margin: 2.25rem 0; color: var(--plum); }
   .sv-subs .eyebrow { margin-bottom: 1.5rem; }
   .sv-subs ul { border-top: 1px solid var(--line-strong); }
   .sv-subs a { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 1.5rem; gap: 1.5rem; align-items: baseline; padding: 1.5rem 0; border-bottom: 1px solid var(--line); transition: padding 0.4s var(--ease), color 0.3s; }
@@ -129,7 +129,7 @@ const crumbs = [{ label: 'Servicii', href: '/servicii/' }, ...(parent ? [{ label
   .sv-subs a :global(.arrow) { align-self: center; }
   .sv-us__head { grid-column: 1 / span 5; display: grid; gap: 1.5rem; align-content: start; }
   .sv-us__head figure { width: min(100%, 17rem); margin-top: 1rem; }
-  .sv-us__head img { width: 100%; mix-blend-mode: multiply; }
+  .sv-us__head img { width: 100%; }
   .sv-us__list { grid-column: 7 / -1; align-self: start; }
   .sv-nav { border-top: 1px solid var(--line); }
   .sv-nav .wrap { display: grid; grid-template-columns: 1fr 1fr; }

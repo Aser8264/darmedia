@@ -11,11 +11,11 @@ const { eyebrow, title, lead, crumbs = [] } = Astro.props;
       </nav>
     )}
     <div class="page-hero__grid">
-      <div class="page-hero__title" data-reveal>
+      <div class="page-hero__title">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}
         <h1 class="h1" set:html={title} />
       </div>
-      {lead && <p class="lead page-hero__lead" data-reveal style="--d:120ms">{lead}</p>}
+      {lead && <p class="lead page-hero__lead">{lead}</p>}
       <slot />
     </div>
   </div>
