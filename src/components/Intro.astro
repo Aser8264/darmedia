@@ -1,0 +1,33 @@
+---
+// Loader de prima vizită: emblema se desenează (stroke), se umple, apare „dar media”, apoi cortina magenta se retrage.
+// E un overlay: pagina se randează dedesubt (nu întârzie LCP). Durată totală ≈ 1,6 s. Se închide singur din CSS, chiar fără JS.
+import { markPath } from '../data/mark';
+---
+<div class="intro" aria-hidden="true" data-intro>
+  <div class="intro__in">
+    <svg class="intro__mark" viewBox="0 0 300 300" width="96" height="96">
+      <path class="intro__stroke" d={markPath} pathLength="1" fill="none" />
+      <path class="intro__fill" d={markPath} fill-rule="evenodd" />
+    </svg>
+    <span class="intro__word"><span>dar</span><b>media</b></span>
+  </div>
+</div>
+<style>
+  .intro { clip-path: inset(0 0 0 0); position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: var(--magenta); color: #fff; pointer-events: none;
+    animation: intro-wipe 0.55s cubic-bezier(0.76, 0, 0.24, 1) 1.05s forwards; }
+  :global(html.no-intro) .intro, :global(html:not(.js)) .intro { display: none; }
+  .intro__in { display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.25rem); animation: intro-up 0.5s var(--ease-out) 1.05s forwards; }
+  .intro__mark { width: clamp(4.5rem, 12vw, 6.5rem); height: auto; overflow: visible; }
+  .intro__stroke { stroke: #fff; stroke-width: 3; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; animation: intro-draw 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+  .intro__fill { fill: #fff; opacity: 0; animation: intro-fill 0.3s ease-out 0.5s forwards; }
+  .intro__word { display: flex; gap: 0.15em; overflow: hidden; font-weight: 800; font-size: clamp(2.5rem, 7vw, 4.25rem); letter-spacing: -0.05em; line-height: 1; padding-bottom: 0.08em; }
+  .intro__word span, .intro__word b { display: block; transform: translateY(110%); animation: intro-word 0.45s var(--ease-out) forwards; }
+  .intro__word span { animation-delay: 0.55s; }
+  .intro__word b { font-weight: 400; animation-delay: 0.65s; }
+  @keyframes intro-draw { to { stroke-dashoffset: 0; } }
+  @keyframes intro-fill { to { opacity: 1; } }
+  @keyframes intro-word { to { transform: none; } }
+  @keyframes intro-up { to { transform: translateY(-2rem); opacity: 0; } }
+  @keyframes intro-wipe { to { clip-path: inset(0 0 100% 0); visibility: hidden; } }
+  @media (prefers-reduced-motion: reduce) { .intro { display: none; } }
+</style>

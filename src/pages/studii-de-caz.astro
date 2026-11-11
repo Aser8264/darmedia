@@ -15,7 +15,7 @@ const cases = caseStudies.map((c) => ({ c, post: postBySlug(c.slug)! })).filter(
       <ul class="cs__grid">
         {cases.map(({ c, post }, i) => (
           <li data-reveal style={`--d:${(i % 2) * 80}ms`}>
-            <CaseCard c={c} title={post.title} date={formatDate(post.date)} headingLevel="h2" />
+            <CaseCard c={c} i={i} title={post.title} date={formatDate(post.date)} headingLevel="h2" />
           </li>
         ))}
       </ul>

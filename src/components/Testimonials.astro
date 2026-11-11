@@ -3,7 +3,7 @@ import { testimonials } from '../data/site';
 interface Props { title?: string }
 const { title = 'Ce spun <em>clienții</em> noștri' } = Astro.props;
 ---
-<section class="section tst" aria-labelledby="tst-h">
+<section class="section tst t-cream" data-theme="cream" aria-labelledby="tst-h">
   <div class="wrap">
     <div class="tst__head">
       <p class="eyebrow">Testimoniale</p>
@@ -19,41 +19,43 @@ const { title = 'Ce spun <em>clienții</em> noștri' } = Astro.props;
       </div>
       <div class="tst__panels">
         {testimonials.map((t, i) => (
-          <figure role="tabpanel" id={`tst-panel-${i}`} aria-labelledby={`tst-tab-${i}`} hidden={i !== 0} tabindex="0">
+          <div role="tabpanel" class="tst__panel" id={`tst-panel-${i}`} aria-labelledby={`tst-tab-${i}`} hidden={i !== 0} tabindex="0"><figure>
             <blockquote>
               <p class="tst__first">{t.quote[0]}</p>
               {t.quote.slice(1).map((q) => <p class="tst__rest">{q}</p>)}
             </blockquote>
             <figcaption><strong>{t.name}</strong><span>{t.role}</span></figcaption>
-          </figure>
+          </figure></div>
         ))}
       </div>
     </div>
   </div>
 </section>
 <style>
+  .tst { overflow: hidden; }
   .tst__head { display: grid; gap: 1.25rem; margin-bottom: clamp(2rem, 4.5vw, 3.5rem); }
-  .tst__body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: start; }
-  .tst__tabs { grid-column: 1 / span 3; display: grid; gap: 0.25rem; position: sticky; top: calc(var(--header-h) + 2rem); }
-  .tst__tabs button { display: flex; align-items: center; gap: 0.9rem; min-height: 3rem; padding: 0.5rem 0.9rem; background: none; border: 1px solid transparent; border-radius: var(--r-md); text-align: left; cursor: pointer; font-size: 1rem; font-weight: 600; color: var(--text-2); transition: color var(--dur), background-color var(--dur), border-color var(--dur); }
-  .tst__tabs button:hover { color: var(--text); background: rgba(255, 255, 255, 0.04); }
-  .tst__tabs button[aria-selected='true'] { color: var(--text); background: var(--surface); border-color: var(--line-2); }
+  .tst__body { position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: start; }
+  .tst__body::before { content: '„'; position: absolute; z-index: -1; left: 22%; top: -0.55em; font-family: var(--serif); font-style: italic; font-size: clamp(14rem, 30vw, 30rem); line-height: 1; color: var(--pink-2); pointer-events: none; }
+  .tst__tabs { grid-column: 1 / span 3; display: grid; border-top: 2px solid var(--fg); position: sticky; top: calc(var(--header-h) + 2rem); }
+  .tst__tabs button { display: flex; align-items: center; gap: 0.9rem; min-height: 3.25rem; padding: 0; background: none; border: 0; border-bottom: 1px solid var(--line-2); text-align: left; cursor: pointer; font-size: 1.0625rem; font-weight: 650; color: var(--fg-2); transition: color var(--dur), transform 0.4s var(--ease-out); }
+  .tst__tabs button:hover { color: var(--fg); transform: translateX(0.35rem); }
+  .tst__tabs button[aria-selected='true'] { color: var(--fg); font-weight: 800; transform: translateX(0.6rem); }
   .tst__tabs button[aria-selected='true'] .num { color: var(--accent-text); }
-  .tst__tabs .num { color: var(--text-2); }
+  .tst__tabs .num { color: var(--fg-2); }
   .tst__panels { grid-column: 5 / -1; }
-  figure { position: relative; padding: clamp(1.5rem, 3.5vw, 3rem); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
-  figure::before { content: '“'; position: absolute; top: clamp(0.5rem, 1.5vw, 1rem); right: clamp(1.25rem, 3vw, 2.5rem); font-family: var(--serif); font-style: italic; font-size: clamp(5rem, 9vw, 8rem); line-height: 1; color: var(--accent); opacity: 0.35; }
-  .tst__first { font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 600; line-height: 1.35; letter-spacing: -0.02em; text-wrap: pretty; max-width: 40rem; }
-  .tst__rest { margin-top: 1.1rem; max-width: 44rem; color: var(--text-2); }
-  figcaption { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; align-items: baseline; margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
-  figcaption span { color: var(--text-2); }
-  .js figure:not([hidden]) { animation: tst-in 0.5s var(--ease); }
-  @keyframes tst-in { from { opacity: 0; transform: translateY(0.5rem); } }
+  .tst__first { font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem); font-weight: 750; line-height: 1.2; letter-spacing: -0.035em; text-wrap: pretty; max-width: 44rem; }
+  .tst__rest { margin-top: 1.1rem; max-width: 42rem; color: var(--fg-2); font-size: var(--fs-lg); }
+  figcaption { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; align-items: baseline; margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--fg); max-width: 42rem; }
+  figcaption strong { font-size: var(--fs-lg); }
+  figcaption span { color: var(--fg-2); }
+  .js .tst__panel:not([hidden]) { animation: tst-in 0.6s var(--ease-out); }
+  @keyframes tst-in { from { opacity: 0; transform: translateY(1rem); } }
   @media (max-width: 900px) {
-    .tst__tabs { grid-column: 1 / -1; position: static; display: flex; overflow-x: auto; gap: 0.5rem; padding-bottom: 0.25rem; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
-    .tst__tabs button { flex: none; border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 0 1.1rem; font-size: 0.9375rem; min-height: 2.75rem; }
+    .tst__body::before { left: auto; right: -2rem; top: -6rem; }
+    .tst__tabs { grid-column: 1 / -1; position: static; display: flex; overflow-x: auto; gap: 1.25rem; border-top: 0; border-bottom: 1px solid var(--line-2); scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+    .tst__tabs button { flex: none; border-bottom: 3px solid transparent; transform: none !important; font-size: 0.9375rem; min-height: 2.75rem; }
     .tst__tabs button .num { display: none; }
-    .tst__tabs button[aria-selected='true'] { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .tst__tabs button[aria-selected='true'] { border-bottom-color: var(--magenta); }
     .tst__panels { grid-column: 1 / -1; }
   }
 </style>

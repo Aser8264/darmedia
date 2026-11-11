@@ -16,13 +16,13 @@ const cases = caseStudies.filter((c) => c.featured && postBySlug(c.slug)).slice(
   <section class="section pf" aria-labelledby="pf-h">
     <div class="wrap">
       <h2 class="sr-only" id="pf-h">Clienți DAR Media</h2>
-      <LogoWall items={clients} variant="grid" label={`${clients.length} de clienți DAR Media`} links captions />
+      <LogoWall items={clients} variant="grid" tone="dark" label={`${clients.length} de clienți DAR Media`} links captions />
     </div>
   </section>
   <section class="section pf-cases on-dark" aria-labelledby="pfc-h">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">Rezultate</p><h2 class="h2" id="pfc-h">Câteva cifre din <em>studiile</em> de caz.</h2><a class="more sec-aside" href="/studii-de-caz/">Toate studiile de caz <Arrow /></a></div>
-      <ul class="pf-cases__grid">{cases.map((c) => <li><CaseCard c={c} /></li>)}</ul>
+      <ul class="pf-cases__grid">{cases.map((c, i) => <li><CaseCard c={c} i={i} /></li>)}</ul>
     </div>
   </section>
   <Testimonials />
