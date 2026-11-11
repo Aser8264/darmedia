@@ -8,9 +8,10 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyCta from '../components/StickyCta.astro';
+import Intro from '../components/Intro.astro';
 import { company } from '../data/site';
 
-interface Props { title: string; description?: string; image?: string; imageAlt?: string; article?: boolean; noindex?: boolean }
+interface Props { title: string; description?: string; image?: string; imageAlt?: string; article?: boolean; noindex?: boolean; intro?: boolean; colorShift?: boolean }
 const {
   title,
   description = 'DAR Media — agenție de digital marketing din Cluj-Napoca. Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.',
@@ -18,6 +19,8 @@ const {
   imageAlt = 'Dumitru, Adelina și Radu, fondatorii DAR Media',
   article = false,
   noindex = false,
+  intro = true,
+  colorShift = false,
 } = Astro.props;
 const fullTitle = title.includes('DAR Media') ? title : `${title} — DAR Media`;
 const SITE = 'https://darmedia.ro'; // canonicalul e mereu domeniul real, indiferent unde e găzduit build-ul
@@ -69,7 +72,7 @@ const ld = {
     <link rel="alternate" hreflang="ro" href={canonical} />
     <link rel="alternate" hreflang="en" href={company.english} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0b0a0c" />
+    <meta name="theme-color" content="#d6116d" />
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:locale" content="ro_RO" />
     <meta property="og:site_name" content="DAR Media" />
@@ -83,62 +86,28 @@ const ld = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      // Intro o singură dată pe sesiune; sărit la prefers-reduced-motion. Fără JS, intro-ul se închide singur din CSS.
+      (function () {
+        var d = document.documentElement; d.classList.add('js');
+        var skip = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        try { if (sessionStorage.getItem('dm-intro')) skip = true; } catch (e) {}
+        d.classList.add(skip ? 'no-intro' : 'has-intro');
+      })();
+    </script>
     <slot name="head" />
   </head>
   <body>
+    {intro && <Intro />}
+    <div class="bgfx" aria-hidden="true" data-bgfx></div>
     <a class="skip" href="#main">Sari la conținut</a>
     <Header />
-    <main id="main" tabindex="-1"><slot /></main>
+    <main id="main" tabindex="-1" data-color-shift={colorShift ? '' : undefined}><slot /></main>
     <Footer />
     <StickyCta />
+    <div class="cursor" aria-hidden="true" data-cursor><span></span></div>
     <script>
-      // Header: bordură la scroll, meniu servicii (disclosure accesibil), meniu mobil.
-      const header = document.querySelector<HTMLElement>('[data-header]')!;
-      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-
-      const megaBtn = document.querySelector<HTMLButtonElement>('[data-mega-toggle]');
-      const mega = document.querySelector<HTMLElement>('[data-mega]');
-      const setMega = (open: boolean, focusBtn = false) => {
-        if (!megaBtn || !mega) return;
-        megaBtn.setAttribute('aria-expanded', String(open));
-        mega.hidden = !open;
-        if (!open && focusBtn) megaBtn.focus();
-      };
-      megaBtn?.addEventListener('click', () => setMega(megaBtn.getAttribute('aria-expanded') !== 'true'));
-      document.addEventListener('click', (e) => { if (mega && !mega.hidden && !header.contains(e.target as Node)) setMega(false); });
-      header.addEventListener('focusout', (e) => {
-        const to = e.relatedTarget as Node | null;
-        if (mega && !mega.hidden && to && !mega.contains(to) && to !== megaBtn) setMega(false);
-      });
-
-      const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-      const menu = document.querySelector<HTMLElement>('[data-menu]');
-      const outside = [document.querySelector('main'), document.querySelector('[data-footer]'), document.querySelector('[data-sticky]')];
-      const setMenu = (open: boolean) => {
-        if (!menuBtn || !menu) return;
-        menuBtn.setAttribute('aria-expanded', String(open));
-        menu.hidden = !open;
-        document.body.classList.toggle('menu-open', open);
-        outside.forEach((el) => el && ((el as HTMLElement).inert = open));
-        if (open) menu.querySelector<HTMLElement>('a')?.focus();
-      };
-      menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== 'Escape') return;
-        if (mega && !mega.hidden) setMega(false, true);
-        if (menu && !menu.hidden) { setMenu(false); menuBtn?.focus(); }
-      });
-      window.matchMedia('(min-width: 1101px)').addEventListener('change', () => setMenu(false));
-
-      // Apariție la scroll (doar transform + opacity).
-      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
-        els.forEach((el) => io.observe(el));
-      } else els.forEach((el) => el.classList.add('is-in'));
+      import '../scripts/motion';
     </script>
   </body>
 </html>

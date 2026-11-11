@@ -51,7 +51,7 @@ import fondatori from '../assets/site/fondatori.webp';
     <div class="wrap">
       <dl>{stats.map((s) => <div><dd>{s.value}{s.unit && <small>{s.unit}</small>}</dd><dt>{s.label}</dt></div>)}</dl>
       <p class="eyebrow ab-partners">Parteneri &amp; certificări</p>
-      <LogoWall items={partners} variant="row" label="Parteneri și certificări" links />
+      <LogoWall items={partners} variant="row" tone="dark" label="Parteneri și certificări" links />
     </div>
   </section>
   <Testimonials title="Clienții ne <em>vorbesc de bine</em>" />
@@ -60,7 +60,7 @@ import fondatori from '../assets/site/fondatori.webp';
 <style>
   .ab-partners { margin: 2.5rem 0 1.25rem; }
   .ab-intro { padding-bottom: var(--section); }
-  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: var(--surface); border-radius: var(--r-lg); margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .ab-fig { grid-column: 1 / -1; aspect-ratio: 21 / 9; overflow: hidden; background: var(--surface); clip-path: polygon(0 0, 100% 7%, 100% 100%, 0 93%); margin-bottom: clamp(3rem, 6vw, 5rem); }
   .ab-fig :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
   .ab-name { grid-column: 1 / span 5; display: grid; gap: 1rem; align-content: start; }
   .ab-letters { font-size: clamp(6rem, 17vw, 16rem); line-height: 0.8; letter-spacing: -0.06em; font-weight: 800; color: var(--plum); display: flex; gap: 0.06em; }

@@ -2,7 +2,7 @@
 interface Props { eyebrow?: string; title: string; lead?: string; crumbs?: { label: string; href?: string }[] }
 const { eyebrow, title, lead, crumbs = [] } = Astro.props;
 ---
-<section class="page-hero">
+<section class="page-hero t-magenta">
   <div class="wrap">
     {crumbs.length > 0 && (
       <nav class="crumbs" aria-label="Breadcrumb">

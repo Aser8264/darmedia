@@ -2,7 +2,6 @@
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Arrow from '../components/Arrow.astro';
-import Icon from '../components/Icon.astro';
 import Mark from '../components/Mark.astro';
 import ServiceList from '../components/ServiceList.astro';
 import Testimonials from '../components/Testimonials.astro';
@@ -11,116 +10,132 @@ import Cta from '../components/Cta.astro';
 import CaseCard from '../components/CaseCard.astro';
 import LogoWall from '../components/LogoWall.astro';
 import { company, partners, keyResults, stats, caseStudies, founders, clients, faq, googleReviews } from '../data/site';
-import { posts, formatDate, postBySlug , coverSrcset } from '../data/posts';
+import { posts, formatDate, postBySlug, coverSrcset } from '../data/posts';
 import fondatori from '../assets/site/fondatori.webp';
 import fDumitru from '../assets/site/f-dumitru.webp';
 import fAdelina from '../assets/site/f-adelina.webp';
 import fRadu from '../assets/site/f-radu.webp';
 const portraits: Record<string, ImageMetadata> = { 'Dumitru Pascariu': fDumitru, 'Adelina Elena Ababei': fAdelina, 'Radu Dascălul': fRadu };
 const latest = posts.slice(0, 3);
-const cases = caseStudies.filter((c) => c.featured && postBySlug(c.slug));
-const pillarIcon = ['compass', 'users', 'cursor', 'repeat'] as const;
-const proof = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € · 9+ ani
+const cases = caseStudies.filter((c) => postBySlug(c.slug));
+const statOrder = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € · 9+ ani
+const heroLines = ['Strategii de omnichannel', 'marketing care îți aduc', 'leaduri și vânzări'];
+const shapes = ['circle', 'arch', 'petal'];
 ---
-<Base title="DAR Media — Agenție de digital marketing, Cluj-Napoca">
-  <!-- Hero -->
-  <section class="hero" data-hero aria-labelledby="hero-h">
-    <div class="hero__bg" aria-hidden="true"><Mark size={900} class="hero__mark" /></div>
+<Base title="DAR Media — Agenție de digital marketing, Cluj-Napoca" colorShift>
+  <!-- 1. Hero — magenta pe toată lățimea -->
+  <section class="hero t-magenta" data-theme="magenta" data-hero aria-labelledby="hero-h">
+    <div class="hero__deco" aria-hidden="true">
+      <span class="hero__ghost" data-speed="-0.08">dar</span>
+      <span class="hero__mark-wrap" data-speed="0.18"><Mark size={420} outline class="hero__mark spin" /></span>
+      <span class="hero__dot float"></span>
+    </div>
     <div class="wrap hero__in">
-      <p class="eyebrow">Agenție de digital marketing · Cluj-Napoca · din {company.since}</p>
-      <h1 class="display hero__title" id="hero-h">Strategii de omnichannel marketing care îți aduc leaduri și vânzări <em>profitabile.</em></h1>
-      <p class="lead hero__sub">Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung.</p>
-      <ul class="hero__proof" aria-label="DAR Media în cifre">
-        <li><strong>350+</strong> proiecte</li>
-        <li><strong>4+ mil. €</strong> administrați</li>
-        <li><strong>9+</strong> ani</li>
-      </ul>
-      <div class="hero__actions">
-        <a class="btn" href="/audit-gratuit/">Cere un audit gratuit <Arrow /></a>
-        <a class="btn btn--ghost" href="#rezultate">Vezi rezultatele</a>
+      <p class="eyebrow hero__eyebrow">Agenție de digital marketing · Cluj-Napoca · din {company.since}</p>
+      <h1 class="hero__title lines is-anim" id="hero-h">
+        {heroLines.map((l, i) => <span style={`--i:${i}`}><span>{l}</span></span>)}
+        <span style="--i:3"><span><em>profitabile.</em></span></span>
+      </h1>
+      <div class="hero__split">
+        <div class="hero__copy">
+          <p class="hero__sub">Sprijinim afacerile aflate în faza de creștere &amp; scalare să genereze vânzări profitabile, clienți mulțumiți și impact pe termen lung.</p>
+          <p class="hero__proof"><span><strong>350+</strong> proiecte</span> <i aria-hidden="true">·</i> <span><strong>4+ mil. €</strong> administrați</span> <i aria-hidden="true">·</i> <span><strong>9+</strong> ani</span></p>
+          <div class="hero__actions">
+            <a class="btn" href="/audit-gratuit/" data-magnetic>Cere un audit gratuit <Arrow /></a>
+            <a class="btn btn--ghost" href="#rezultate">Vezi rezultatele</a>
+          </div>
+        </div>
+        <figure class="hero__photo" data-speed="0.06">
+          <span class="hero__frame" aria-hidden="true"></span>
+          <span class="tape hero__tape" aria-hidden="true"></span>
+          <Picture src={fondatori} formats={['avif', 'webp']} fallbackFormat="webp" widths={[400, 640, 900]} sizes="(max-width: 900px) 78vw, 30vw" alt="Dumitru, Adelina și Radu, fondatorii DAR Media, cu mâinile unite" loading="eager" fetchpriority="high" decoding="async" />
+          <figcaption class="sticker hero__sticker"><span><b>D·A·R</b>fondatorii</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- Parteneri -->
-  <section class="partners" aria-labelledby="partners-h">
-    <div class="wrap">
-      <h2 class="eyebrow partners__h" id="partners-h">Parteneri &amp; certificări</h2>
-      <LogoWall items={partners} variant="row" label="Parteneri și certificări" links />
+  <!-- 2. Parteneri — bandă prună, marquee -->
+  <section class="partners t-plum" data-theme="plum" data-lock aria-labelledby="partners-h">
+    <h2 class="sr-only" id="partners-h">Parteneri și certificări</h2>
+    <div class="partners__in">
+      <p class="partners__label" aria-hidden="true">Parteneri &amp;<br />certificări</p>
+      <LogoWall items={partners} variant="marquee" rows={1} label="Parteneri și certificări" />
     </div>
   </section>
 
-  <!-- Studii de caz -->
-  <section class="section cases" id="rezultate" aria-labelledby="cases-h">
-    <div class="wrap">
-      <div class="sec-head">
+  <!-- 3. Studii de caz — crem, scroll orizontal fixat pe desktop, glisare pe mobil -->
+  <section class="cases t-cream" id="rezultate" data-theme="cream" data-hscroll aria-labelledby="cases-h">
+    <div class="cases__sticky">
+      <div class="wrap cases__head">
         <p class="eyebrow">Studii de caz</p>
-        <h2 class="h2" id="cases-h">Cum am generat, concret, <em>rezultate</em> pentru clienții DAR Media.</h2>
-        <a class="more sec-aside" href="/studii-de-caz/">Toate cele {caseStudies.length} studii de caz <Arrow /></a>
+        <h2 class="h2" id="cases-h">Rezultate <em>concrete,</em> nu promisiuni.</h2>
+        <div class="cases__meta">
+          <a class="more" href="/studii-de-caz/">Toate cele {caseStudies.length} studii <Arrow /></a>
+          <span class="cases__bar" aria-hidden="true"><span></span></span>
+        </div>
       </div>
-    </div>
-    <div class="cases__scroller">
-      <ul class="wrap cases__grid">
-        {cases.map((c, i) => <li data-reveal style={`--d:${(i % 2) * 80}ms`}><CaseCard c={c} /></li>)}
+      <ul class="cases__track" data-track aria-label="Studii de caz — derulează orizontal">
+        {cases.map((c, i) => <li><CaseCard c={c} i={i} /></li>)}
+        <li class="cases__end"><a href="/studii-de-caz/" data-cursor-label="Toate"><span>Toate studiile de caz</span><Arrow /></a></li>
       </ul>
     </div>
   </section>
 
-  <!-- Ce facem -->
-  <section class="section manifest on-dark" aria-labelledby="man-h">
+  <!-- 4. Ce facem — roz pal, tipografie deschisă, listă numerotată asimetrică -->
+  <section class="section manifest t-pink" data-theme="pink" aria-labelledby="man-h">
+    <span class="manifest__ghost outline-text" aria-hidden="true" data-speed="0.1">DAR</span>
     <div class="wrap">
       <div class="manifest__top">
-        <div>
-          <p class="eyebrow">Ce facem</p>
-          <h2 class="h2" id="man-h">Darul tău, <em>darul</em> nostru.</h2>
-        </div>
+        <p class="eyebrow">Ce facem</p>
+        <h2 class="manifest__title" id="man-h"><span>Darul tău,</span> <span><em>darul</em> nostru.</span></h2>
         <dl class="gifts">
-          <div><dt>Darul tău</dt><dd>O afacere cu potențial de creștere, care livrează produse și servicii excelente.</dd></div>
-          <div><dt>Darul nostru</dt><dd>Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.</dd></div>
+          <div data-reveal><dt>Darul tău</dt><dd>O afacere cu potențial de creștere, care livrează produse și servicii excelente.</dd></div>
+          <div data-reveal style="--d:120ms"><dt>Darul nostru</dt><dd>Strategii de omnichannel marketing care îți aduc leaduri și vânzări profitabile.</dd></div>
         </dl>
       </div>
       <ol class="pillars">
         {keyResults.map((k, i) => (
-          <li class="card" data-reveal style={`--d:${i * 70}ms`}>
-            <span class="icon-badge"><Icon name={pillarIcon[i]} /></span>
-            <h3 class="h3">{k.title}</h3>
-            <p class="muted">{k.text}</p>
+          <li data-reveal style={`--d:${(i % 2) * 90}ms`}>
+            <span class="pillars__n">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="pillars__t">{k.title}</h3>
+            <p>{k.text}</p>
           </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <!-- Servicii -->
-  <section class="section services" id="servicii" aria-labelledby="svc-h">
+  <!-- 5. Servicii — prună, rânduri mari -->
+  <section class="section services t-plum" id="servicii" data-theme="plum" aria-labelledby="svc-h">
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow">Servicii</p>
-        <h2 class="h2" id="svc-h">Crește-ți afacerea cu servicii de marketing digital, focusate pe <em>rezultate</em> concrete.</h2>
+        <h2 class="h2" id="svc-h">Servicii de marketing digital, focusate pe <em>rezultate</em> concrete.</h2>
         <a class="more sec-aside" href="/servicii/">Toate serviciile <Arrow /></a>
       </div>
       <ServiceList />
     </div>
   </section>
 
-  <!-- Cifre -->
-  <section class="section numbers on-dark" aria-labelledby="num-h">
+  <!-- 6. Cifre — magenta, numere care cresc, așezare în diagonală -->
+  <section class="section numbers t-magenta" data-theme="magenta" aria-labelledby="num-h">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="numbers__head">
         <p class="eyebrow">Numerele vorbesc</p>
         <h2 class="h2" id="num-h">Suntem mereu pregătiți pentru o <em>nouă</em> provocare.</h2>
       </div>
       <dl class="numbers__list">
-        {proof.map((s, i) => (
-          <div class="card" data-reveal style={`--d:${i * 80}ms`}>
-            <dt class="numbers__label">{s.label}</dt>
-            <dd class="numbers__val">{s.value}{s.unit && <small>{s.unit}</small>}</dd>
+        {statOrder.map((s, i) => (
+          <div class={`numbers__item numbers__item--${i}`}>
+            <dt>{s.label}</dt>
+            <dd class="numbers__val"><span data-count={parseFloat(s.value)}>{parseFloat(s.value)}</span>+{s.unit && <small>{s.unit}</small>}</dd>
             <dd class="numbers__note">{s.note}</dd>
           </div>
         ))}
       </dl>
       <p class="numbers__g">
-        <span class="stars" aria-hidden="true">{[0, 1, 2, 3, 4].map(() => <Icon name="star" class="icon star" />)}</span>
+        <span class="stars" aria-hidden="true">★★★★★</span>
         <span><strong>{googleReviews.rating}</strong> pe Google, pe baza a {googleReviews.count} de recenzii.</span>
         <a class="link" href="/portofoliu/#recenzii">Citește recenziile</a>
       </p>
@@ -129,57 +144,47 @@ const proof = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € ·
 
   <Testimonials />
 
-  <!-- Echipa -->
-  <section class="section team on-dark" aria-labelledby="team-h">
+  <!-- 8. Echipa — roz, portrete în forme din emblemă, așezate în trepte -->
+  <section class="section team t-pink" data-theme="pink" aria-labelledby="team-h">
     <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Despre noi</p>
-        <h2 class="h2" id="team-h">Echipa ta creativă de marketing, care îți aduce <em>rezultate</em> măsurate.</h2>
-        <a class="more sec-aside" href="/echipa-darmedia/">Vezi echipa <Arrow /></a>
-      </div>
-      <div class="team__feature">
-        <figure class="team__photo" data-reveal>
-          <Picture src={fondatori} formats={['avif', 'webp']} fallbackFormat="webp" widths={[480, 800, 1200, 1600]} sizes="(max-width: 900px) 100vw, 58vw" alt="Dumitru, Adelina și Radu, fondatorii DAR Media, cu mâinile unite" loading="lazy" decoding="async" />
-          <figcaption><span><b>D</b>umitru, <b>A</b>delina &amp; <b>R</b>adu</span><span>Fondatorii DAR Media</span></figcaption>
-        </figure>
-        <div class="team__note" data-reveal style="--d:100ms">
+      <div class="team__top">
+        <div>
+          <p class="eyebrow">Despre noi</p>
+          <h2 class="h2" id="team-h">Echipa ta creativă de marketing, care îți aduce <em>rezultate</em> măsurate.</h2>
+        </div>
+        <div class="team__note" data-reveal>
           <p class="team__lead">Numele a apărut de la inițialele prenumelor noastre — Dumitru, Adelina, Radu — și de la ideea că orice om și orice business are un dar prețios de oferit celorlalți.</p>
           <p class="muted">Credem cu tărie în forța echipei noastre, formată din colegi tineri, creativi și orientați spre rezultate. Atuurile noastre sunt comunicarea, transparența, evoluția continuă și relațiile solide construite între noi.</p>
-          <a class="more" href="/povestea-noastra/">Povestea noastră <Arrow /></a>
+          <p class="team__links"><a class="more" href="/povestea-noastra/">Povestea noastră <Arrow /></a><a class="more" href="/echipa-darmedia/">Vezi echipa <Arrow /></a></p>
         </div>
       </div>
       <ul class="team__grid">
         {founders.map((f, i) => (
-          <li class="card" data-reveal style={`--d:${i * 90}ms`}>
+          <li class={`team__m team__m--${shapes[i]}`} data-reveal style={`--d:${i * 110}ms`}>
             <div class="team__pic">
               <span class="team__letter" aria-hidden="true">{f.initial}</span>
-              <Picture src={portraits[f.name]} formats={['avif', 'webp']} fallbackFormat="webp" widths={[240, 450]} sizes="(max-width: 640px) 50vw, 300px" alt={f.name} loading="lazy" decoding="async" />
+              <Picture src={portraits[f.name]} formats={['avif', 'webp']} fallbackFormat="webp" widths={[240, 450]} sizes="(max-width: 640px) 70vw, 28vw" alt={f.name} loading="lazy" decoding="async" />
             </div>
-            <div class="team__cap">
-              <h3 class="h4">{f.name}</h3>
-              <p class="muted small">{f.role}</p>
-              <a class="team__in" href={f.links.LinkedIn} target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> — {f.name} (se deschide într-o filă nouă)</span></a>
-            </div>
+            <h3 class="h4">{f.name}</h3>
+            <p class="muted small">{f.role}</p>
+            <a class="team__in" href={f.links.LinkedIn} target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> — {f.name} (se deschide într-o filă nouă)</span></a>
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <!-- Clienți -->
-  <section class="section clients" aria-labelledby="cl-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Au încredere în noi</p>
-        <h2 class="h2" id="cl-h">Afaceri care au ales <em>DAR Media.</em></h2>
-        <a class="more sec-aside" href="/portofoliu/">Portofoliu · {clients.length} branduri <Arrow /></a>
-      </div>
-      <LogoWall items={clients} variant="marquee" label={`Logourile celor ${clients.length} de clienți DAR Media`} />
+  <!-- 9. Clienți — bandă prună, marquee pe două rânduri -->
+  <section class="clients t-plum" data-theme="plum" data-lock aria-labelledby="cl-h">
+    <div class="wrap clients__head">
+      <h2 class="clients__title" id="cl-h">Au ales <em>DAR Media</em></h2>
+      <a class="more" href="/portofoliu/">Portofoliu · {clients.length} branduri <Arrow /></a>
     </div>
+    <LogoWall items={clients} variant="marquee" label={`Logourile celor ${clients.length} de clienți DAR Media`} />
   </section>
 
-  <!-- FAQ -->
-  <section class="section faqs on-dark" aria-labelledby="faq-h">
+  <!-- 10. FAQ — crem, rânduri deschise -->
+  <section class="section faqs t-cream" data-theme="cream" aria-labelledby="faq-h">
     <div class="wrap faqs__in">
       <div class="faqs__head">
         <p class="eyebrow">Întrebări frecvente</p>
@@ -190,8 +195,8 @@ const proof = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € ·
     </div>
   </section>
 
-  <!-- Resurse -->
-  <section class="section learn" aria-labelledby="learn-h">
+  <!-- 11. Resurse — roz, linkuri mari + articole cu imagini rotite și bandă adezivă -->
+  <section class="section learn t-pink" data-theme="pink" aria-labelledby="learn-h">
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow">Învață să te promovezi mai eficient, la un cost mai mic</p>
@@ -199,19 +204,20 @@ const proof = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € ·
       </div>
       <div class="learn__grid">
         <ul class="learn__links">
-          <li><a class="card card--link" href="/ebook/"><span class="h4">Ebook-uri gratuite</span><Arrow /></a></li>
-          <li><a class="card card--link" href="/blog/"><span class="h4">Blog</span><Arrow /></a></li>
-          <li><a class="card card--link" href={company.social[3].href} target="_blank" rel="noopener noreferrer"><span class="h4">Video<span class="sr-only"> (YouTube, se deschide într-o filă nouă)</span></span><Arrow dir="up-right" /></a></li>
+          <li><a href="/ebook/"><span>Ebook-uri gratuite</span><Arrow /></a></li>
+          <li><a href="/blog/"><span>Blog</span><Arrow /></a></li>
+          <li><a href={company.social[3].href} target="_blank" rel="noopener noreferrer"><span>Video<span class="sr-only"> (YouTube, se deschide într-o filă nouă)</span></span><Arrow dir="up-right" /></a></li>
         </ul>
         <ul class="learn__posts">
-          {latest.map((p) => (
-            <li>
-              <a href={`/${p.slug}/`} class="card card--link">
-                {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} srcset={coverSrcset(p.cover)} sizes="(max-width: 640px) 120px, 300px" alt="" loading="lazy" decoding="async" />}
-                <span class="learn__body">
-                  <span class="tag">{p.categories[0]} · {formatDate(p.date)}</span>
-                  <span class="learn__title">{p.title}</span>
+          {latest.map((p, i) => (
+            <li class={`learn__post learn__post--${i}`} data-reveal style={`--d:${i * 90}ms`}>
+              <a href={`/${p.slug}/`}>
+                <span class="learn__img">
+                  <span class="tape" aria-hidden="true"></span>
+                  {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} srcset={coverSrcset(p.cover)} sizes="(max-width: 900px) 80vw, 24vw" alt="" loading="lazy" decoding="async" />}
                 </span>
+                <span class="tag">{p.categories[0]} · {formatDate(p.date)}</span>
+                <span class="learn__title">{p.title}</span>
               </a>
             </li>
           ))}
@@ -224,116 +230,175 @@ const proof = [stats[1], stats[2], stats[0]]; // 350+ proiecte · 4+ mil. € ·
 </Base>
 
 <style>
-  /* hero */
-  .hero { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--line); background:
-      radial-gradient(60% 70% at 85% 10%, rgba(237, 30, 121, 0.26), transparent 70%),
-      radial-gradient(50% 60% at 0% 100%, rgba(158, 0, 93, 0.28), transparent 70%),
-      var(--bg); }
-  .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 72px 72px; -webkit-mask-image: radial-gradient(80% 70% at 60% 30%, #000, transparent 75%); mask-image: radial-gradient(80% 70% at 60% 30%, #000, transparent 75%); opacity: 0.45; }
-  .hero__bg { position: absolute; z-index: -1; right: -12rem; top: 50%; transform: translateY(-50%); width: min(62vw, 56rem); pointer-events: none; }
-  .hero__bg :global(.hero__mark) { width: 100%; height: auto; color: var(--accent); opacity: 0.07; }
-  .hero__in { display: grid; gap: clamp(1.25rem, 2.5vw, 1.75rem); justify-items: start; padding-block: clamp(3.5rem, 10vw, 8.5rem) clamp(3.5rem, 8vw, 6.5rem); min-height: min(88svh, 52rem); align-content: center; }
-  .hero__title { max-width: 17ch; }
-  .hero__sub { max-width: 36rem; }
-  .hero__proof { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
-  .hero__proof li { display: inline-flex; align-items: baseline; gap: 0.4rem; padding: 0.45rem 0.95rem; border: 1px solid var(--line-2); border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.03); color: var(--text-2); font-size: var(--fs-sm); }
-  .hero__proof strong { color: var(--text); font-weight: 800; font-size: 1.0625rem; letter-spacing: -0.02em; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; }
+  /* ---------- 1. hero */
+  .hero { position: relative; overflow: hidden; isolation: isolate; }
+  .hero__deco { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .hero__ghost { position: absolute; left: -2vw; bottom: -0.2em; font-size: var(--fs-giant); font-weight: 850; letter-spacing: -0.07em; line-height: 0.75; color: transparent; -webkit-text-stroke: 2px rgba(255, 255, 255, 0.35); }
+  .hero__mark-wrap { position: absolute; right: -7rem; top: -5rem; width: clamp(16rem, 38vw, 34rem); }
+  .hero__mark-wrap :global(.hero__mark) { width: 100%; height: auto; color: var(--magenta); opacity: 1; }
+  .hero__mark-wrap :global(svg path) { stroke: rgba(255, 255, 255, 0.5); }
+  .hero__dot { position: absolute; right: 30%; bottom: 8%; width: clamp(3rem, 6vw, 5rem); aspect-ratio: 1; border-radius: 50%; background: var(--c-plum); }
+  .hero__in { position: relative; padding-block: clamp(2rem, 4.5vw, 4rem) clamp(4rem, 9vw, 7rem); }
+  .hero__eyebrow { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+  .hero__title { font-size: clamp(2.75rem, 0.8rem + 5.3vw, 6.5rem); font-weight: 850; line-height: 0.9; letter-spacing: -0.06em; }
+  .hero__title em { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; color: #fff; }
+  .hero__split { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: start; margin-top: clamp(1.75rem, 3vw, 2.5rem); }
+  .hero__copy { grid-column: 1 / span 6; display: grid; gap: 1.5rem; justify-items: start; padding-top: 0.5rem; }
+  .hero__sub { font-size: var(--fs-lg); line-height: 1.5; max-width: 34rem; font-weight: 500; }
+  .hero__proof { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 0.6rem; padding: 0.9rem 0; border-block: 2px solid #fff; font-size: var(--fs-base); font-weight: 600; }
+  .hero__proof strong { font-size: clamp(1.35rem, 1rem + 1.2vw, 1.9rem); font-weight: 850; letter-spacing: -0.04em; }
+  .hero__proof span { white-space: nowrap; }
+  .hero__proof i { font-style: normal; opacity: 0.8; margin-inline: 0.15rem; }
+  @media (max-width: 480px) { .hero__proof i { display: none; } .hero__proof { gap: 0.25rem 1.1rem; } }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
+  .hero__actions .btn { transition: box-shadow var(--dur) var(--ease), transform 0.25s var(--ease-out); }
+  .hero__photo { grid-column: 8 / -1; position: relative; margin-top: clamp(-11rem, -12vw, -4rem); }
+  .hero__photo :global(img) { position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: var(--arch); rotate: 3deg; }
+  .hero__frame { position: absolute; inset: 0; border: 3px solid var(--c-plum); border-radius: var(--arch); translate: -1.25rem 1.25rem; rotate: -2deg; }
+  .hero__tape { top: -0.5rem; left: 50%; translate: -50% 0; rotate: -6deg; }
+  .hero__sticker { left: -2.5rem; bottom: 12%; background: var(--c-plum); }
+  .hero__sticker b { font-size: 1.35rem; letter-spacing: 0.02em; }
 
-  /* partners */
-  .partners { padding-block: clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--line); }
-  .partners__h { margin-bottom: 1.5rem; }
+  /* ---------- 2. parteneri */
+  .partners__in { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem; padding-block: 1.5rem; padding-left: var(--gutter); }
+  .partners__label { font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hot); line-height: 1.4; }
 
-  /* cases */
-  .cases__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
-  .cases__grid > li { display: flex; }
-  .cases__grid > li > :global(a) { flex: 1; }
-  @media (max-width: 760px) {
-    .cases__scroller { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-    .cases__scroller::-webkit-scrollbar { display: none; }
-    .cases__grid { display: flex; width: max-content; max-width: none; gap: 0.75rem; padding-bottom: 0.5rem; }
-    .cases__grid > li { width: min(84vw, 22rem); scroll-snap-align: start; scroll-margin-left: var(--gutter); }
+  /* ---------- 3. studii de caz */
+  .cases { position: relative; }
+  .cases__sticky { padding-block: var(--section) calc(var(--section) * 0.7); }
+  .cases__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1rem; align-items: end; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .cases__head .eyebrow { grid-column: 1 / -1; }
+  .cases__head .h2 { grid-column: 1 / span 8; }
+  .cases__meta { grid-column: 9 / -1; display: grid; gap: 0.75rem; justify-items: end; }
+  .cases__bar { display: none; width: 100%; height: 3px; background: var(--line); }
+  .cases__bar span { display: block; height: 100%; background: var(--magenta); transform-origin: left; transform: scaleX(var(--progress, 0)); }
+  .cases__track { display: flex; gap: clamp(1.5rem, 3vw, 3rem); padding-inline: var(--gutter); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .cases__track::-webkit-scrollbar { display: none; }
+  .cases__track > li { flex: none; width: min(82vw, 26rem); scroll-snap-align: start; scroll-margin-left: var(--gutter); }
+  .cases__end a { display: flex; flex-direction: column; justify-content: center; gap: 1rem; height: 100%; min-height: 16rem; padding: 2rem; background: var(--c-plum); color: #fff; font-size: clamp(1.75rem, 1rem + 2vw, 2.75rem); font-weight: 850; letter-spacing: -0.05em; line-height: 1; clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 94%); transition: clip-path 0.6s var(--ease-out); }
+  .cases__end a:hover { clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%); }
+  .cases__end :global(.arrow) { width: 2.5rem; height: 2.5rem; color: var(--hot); }
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .cases__sticky { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-block: calc(var(--header-h) + 1rem) 2rem; }
+    .cases__bar { display: block; }
+    .cases__track { overflow: visible; scroll-snap-type: none; will-change: transform; }
+    .cases__track > li { width: clamp(22rem, 30vw, 30rem); }
+    .cases__track > li:nth-child(even) { margin-top: 3rem; }
   }
+  @media (min-width: 1024px) { .cases__track > li { width: clamp(22rem, 30vw, 30rem); } }
 
-  /* manifest */
-  .manifest__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: end; margin-bottom: clamp(2.25rem, 4.5vw, 3.5rem); }
-  .manifest__top > div { grid-column: 1 / span 5; display: grid; gap: 1.25rem; }
-  .gifts { grid-column: 7 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-  .gifts > div { padding-top: 1rem; border-top: 2px solid var(--accent); display: grid; gap: 0.5rem; align-content: start; }
-  .gifts dt { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
-  .gifts dd { font-size: var(--fs-lg); line-height: 1.4; text-wrap: pretty; }
-  .pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
-  .pillars li { padding: clamp(1.25rem, 2.2vw, 1.75rem); display: grid; gap: 0.85rem; align-content: start; }
-  .pillars .h3 { margin-top: 0.5rem; }
+  /* ---------- 4. manifest */
+  .manifest { overflow: hidden; isolation: isolate; }
+  .manifest__ghost { position: absolute; z-index: -1; right: -3vw; top: 10%; font-size: var(--fs-giant); font-weight: 850; letter-spacing: -0.07em; line-height: 0.8; color: transparent; -webkit-text-stroke: 2px var(--magenta); opacity: 0.55; }
+  .manifest__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1.5rem; margin-bottom: clamp(3rem, 7vw, 6rem); }
+  .manifest__top .eyebrow { grid-column: 1 / -1; }
+  .manifest__title { grid-column: 1 / span 9; font-size: clamp(3rem, 1.4rem + 7vw, 8.5rem); font-weight: 850; line-height: 0.88; letter-spacing: -0.065em; }
+  .manifest__title span { display: block; }
+  .manifest__title span + span { padding-left: clamp(2rem, 14vw, 14rem); }
+  .manifest__title em { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em; color: var(--accent-text); }
+  .gifts { grid-column: 6 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); margin-top: 1rem; }
+  .gifts > div { padding-top: 0.9rem; border-top: 3px solid var(--magenta); display: grid; gap: 0.5rem; align-content: start; }
+  .gifts dt { font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+  .gifts dd { font-size: var(--fs-lg); line-height: 1.4; font-weight: 600; text-wrap: pretty; }
+  .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 6vw, 6rem); }
+  .pillars li { display: grid; grid-template-columns: auto 1fr; column-gap: 1.25rem; padding-block: 1.75rem; border-top: 2px solid var(--fg); }
+  .pillars li:nth-child(even) { translate: 0 clamp(2rem, 6vw, 5rem); }
+  .pillars__n { grid-row: span 2; font-size: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); font-weight: 850; letter-spacing: -0.06em; line-height: 0.85; color: var(--magenta-ink); }
+  .pillars__t { font-size: var(--fs-h3); font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; }
+  .pillars p { color: var(--fg-2); margin-top: 0.5rem; max-width: 30rem; }
 
-  /* numbers */
-  .numbers__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-  .numbers__list > div { padding: clamp(1.5rem, 3vw, 2.25rem); display: grid; gap: 0.75rem; align-content: start; }
-  .numbers__label { order: -1; font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2); }
-  .numbers__val { font-size: var(--fs-mega); font-weight: 800; line-height: 0.95; letter-spacing: -0.055em; }
-  .numbers__val small { font-size: 0.32em; letter-spacing: -0.01em; margin-left: 0.3em; color: var(--accent-text); font-weight: 750; }
-  .numbers__note { color: var(--text-2); font-size: var(--fs-sm); }
-  .numbers__g { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 1.5rem; color: var(--text-2); }
-  .numbers__g strong { color: var(--text); }
-  .stars { display: inline-flex; gap: 0.15rem; color: #f5b400; }
-  .stars :global(.star) { width: 1.1rem; height: 1.1rem; fill: currentColor; }
+  /* ---------- 6. cifre */
+  .numbers { overflow: hidden; }
+  .numbers__head { display: grid; gap: 1.25rem; max-width: 44rem; margin-bottom: clamp(2.5rem, 6vw, 5rem); }
+  .numbers__list { display: grid; gap: clamp(2rem, 4vw, 3rem); }
+  .numbers__item { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 22rem); column-gap: clamp(1.5rem, 4vw, 4rem); align-items: end; padding-top: 1.25rem; border-top: 2px solid #fff; }
+  .numbers__item--1 { margin-left: clamp(0rem, 16vw, 20rem); }
+  .numbers__item--2 { margin-left: clamp(0rem, 32vw, 40rem); }
+  .numbers__item dt { grid-column: 1 / -1; font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
+  .numbers__val { font-size: clamp(5rem, 2rem + 13vw, 14rem); font-weight: 850; line-height: 0.82; letter-spacing: -0.075em; font-variant-numeric: tabular-nums; }
+  .numbers__val small { font-size: 0.24em; letter-spacing: -0.03em; margin-left: 0.25em; }
+  .numbers__note { font-size: var(--fs-base); font-weight: 500; padding-bottom: 0.5rem; }
+  .numbers__g { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: clamp(2.5rem, 5vw, 4rem); font-weight: 500; }
+  .stars { letter-spacing: 0.1em; color: #fff; font-size: 1.1rem; }
 
-  /* team */
-  .team__feature { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); align-items: end; margin-bottom: var(--gap); }
-  .team__photo { grid-column: 1 / span 7; }
-  .team__photo :global(img) { width: 100%; height: auto; aspect-ratio: 1600 / 1093; object-fit: cover; border-radius: var(--r-lg); border: 1px solid var(--line); }
-  .team__photo figcaption { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.75rem; font-size: var(--fs-sm); color: var(--text-2); }
-  .team__photo b { color: var(--accent-text); }
-  .team__note { grid-column: 9 / -1; display: grid; gap: 1.25rem; justify-items: start; }
-  .team__lead { font-size: var(--fs-h4); font-weight: 600; line-height: 1.4; letter-spacing: -0.015em; }
-  .team__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-  .team__grid > li { overflow: hidden; }
-  .team__pic { position: relative; aspect-ratio: 1; display: grid; place-items: end center; overflow: hidden; background: radial-gradient(70% 70% at 50% 60%, rgba(237, 30, 121, 0.22), transparent 70%); border-bottom: 1px solid var(--line); }
-  .team__letter { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); font-size: clamp(9rem, 22vw, 18rem); font-weight: 800; line-height: 0.7; letter-spacing: -0.06em; color: rgba(255, 255, 255, 0.05); }
-  .team__pic :global(img) { position: relative; width: 88%; height: auto; transition: transform 0.6s var(--ease); }
-  .team__grid li:hover .team__pic :global(img) { transform: translateY(-0.35rem); }
-  .team__cap { display: grid; grid-template-columns: 1fr auto; gap: 0.15rem 1rem; align-items: center; padding: 1.1rem 1.25rem 1.25rem; }
-  .team__cap .muted { grid-column: 1; }
-  .team__in { grid-column: 2; grid-row: 1 / span 2; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 0.9rem; border: 1px solid var(--line-2); border-radius: var(--r-pill); font-size: var(--fs-sm); font-weight: 700; }
-  .team__in:hover { border-color: var(--accent); color: var(--accent-text); }
+  /* ---------- 8. echipa */
+  .team__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 2rem; margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .team__top > div:first-child { grid-column: 1 / span 7; display: grid; gap: 1.25rem; align-content: start; }
+  .team__note { grid-column: 9 / -1; display: grid; gap: 1rem; align-content: end; }
+  .team__lead { font-size: var(--fs-lg); font-weight: 650; line-height: 1.45; }
+  .team__links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
+  .team__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+  .team__m { display: grid; gap: 0.35rem; justify-items: start; }
+  .team__m:nth-child(2) { margin-top: clamp(0rem, 8vw, 7rem); }
+  .team__m:nth-child(3) { margin-top: clamp(0rem, 3vw, 2.5rem); }
+  .team__pic { position: relative; width: 100%; aspect-ratio: 1; display: grid; place-items: end center; margin-bottom: 1rem; isolation: isolate; }
+  .team__pic::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--magenta); transition: transform 0.7s var(--ease-out); }
+  .team__m--circle .team__pic::before { border-radius: 50%; }
+  .team__m--arch .team__pic::before { border-radius: var(--arch); rotate: -3deg; }
+  .team__m--petal .team__pic::before { border-radius: 0 50% 0 50%; rotate: 4deg; background: var(--c-plum); }
+  .team__m:hover .team__pic::before { transform: rotate(-6deg) scale(1.04); }
+  .team__letter { position: absolute; z-index: -1; left: 50%; top: 48%; transform: translate(-50%, -50%); font-size: clamp(8rem, 18vw, 16rem); font-weight: 850; line-height: 0.7; letter-spacing: -0.06em; color: transparent; -webkit-text-stroke: 2px rgba(255, 255, 255, 0.6); }
+  .team__pic :global(img) { position: relative; width: 92%; height: auto; transition: transform 0.6s var(--ease-out); }
+  .team__m:hover .team__pic :global(img) { transform: translateY(-0.5rem) rotate(-1.5deg); }
+  .team__in { display: inline-flex; align-items: center; min-height: 2.75rem; font-weight: 750; font-size: var(--fs-sm); border-bottom: 2px solid currentColor; }
+  .team__in:hover { color: var(--accent-text); }
 
-  /* faq */
+  /* ---------- 9. clienți */
+  .clients { padding-block: clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem); }
+  .clients__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 2rem; }
+  .clients__title { font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem); font-weight: 850; letter-spacing: -0.055em; line-height: 1; }
+  .clients__title em { font-family: var(--serif); font-weight: 400; color: var(--hot); letter-spacing: -0.02em; }
+
+  /* ---------- 10. faq */
   .faqs__in { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem var(--gap); }
   .faqs__head { grid-column: 1 / span 4; display: grid; gap: 1.25rem; align-content: start; position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
   .faqs__list { grid-column: 6 / -1; }
 
-  /* learn */
-  .learn__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); }
-  .learn__links { grid-column: 1 / span 4; display: grid; gap: 0.6rem; align-content: start; }
-  .learn__links a { display: flex; justify-content: space-between; align-items: center; min-height: 4.5rem; padding: 0 1.25rem; }
-  .learn__links :global(.arrow) { color: var(--accent-text); }
-  .learn__posts { grid-column: 5 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-  .learn__posts a { display: grid; grid-template-rows: auto 1fr; overflow: hidden; height: 100%; }
-  .learn__posts img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--surface-2); }
-  .learn__body { display: grid; gap: 0.6rem; align-content: start; padding: 1.1rem 1.25rem 1.4rem; }
-  .learn__title { font-size: 1.125rem; font-weight: 650; line-height: 1.3; letter-spacing: -0.015em; }
+  /* ---------- 11. resurse */
+  .learn__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 3rem var(--gap); align-items: start; }
+  .learn__links { grid-column: 1 / span 5; border-top: 2px solid var(--fg); }
+  .learn__links a { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: clamp(4.5rem, 8vw, 6.5rem); border-bottom: 1px solid var(--line-2); font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem); font-weight: 850; letter-spacing: -0.05em; line-height: 1; transition: transform 0.45s var(--ease-out), color var(--dur); }
+  .learn__links a:hover { transform: translateX(0.75rem); color: var(--accent-text); }
+  .learn__links :global(.arrow) { width: 2rem; height: 2rem; color: var(--magenta-ink); }
+  .learn__posts { grid-column: 7 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem var(--gap); }
+  .learn__post a { display: grid; gap: 0.6rem; }
+  .learn__post--0 { grid-column: 1 / -1; }
+  .learn__post--1 { rotate: -2deg; }
+  .learn__post--2 { rotate: 2.5deg; margin-top: 2.5rem; }
+  .learn__img { position: relative; display: block; padding: 0.6rem; background: #fff; box-shadow: 0 10px 24px -14px rgba(43, 10, 32, 0.45); margin-bottom: 0.4rem; transition: transform 0.5s var(--ease-out); }
+  .learn__post--0 .learn__img { rotate: 1.5deg; }
+  .learn__img .tape { top: -0.75rem; left: 50%; translate: -50% 0; rotate: 4deg; }
+  .learn__img img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--pink); }
+  .learn__post a:hover .learn__img { transform: rotate(-1.5deg) scale(1.02); }
+  .learn__title { font-size: 1.125rem; font-weight: 750; line-height: 1.3; letter-spacing: -0.02em; }
+  .learn__post a:hover .learn__title { color: var(--accent-text); }
 
   @media (max-width: 1040px) {
-    .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pillars { grid-template-columns: 1fr; }
+    .pillars li:nth-child(even) { translate: none; }
     .learn__links, .learn__posts { grid-column: 1 / -1; }
-    .learn__links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 900px) {
-    .manifest__top > div, .gifts, .team__photo, .team__note, .faqs__head, .faqs__list { grid-column: 1 / -1; position: static; }
-    .numbers__list { grid-template-columns: 1fr; }
-    .team__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .hero__copy, .hero__photo { grid-column: 1 / -1; }
+    .hero__photo { width: min(78%, 22rem); justify-self: end; margin: 3rem -0.5rem 0 0; }
+    .hero__sticker { left: -2.75rem; width: 6.5rem; }
+    .cases__head .h2, .cases__meta { grid-column: 1 / -1; justify-items: start; }
+    .manifest__title, .gifts { grid-column: 1 / -1; }
+    .numbers__item, .numbers__item--1, .numbers__item--2 { margin-left: 0; grid-template-columns: 1fr; }
+    .team__top > div:first-child, .team__note { grid-column: 1 / -1; }
+    .team__grid { grid-template-columns: 1fr 1fr; }
+    .team__m:nth-child(2) { margin-top: 3rem; }
+    .team__m:nth-child(3) { margin-top: 0; grid-column: 1 / span 1; }
+    .faqs__head, .faqs__list { grid-column: 1 / -1; position: static; }
   }
   @media (max-width: 640px) {
-    .hero__bg { right: -55%; width: 120vw; top: 18%; }
+    .partners__in { grid-template-columns: 1fr; padding-inline: 0; }
+    .partners__label { padding-inline: var(--gutter); }
+    .partners__label br { display: none; }
     .gifts { grid-template-columns: 1fr; }
-    .pillars { grid-template-columns: 1fr; }
-    .team__grid { grid-template-columns: 1fr; }
-    .team__pic { aspect-ratio: 1; }
-    .team__pic :global(img) { width: 96%; }
-    .learn__links { grid-template-columns: 1fr; }
+    .numbers__item--1 { margin-left: 8vw; }
+    .numbers__item--2 { margin-left: 16vw; }
     .learn__posts { grid-template-columns: 1fr; }
-    .learn__posts a { grid-template-columns: 7.5rem 1fr; grid-template-rows: auto; }
-    .learn__posts img { height: 100%; aspect-ratio: auto; }
-    .learn__body { padding: 0.9rem 1rem; }
+    .learn__post--2 { margin-top: 0; }
   }
 </style>
