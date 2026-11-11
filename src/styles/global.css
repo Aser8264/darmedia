@@ -33,7 +33,7 @@
   --gutter: clamp(1.25rem, 4.5vw, 4rem);
   --max: 82rem;
   --gap: clamp(1rem, 2.2vw, 2rem);
-  --section: clamp(4.5rem, 9vw, 8rem);
+  --section: clamp(3.5rem, 7vw, 6rem);
   --header-h: 4.5rem;
 
   /* ---------- formă & adâncime */
@@ -125,8 +125,8 @@ main:focus { outline: none; }
 p { text-wrap: pretty; }
 
 /* ---------- linkuri & butoane */
-.link { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; transition: color var(--dur) ease; }
-.link:hover { color: var(--accent-text); }
+.link { color: inherit; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 0.08em; transition: color var(--dur) ease, background-size 0.35s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .link:hover { color: var(--accent-text); background-size: 0 1px; background-position: 100% 100%; } }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
   min-height: 3.25rem; padding: 0.85rem 1.5rem;
@@ -134,6 +134,8 @@ p { text-wrap: pretty; }
   font-weight: 650; font-size: 1rem; line-height: 1.1; cursor: pointer;
   transition: transform 160ms var(--ease-out), box-shadow var(--dur) ease, border-color var(--dur) ease;
 }
+.btn { position: relative; overflow: hidden; isolation: isolate; }
+.btn::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform 0.6s var(--ease-out); pointer-events: none; }
 .btn:active { transform: scale(0.97); }
 .btn .arrow { transition: transform var(--dur) var(--ease-out); }
 .btn--ghost, .btn--line { background: transparent; color: var(--fg); border-color: var(--line-2); }
@@ -143,7 +145,9 @@ p { text-wrap: pretty; }
 .more .arrow { color: var(--accent-text); transition: transform var(--dur) var(--ease-out); }
 .more:hover { color: var(--accent-text); }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover { box-shadow: var(--shadow-2); }
+  .btn:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+  .btn:hover::after { transform: translateX(120%); }
+  .btn:active { transform: scale(0.97); }
   .btn:hover .arrow, .more:hover .arrow { transform: translateX(3px); }
   .btn--ghost:hover, .btn--line:hover { border-color: currentColor; box-shadow: none; }
 }
@@ -249,10 +253,35 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .lines > span { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
 .lines > span > span { display: inline-block; text-wrap: balance; }
 .js .lines.is-anim > span > span { transform: translateY(105%); animation: line-up 0.9s var(--ease-out) forwards; animation-delay: calc(var(--base, 0.1s) + var(--i, 0) * 0.07s); }
-html.has-intro .lines.is-anim { --base: 1.15s; }
+html.has-intro .lines.is-anim { --base: 0.95s; }
 @keyframes line-up { to { transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   .js .lines.is-anim > span > span { transform: none; animation: none; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---------- mișcare la scroll: apariție treptată (doar transform + opacity, doar cu JS) */
+.js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); transition-delay: var(--d, 0ms); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+.js [data-reveal='left'] { transform: translateX(-24px); }
+.js [data-reveal='scale'] { transform: scale(0.96); }
+
+/* ---------- bara de progres a lecturii */
+.progress { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: 3px; background: var(--magenta); transform-origin: left; transform: scaleX(var(--p, 0)); pointer-events: none; }
+
+/* ---------- forme estompate care plutesc (decor, doar în hero și în banda de contact) */
+.blob { position: absolute; z-index: -1; border-radius: 50%; filter: blur(60px); opacity: 0.55; pointer-events: none; will-change: transform; }
+@keyframes drift-a { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(6%, -8%) scale(1.08); } 66% { transform: translate(-5%, 6%) scale(0.95); } }
+@keyframes drift-b { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-8%, -6%) scale(1.12); } }
+
+/* ---------- marquee de text */
+.ticker { display: flex; overflow: hidden; white-space: nowrap; user-select: none; }
+.ticker__track { display: flex; flex: none; gap: 2.5rem; padding-right: 2.5rem; animation: ticker 28s linear infinite; }
+@keyframes ticker { to { transform: translateX(-100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .blob, .ticker__track { animation: none !important; }
+  .progress { display: none; }
 }

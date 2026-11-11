@@ -19,7 +19,7 @@ const {
   imageAlt = 'Dumitru, Adelina și Radu, fondatorii DAR Media',
   article = false,
   noindex = false,
-  intro = true,
+  intro = false,
   colorShift = false,
 } = Astro.props;
 const fullTitle = title.includes('DAR Media') ? title : `${title} — DAR Media`;
@@ -86,12 +86,12 @@ const ld = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
-    <script is:inline>
-      // Intro o singură dată pe sesiune; sărit la prefers-reduced-motion. Fără JS, intro-ul se închide singur din CSS.
+    <script is:inline data-show-intro={intro ? '1' : '0'}>
+      // Intro la fiecare încărcare a paginii principale; sărit la prefers-reduced-motion. Fără JS, intro-ul se închide singur din CSS.
       (function () {
         var d = document.documentElement; d.classList.add('js');
         var skip = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        try { if (sessionStorage.getItem('dm-intro')) skip = true; } catch (e) {}
+        if (!document.currentScript || document.currentScript.dataset.showIntro !== '1') skip = true;
         d.classList.add(skip ? 'no-intro' : 'has-intro');
       })();
     </script>
@@ -99,6 +99,7 @@ const ld = {
   </head>
   <body>
     {intro && <Intro />}
+    <div class="progress" aria-hidden="true" data-progress></div>
     <a class="skip" href="#main">Sari la conținut</a>
     <Header />
     <main id="main" tabindex="-1"><slot /></main>

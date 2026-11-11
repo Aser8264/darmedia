@@ -21,7 +21,9 @@ const { c, title, date, headingLevel: H = 'h3' } = Astro.props;
   </span>
 </a>
 <style>
-  .cc { display: grid; gap: 0.9rem; padding-block: 1.75rem 2rem; border-top: 1px solid var(--line-2); height: 100%; color: var(--fg); }
+  .cc { position: relative; isolation: isolate; display: grid; gap: 0.9rem; padding: 1.75rem 1.25rem 2rem; border-top: 1px solid var(--line-2); height: 100%; color: var(--fg); }
+  .cc::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--pink); transform: scaleY(0); transform-origin: bottom; transition: transform 0.45s var(--ease-out); }
+  .cc__num { transition: color 0.3s ease; }
   .cc__fig { display: block; line-height: 1; font-variant-numeric: lining-nums; }
   .cc__num { font-size: clamp(2.75rem, 2rem + 3vw, 4.25rem); font-weight: 700; line-height: 1; letter-spacing: -0.035em; }
   .cc__unit { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem); font-weight: 650; letter-spacing: 0; margin-left: 0.3em; color: var(--accent-text); }
@@ -35,6 +37,8 @@ const { c, title, date, headingLevel: H = 'h3' } = Astro.props;
   @media (hover: hover) and (pointer: fine) {
     .cc { transition: border-color 0.2s ease; }
     .cc:hover { border-top-color: var(--magenta); }
+    .cc:hover::before { transform: scaleY(1); }
+    .cc:hover .cc__num { color: var(--magenta-ink); }
     .cc:hover .cc__more { color: var(--accent-text); }
     .cc:hover .cc__more :global(.arrow) { transform: translateX(3px); }
   }
