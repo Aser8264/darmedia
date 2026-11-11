@@ -1,0 +1,87 @@
+---
+// Logouri reale (monocrom, înălțime vizuală uniformă). `grid` = grilă ordonată; `row` = rând simplu; `marquee` = bandă animată
+// cu buton de pauză (WCAG 2.2.2), oprită complet la prefers-reduced-motion.
+import { logoSize } from '../data/logos';
+interface Item { name: string; logo: string; href?: string }
+interface Props { items: Item[]; variant?: 'grid' | 'marquee' | 'row'; label: string; links?: boolean; captions?: boolean }
+const { items, variant = 'grid', label, links = false, captions = false } = Astro.props;
+const half = Math.ceil(items.length / 2);
+const rows = variant === 'marquee' ? [items.slice(0, half), items.slice(half)] : [items];
+const size = (l: string) => logoSize[l] ?? { w: 120, h: 40 };
+---
+{variant === 'marquee' ? (
+  <div class="lw lw--marquee" role="region" aria-label={label} data-marquee>
+    <div class="lw__viewport">
+      {rows.map((row, r) => (
+        <div class:list={['lw__track', { 'lw__track--rev': r === 1 }]}>
+          <ul class="lw__list">
+            {row.map((c) => (
+              <li><img src={`/media/logos/${c.logo}.webp`} alt={c.name} width={size(c.logo).w} height={size(c.logo).h} loading="lazy" decoding="async" /></li>
+            ))}
+          </ul>
+          <ul class="lw__list" aria-hidden="true">
+            {row.map((c) => (
+              <li><img src={`/media/logos/${c.logo}.webp`} alt="" width={size(c.logo).w} height={size(c.logo).h} loading="lazy" decoding="async" /></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <button type="button" class="lw__pause" aria-pressed="false" data-marquee-toggle>
+      <span class="lw__pause-ico" aria-hidden="true"></span><span>Pauză animație</span>
+    </button>
+  </div>
+) : (
+  <ul class:list={['lw', `lw--${variant}`]} aria-label={label}>
+    {items.map((c) => {
+      const img = <img src={`/media/logos/${c.logo}.webp`} alt={captions ? '' : c.name} width={size(c.logo).w} height={size(c.logo).h} loading="lazy" decoding="async" />;
+      const cap = captions && <span class="lw__cap">{c.name}{links && c.href && <span class="sr-only"> (se deschide într-o filă nouă)</span>}</span>;
+      return <li>{links && c.href ? <a href={c.href} target="_blank" rel="noopener noreferrer">{img}{cap}{!captions && <span class="sr-only"> (se deschide într-o filă nouă)</span>}</a> : <>{img}{cap}</>}</li>;
+    })}
+  </ul>
+)}
+<style>
+  .lw img { opacity: 0.72; transition: opacity var(--dur) var(--ease); }
+  .lw li:hover img, .lw a:focus-visible img { opacity: 1; }
+
+  .lw--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(46%, 11rem), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .lw--grid li { display: grid; place-items: center; min-height: 7rem; padding: 1.25rem; background: var(--bg); }
+  .lw--grid a { display: grid; place-items: center; width: 100%; height: 100%; min-height: 4.5rem; }
+  .lw--grid li, .lw--grid a { align-content: center; gap: 0.9rem; }
+  .lw__cap { font-size: var(--fs-xs); font-weight: 600; color: var(--text-2); text-align: center; line-height: 1.3; transition: color var(--dur); }
+  .lw--grid a:hover .lw__cap { color: var(--accent-text); }
+
+  .lw--row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 1.5rem 2rem; }
+  @media (min-width: 600px) { .lw--row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .lw--row li { display: grid; place-items: center; min-height: 3.5rem; }
+  .lw--row img { max-height: 3rem; width: auto; }
+  @media (min-width: 1000px) { .lw--row { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+
+  .lw--marquee { display: grid; gap: 1rem; }
+  .lw__viewport { display: grid; gap: 1.25rem; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .lw__track { display: flex; width: max-content; animation: lw-scroll 70s linear infinite; }
+  .lw__track--rev { animation-direction: reverse; animation-duration: 80s; }
+  .lw--marquee:hover .lw__track, .lw--marquee.is-paused .lw__track { animation-play-state: paused; }
+  .lw__list { display: flex; align-items: center; gap: clamp(2.5rem, 5vw, 4.5rem); padding-right: clamp(2.5rem, 5vw, 4.5rem); }
+  .lw__list li { flex: none; display: grid; place-items: center; height: 4rem; }
+  .lw__pause { justify-self: end; display: inline-flex; align-items: center; gap: 0.6rem; min-height: 2.75rem; padding: 0 1rem; border-radius: var(--r-pill); border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: var(--fs-xs); font-weight: 700; cursor: pointer; }
+  .lw__pause:hover { color: var(--text); border-color: var(--text); }
+  .lw__pause-ico { width: 0.6rem; height: 0.7rem; border-inline: 2.5px solid currentColor; }
+  .lw--marquee.is-paused .lw__pause-ico { width: 0; height: 0; border: 0; border-left: 0.6rem solid currentColor; border-block: 0.36rem solid transparent; }
+  @keyframes lw-scroll { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .lw__viewport { -webkit-mask-image: none; mask-image: none; }
+    .lw__track { animation: none; width: auto; }
+    .lw__list { flex-wrap: wrap; justify-content: center; gap: 1.5rem 2.5rem; padding: 0; }
+    .lw__list[aria-hidden='true'], .lw__pause { display: none; }
+  }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-marquee]').forEach((m) => {
+    const b = m.querySelector<HTMLButtonElement>('[data-marquee-toggle]');
+    b?.addEventListener('click', () => {
+      const on = m.classList.toggle('is-paused');
+      b.setAttribute('aria-pressed', String(on));
+    });
+  });
+</script>

@@ -37,8 +37,8 @@ import { ebooks, company } from '../data/site';
   .eb { padding-bottom: var(--section); }
   .eb ul { border-top: 1px solid var(--line-strong); }
   .eb li a { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: center; padding: clamp(1.5rem, 3vw, 2.5rem) 0; border-bottom: 1px solid var(--line); }
-  .eb__img { grid-column: 1 / span 3; background: var(--white); aspect-ratio: 4 / 4.2; overflow: hidden; display: grid; place-items: center; }
-  .eb__img img { width: 82%; mix-blend-mode: multiply; transition: transform 0.8s var(--ease); }
+  .eb__img { grid-column: 1 / span 3; background: var(--bg-2); aspect-ratio: 4 / 4.2; overflow: hidden; display: grid; place-items: center; }
+  .eb__img img { width: 82%; transition: transform 0.8s var(--ease); }
   .eb li a:hover img { transform: scale(1.05) rotate(-1.5deg); }
   .eb__txt { grid-column: 5 / span 7; display: grid; gap: 1rem; justify-items: start; }
   .eb__txt .h2 { font-size: clamp(1.9rem, 3.8vw, 3.4rem); transition: color 0.3s; }

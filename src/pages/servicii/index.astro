@@ -8,7 +8,7 @@ import { process, keyResults } from '../../data/site';
 ---
 <Base title="Servicii de marketing digital" description="Servicii de marketing omnichannel care vizează întreaga călătorie a clientului: audit, strategie, reclame plătite, SEO, email și SMS marketing, branding.">
   <PageHero eyebrow="Servicii" title="Marketing digital focusat pe <em>rezultate concrete.</em>" lead="Îți oferim servicii de marketing omnichannel care vizează întreaga călătorie a clientului. De la audit și strategie, până la implementare și raportare, ne ocupăm de fiecare etapă." crumbs={[{ label: 'Servicii' }]} />
-  <section class="section--tight" style="padding-top:0"><div class="wrap"><ServiceList /></div></section>
+  <section class="section--tight" style="padding-top:0"><div class="wrap"><ServiceList headingLevel="h2" /></div></section>
 
   <section class="section on-dark">
     <div class="wrap">
@@ -30,7 +30,7 @@ import { process, keyResults } from '../../data/site';
 <style>
   .proc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .proc li { border-top: 1px solid var(--line); padding-top: 1.5rem; display: grid; gap: 1rem; align-content: start; }
-  .proc__n { font-family: var(--serif); font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; color: var(--rose); margin-bottom: 1.5rem; }
+  .proc__n { font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; font-weight: 800; letter-spacing: -0.05em; color: var(--rose); margin-bottom: 1.5rem; }
   .kr__head { grid-column: 1 / span 5; display: grid; gap: 1.5rem; align-content: start; justify-items: start; }
   .kr__list { grid-column: 7 / -1; }
   .kr__list strong { font-weight: 650; }

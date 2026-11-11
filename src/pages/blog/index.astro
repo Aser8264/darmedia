@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import BrevoForm from '../../components/BrevoForm.astro';
 import Arrow from '../../components/Arrow.astro';
-import { posts, formatDate, categories } from '../../data/posts';
+import { posts, formatDate, categories , coverSrcset } from '../../data/posts';
 const [lead, ...rest] = posts;
 const featured = rest.slice(0, 4);
 const archive = rest.slice(4);
@@ -16,7 +16,7 @@ const cats = categories.filter((c) => counts[c] >= 2);
     <div class="wrap">
       <div class="bl__top" data-top>
         <a class="bl__lead" href={`/${lead.slug}/`}>
-          {lead.cover && <img src={lead.cover.src} width={lead.cover.width} height={lead.cover.height} alt="" />}
+          {lead.cover && <img src={lead.cover.src} width={lead.cover.width} height={lead.cover.height} srcset={coverSrcset(lead.cover)} sizes="(max-width: 900px) 92vw, 600px" alt="" fetchpriority="high" decoding="async" />}
           <span class="tag">{lead.categories[0]} · {formatDate(lead.date)}</span>
           <span class="h2">{lead.title}</span>
           <span class="muted">{lead.description}</span>
@@ -24,7 +24,7 @@ const cats = categories.filter((c) => counts[c] >= 2);
         <ul class="bl__feat">
           {featured.map((p) => (
             <li><a href={`/${p.slug}/`}>
-              {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} alt="" loading="lazy" />}
+              {p.cover && <img src={p.cover.src} width={p.cover.width} height={p.cover.height} srcset={coverSrcset(p.cover)} sizes="(max-width: 900px) 40vw, 300px" alt="" loading="lazy" />}
               <span><span class="tag">{p.categories[0]} · {formatDate(p.date)}</span><span class="h3">{p.title}</span></span>
             </a></li>
           ))}
@@ -80,12 +80,12 @@ const cats = categories.filter((c) => counts[c] >= 2);
   .bl__filters button { padding: 0.5rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: none; cursor: pointer; font-size: 0.9375rem; font-weight: 500; transition: background 0.25s, color 0.25s, border-color 0.25s; }
   .bl__filters button sup { font-size: 0.7em; color: var(--ink-soft); margin-left: 0.15em; }
   .bl__filters button:hover { border-color: var(--ink); }
-  .bl__filters button.is-on { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .bl__filters button.is-on { background: var(--text); color: var(--bg); border-color: var(--text); }
   .bl__filters button.is-on sup { color: inherit; opacity: 0.7; }
   .bl__list { border-top: 1px solid var(--line-strong); }
   .bl__list a { display: grid; grid-template-columns: 10rem minmax(0, 1fr) 11rem 1.25rem; gap: 1.5rem; align-items: baseline; padding: 1.15rem 0; border-bottom: 1px solid var(--line); transition: padding 0.4s var(--ease), color 0.25s; }
   .bl__list time { font-size: 0.875rem; color: var(--ink-soft); }
-  .bl__title { font-family: var(--serif); font-size: clamp(1.3rem, 1.9vw, 1.65rem); line-height: 1.15; }
+  .bl__title { font-size: clamp(1.3rem, 1.9vw, 1.65rem); line-height: 1.15; }
   .bl__list .tag { text-align: right; }
   .bl__list :global(.arrow) { align-self: center; opacity: 0; transition: opacity 0.25s; }
   .bl__list a:hover { padding-left: 0.75rem; color: var(--plum); }

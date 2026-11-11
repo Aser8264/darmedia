@@ -40,7 +40,7 @@ const files = import.meta.glob<{ default: Post }>('../content/posts/*.json', { e
 const raw = Object.values(files).map((m) => m.default);
 const valid = new Set<string>([...STATIC, ...raw.map((p) => p.slug), ...services.map((s) => s.slug), ...resources.map((r) => r.slug)]);
 export const posts: Post[] = raw
-  .map((p) => ({ ...p, html: fixLinks(p.html, valid), title: p.title.replace(/\s+/g, ' ').trim(), categories: [...new Set(p.categories.map((c) => RENAME[c] ?? c))] }))
+  .map((p) => ({ ...p, html: fixLinks(p.html, valid), title: p.title.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), categories: [...new Set(p.categories.map((c) => RENAME[c] ?? c))] }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 
 export const postBySlug = (slug: string) => posts.find((p) => p.slug === slug);
@@ -51,3 +51,7 @@ export const formatDate = (iso: string) => {
 };
 export const readingTime = (words: number) => Math.max(1, Math.round(words / 220));
 export const categories = [...new Set(posts.flatMap((p) => p.categories))].sort((a, b) => a.localeCompare(b, 'ro'));
+
+// Variantă de 640px (public/media/covers/640) pentru copertele mai late de 700px — srcset pentru mobil și liste.
+export const coverSrcset = (c: { src: string; width: number }) =>
+  c.width > 700 ? `${c.src.replace('/media/covers/', '/media/covers/640/')} 640w, ${c.src} ${c.width}w` : undefined;

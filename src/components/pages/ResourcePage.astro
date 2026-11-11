@@ -54,8 +54,8 @@ const others = ebooks.filter((e) => e.slug !== r.slug).slice(0, 3);
   .res__main .h1 { font-size: clamp(2.5rem, 5.4vw, 4.8rem); }
   .res__jump { display: none; justify-self: start; }
   @media (max-width: 1000px) { .res__jump { display: inline-flex; } }
-  .res__cover { background: var(--white); max-width: 26rem; margin-top: 1rem; }
-  .res__cover img { mix-blend-mode: multiply; width: 100%; }
+  .res__cover { background: var(--bg-2); max-width: 26rem; margin-top: 1rem; }
+  .res__cover img { width: 100%; }
   .res__sec { display: grid; gap: 1.1rem; padding-top: 2.5rem; margin-top: 1rem; border-top: 1px solid var(--line-strong); }
   .res__sec p { color: var(--ink-soft); max-width: 42rem; }
   .res__cards { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--gap); }
