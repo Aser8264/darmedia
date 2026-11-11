@@ -1,93 +1,88 @@
-/* DAR Media — design system, revizia 2
-   Culori eșantionate din fișierele logo de pe darmedia.ro:
-     #ED1E79 (wordmark „media”), #9E005D (wordmark „dar”), #9A1766 (emblema).
-   Paletă: magenta (dominantă), roz aprins, roz pal, crem #F4EFE8 (tema originală), prună închisă în loc de negru.
-   Contrast verificat (WCAG AA): alb pe #D6116D 5.05 · #2B0A20 pe crem 15.7 · #9A1766 pe crem 6.8 · #FF5AA0 pe prună 6.2.
-   Albul pe #ED1E79 dă doar 4.15 → #ED1E79 rămâne pentru grafică și text foarte mare; zonele cu text folosesc #D6116D. */
+/* DAR Media — design system (revizia 3: luminos, calm)
+   Bază crem #F4EFE8 (tema originală a clientului), text prună, magenta ca accent.
+   Culori eșantionate din logo: #ED1E79 (wordmark „media”), #9A1766 (emblema), #9E005D (wordmark „dar”).
+   Contrast (WCAG AA): prună #2B0A20 pe crem 15.7 · #9A1766 pe crem 6.8 · alb pe #D6116D 5.05 · #5E4A57 pe crem 7.1.
+   Reguli: fără etichete deasupra titlurilor, fără numerotare decorativă, fără umbre dure, fără animații decorative. */
 
 :root {
-  --magenta: #ed1e79;
-  --magenta-ink: #d6116d;
-  --hot: #ff5aa0;
-  --pink: #fbe1ec;
-  --pink-2: #f7c6dc;
+  --magenta: #ed1e79;        /* grafic: sublinieri, puncte, detalii */
+  --magenta-ink: #d6116d;    /* butoane, banda de contact (alb 5.05:1) */
+  --mark: #9a1766;           /* text accent pe crem (6.8:1) */
+  --pink: #fbe7ef;           /* secțiuni alternative */
+  --pink-2: #f6d3e2;
   --cream: #f4efe8;
-  --mark: #9a1766;
+  --paper: #fbf8f4;
   --c-plum: #2b0a20;
   --c-plum-2: #3a1030;
-  --white: #ffffff;
 
   /* ---------- type */
   --sans: 'Hanken Grotesk Variable', 'Hanken Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   --font-display: var(--sans);
   --fs-xs: 0.8125rem;
-  --fs-sm: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  --fs-sm: 0.9375rem;
   --fs-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --fs-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
-  --fs-h4: clamp(1.1875rem, 1.1rem + 0.45vw, 1.4375rem);
-  --fs-h3: clamp(1.375rem, 1.2rem + 0.85vw, 1.875rem);
-  --fs-h2: clamp(2.1rem, 1.4rem + 3vw, 4rem);
-  --fs-h1: clamp(2.6rem, 1.6rem + 4.6vw, 5.5rem);
-  --fs-display: clamp(2.9rem, 1.4rem + 6.6vw, 7.5rem);
-  --fs-mega: clamp(3.5rem, 2rem + 7vw, 8.5rem);
-  --fs-giant: clamp(7rem, 4rem + 18vw, 22rem);
+  --fs-lg: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  --fs-h4: clamp(1.1875rem, 1.12rem + 0.35vw, 1.375rem);
+  --fs-h3: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --fs-h2: clamp(2rem, 1.55rem + 2vw, 3.25rem);
+  --fs-h1: clamp(2.5rem, 1.75rem + 3.4vw, 4.75rem);
+  --fs-display: clamp(2.6rem, 1.6rem + 4.4vw, 6rem);
 
   /* ---------- space */
-  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem;
-  --s-6: 2rem; --s-7: 3rem; --s-8: 4rem; --s-9: 6rem;
-  --gutter: clamp(1.25rem, 4.5vw, 4.5rem);
-  --max: 88rem;
+  --gutter: clamp(1.25rem, 4.5vw, 4rem);
+  --max: 82rem;
   --gap: clamp(1rem, 2.2vw, 2rem);
-  --section: clamp(5rem, 11vw, 10rem);
+  --section: clamp(4.5rem, 9vw, 8rem);
   --header-h: 4.5rem;
 
-  /* ---------- formă: colțuri drepte; formele vin din emblemă (arc, inimă, panglică), nu din raze uniforme */
-  --r-sm: 0; --r-md: 0; --r-lg: 0; --r-pill: 999px;
-  --arch: 999px 999px 0 0;
-  --shadow-hard: 8px 8px 0 var(--c-plum);
+  /* ---------- formă & adâncime */
+  --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(43, 10, 32, 0.06), 0 4px 12px -4px rgba(43, 10, 32, 0.08);
+  --shadow-2: 0 2px 4px rgba(43, 10, 32, 0.06), 0 18px 40px -18px rgba(43, 10, 32, 0.28);
 
-  /* ---------- motion */
-  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur: 0.35s;
+  /* ---------- motion (Emil Kowalski: ease-out puternic, sub 300ms pentru UI) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease: var(--ease-out);
+  --dur: 0.2s;
 }
 
-/* ---------- teme de secțiune (fiecare definește toate variabilele, inclusiv numele vechi folosite de paginile secundare) */
-:root, .t-cream, html.bg-fx[data-theme="cream"] {
-  --bg: var(--cream); --fg: var(--c-plum); --fg-2: #5e4a57; --accent-text: var(--mark); --line: rgba(43, 10, 32, 0.16); --line-2: rgba(43, 10, 32, 0.55);
-  --surface: #fbf8f4; --surface-2: #ffffff; --btn-bg: var(--magenta-ink); --btn-fg: #fff; --btn-shadow: var(--c-plum);
-  --text: var(--fg); --text-2: var(--fg-2); --ink: var(--c-plum); --ink-soft: #5e4a57; --rose: var(--mark); --accent: var(--magenta);
-  --paper: var(--cream); --paper-2: var(--pink); --plum: var(--mark); --bg-2: var(--surface); --line-strong: var(--line-2); --focus: var(--magenta-ink); --on-accent: #fff; --accent-soft: var(--pink);
+/* ---------- teme statice de secțiune (definesc toate variabilele, inclusiv numele vechi folosite de paginile secundare) */
+:root, .t-cream {
+  --bg: var(--cream); --fg: var(--c-plum); --fg-2: #5e4a57; --accent-text: var(--mark); --line: rgba(43, 10, 32, 0.12); --line-2: rgba(43, 10, 32, 0.28);
+  --surface: var(--paper); --surface-2: #ffffff; --btn-bg: var(--magenta-ink); --btn-fg: #fff;
+  --text: var(--fg); --text-2: var(--fg-2); --ink: var(--c-plum); --ink-soft: #5e4a57; --rose: var(--mark); --accent: var(--magenta); --plum: var(--mark);
+  --paper-2: var(--pink); --bg-2: var(--surface); --line-strong: var(--line-2); --focus: var(--magenta-ink); --on-accent: #fff; --accent-soft: var(--pink);
   color-scheme: light;
 }
-.t-pink, html.bg-fx[data-theme="pink"] {
-  --bg: var(--pink); --fg: var(--c-plum); --fg-2: #5e4a57; --accent-text: var(--mark); --line: rgba(43, 10, 32, 0.16); --line-2: rgba(43, 10, 32, 0.55);
-  --surface: #fff5f9; --surface-2: #ffffff; --btn-bg: var(--magenta-ink); --btn-fg: #fff; --btn-shadow: var(--c-plum);
-  --text: var(--fg); --text-2: var(--fg-2); --ink: var(--c-plum); --ink-soft: #5e4a57; --rose: var(--mark); --accent: var(--magenta);
-  --line-strong: var(--line-2); --focus: var(--magenta-ink); --accent-soft: #fff; --plum: var(--mark); --bg-2: var(--surface);
+.t-pink {
+  --bg: var(--pink); --fg: var(--c-plum); --fg-2: #5a4553; --accent-text: var(--mark); --line: rgba(43, 10, 32, 0.12); --line-2: rgba(43, 10, 32, 0.28);
+  --surface: #fdf3f7; --surface-2: #ffffff; --btn-bg: var(--magenta-ink); --btn-fg: #fff;
+  --text: var(--fg); --text-2: var(--fg-2); --ink: var(--c-plum); --ink-soft: #5a4553; --rose: var(--mark); --accent: var(--magenta); --plum: var(--mark);
+  --bg-2: var(--surface); --line-strong: var(--line-2); --focus: var(--magenta-ink); --accent-soft: #fff;
 }
-.t-plum, .on-dark, html.bg-fx[data-theme="plum"] {
-  --bg: var(--c-plum); --fg: #fff; --fg-2: #d9b9cb; --accent-text: var(--hot); --line: rgba(255, 255, 255, 0.16); --line-2: rgba(255, 255, 255, 0.55);
-  --surface: var(--c-plum-2); --surface-2: #4a1640; --btn-bg: var(--magenta-ink); --btn-fg: #fff; --btn-shadow: var(--hot);
-  --text: var(--fg); --text-2: var(--fg-2); --ink: #fff; --ink-soft: var(--fg-2); --rose: var(--hot); --accent: var(--magenta);
-  --line-strong: var(--line-2); --focus: var(--hot); --accent-soft: rgba(255, 90, 160, 0.16); --plum: var(--hot); --bg-2: var(--surface);
+.t-plum, .on-dark {
+  --bg: var(--c-plum); --fg: #fff; --fg-2: #dcc3d1; --accent-text: #ff7ab3; --line: rgba(255, 255, 255, 0.14); --line-2: rgba(255, 255, 255, 0.4);
+  --surface: var(--c-plum-2); --surface-2: #4a1640; --btn-bg: var(--magenta-ink); --btn-fg: #fff;
+  --text: var(--fg); --text-2: var(--fg-2); --ink: #fff; --ink-soft: var(--fg-2); --rose: #ff7ab3; --accent: var(--magenta); --plum: #ff7ab3;
+  --bg-2: var(--surface); --line-strong: var(--line-2); --focus: #ff7ab3; --accent-soft: rgba(255, 122, 179, 0.14);
   color-scheme: dark;
 }
-.t-magenta, .on-plum, html.bg-fx[data-theme="magenta"] {
-  --bg: var(--magenta-ink); --fg: #fff; --fg-2: #fff; --accent-text: #fff; --line: rgba(255, 255, 255, 0.3); --line-2: rgba(255, 255, 255, 0.75);
-  --surface: #c40f63; --surface-2: #b80d5c; --btn-bg: #fff; --btn-fg: var(--mark); --btn-shadow: var(--c-plum);
-  --text: var(--fg); --text-2: var(--fg-2); --ink: #fff; --ink-soft: #fff; --rose: #fff; --accent: var(--c-plum);
-  --line-strong: var(--line-2); --focus: #fff; --accent-soft: rgba(255, 255, 255, 0.16); --plum: #fff; --bg-2: var(--surface);
+.t-magenta, .on-plum {
+  --bg: var(--magenta-ink); --fg: #fff; --fg-2: #fff; --accent-text: #fff; --line: rgba(255, 255, 255, 0.3); --line-2: rgba(255, 255, 255, 0.7);
+  --surface: #c40f63; --surface-2: #b80d5c; --btn-bg: #fff; --btn-fg: var(--mark);
+  --text: var(--fg); --text-2: var(--fg-2); --ink: #fff; --ink-soft: #fff; --rose: #fff; --accent: #fff; --plum: #fff;
+  --bg-2: var(--surface); --line-strong: var(--line-2); --focus: #fff; --accent-soft: rgba(255, 255, 255, 0.16);
   color-scheme: dark;
 }
 .t-cream, .t-pink, .t-plum, .t-magenta, .on-dark, .on-plum { background-color: var(--bg); color: var(--fg); }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 1.5rem); background: var(--bg); }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 1.5rem); background: var(--cream); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
-  margin: 0; background: var(--bg); color: var(--fg);
+  margin: 0; background: var(--cream); color: var(--c-plum);
   font-family: var(--sans); font-size: var(--fs-base); line-height: 1.6;
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
@@ -97,10 +92,11 @@ a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
-::selection { background: var(--magenta); color: #fff; }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+::selection { background: var(--pink-2); color: var(--c-plum); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+html { scrollbar-color: rgba(43, 10, 32, 0.35) transparent; }
 
-.skip { position: absolute; left: 1rem; top: -5rem; background: var(--c-plum); color: #fff; padding: 0.85rem 1.1rem; z-index: 200; font-weight: 700; }
+.skip { position: absolute; left: 1rem; top: -5rem; background: var(--c-plum); color: #fff; padding: 0.85rem 1.1rem; z-index: 200; font-weight: 700; border-radius: var(--r-sm); }
 .skip:focus { top: 1rem; }
 main:focus { outline: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -112,73 +108,56 @@ main:focus { outline: none; }
 .section--tight { padding-block: calc(var(--section) * 0.6); }
 .rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 
-/* ---------- type */
-.display, .h1, .h2, .h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.045em; text-wrap: balance; }
-.display { font-size: var(--fs-display); line-height: 0.92; letter-spacing: -0.055em; }
-.h1 { font-size: var(--fs-h1); line-height: 0.98; letter-spacing: -0.05em; }
-.h2 { font-size: var(--fs-h2); line-height: 1; }
-.h3 { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -0.025em; font-weight: 750; }
-.h4 { font-size: var(--fs-h4); line-height: 1.25; font-weight: 750; letter-spacing: -0.02em; }
-.display em, .h1 em, .h2 em, .h3 em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.015em; color: var(--accent-text); padding-right: 0.05em; }
-.lead { font-size: var(--fs-lg); line-height: 1.55; color: var(--fg-2); max-width: 40em; text-wrap: pretty; }
+/* ---------- type (tracking ≥ -0.04em, display ≤ 6rem) */
+.display, .h1, .h2, .h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; text-wrap: balance; }
+.display { font-size: var(--fs-display); line-height: 1; letter-spacing: -0.038em; }
+.h1 { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.035em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.08; }
+.h3 { font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.02em; font-weight: 650; }
+.h4 { font-size: var(--fs-h4); line-height: 1.3; font-weight: 650; letter-spacing: -0.015em; }
+.display em, .h1 em, .h2 em, .h3 em { font-style: normal; color: var(--accent-text); }
+.lead { font-size: var(--fs-lg); line-height: 1.55; color: var(--fg-2); max-width: 38em; text-wrap: pretty; }
 .muted { color: var(--fg-2); }
 .small { font-size: var(--fs-sm); }
-.eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-size: var(--fs-xs); font-weight: 750; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg); }
-.eyebrow::before { content: ''; width: 1.75rem; height: 2px; background: currentColor; flex: none; }
-.num { font-weight: 750; color: var(--accent-text); font-size: var(--fs-sm); line-height: 1; font-variant-numeric: tabular-nums; }
-.outline-text { color: transparent; -webkit-text-stroke: 1.5px currentColor; }
+/* etichetele de deasupra titlurilor sunt eliminate: titlul vorbește singur */
+.eyebrow { display: none; }
+.num { display: none; }
+p { text-wrap: pretty; }
 
-/* ---------- links & buttons (colțuri drepte, umbră plină decalată) */
-.link { color: inherit; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1.5px no-repeat; padding-bottom: 0.1em; transition: color var(--dur) var(--ease); }
+/* ---------- linkuri & butoane */
+.link { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; transition: color var(--dur) ease; }
 .link:hover { color: var(--accent-text); }
 .btn {
-  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
-  min-height: 3.5rem; padding: 0.95rem 1.6rem;
-  background: var(--btn-bg); color: var(--btn-fg); border: 2px solid var(--btn-bg);
-  font-weight: 750; font-size: 1.0625rem; letter-spacing: -0.01em; line-height: 1.1; cursor: pointer;
-  box-shadow: 5px 5px 0 var(--btn-shadow);
-  transition: box-shadow var(--dur) var(--ease), translate var(--dur) var(--ease);
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 3.25rem; padding: 0.85rem 1.5rem;
+  background: var(--btn-bg); color: var(--btn-fg); border: 1px solid var(--btn-bg); border-radius: var(--r-sm);
+  font-weight: 650; font-size: 1rem; line-height: 1.1; cursor: pointer;
+  transition: transform 160ms var(--ease-out), box-shadow var(--dur) ease, border-color var(--dur) ease;
 }
-.btn:hover { box-shadow: 8px 8px 0 var(--btn-shadow); translate: -2px -2px; }
-.btn:active { box-shadow: 2px 2px 0 var(--btn-shadow); translate: 2px 2px; }
-.btn .arrow { transition: transform var(--dur) var(--ease); }
-.btn:hover .arrow { transform: translateX(0.25rem); }
-.btn--ghost, .btn--line { background: transparent; color: var(--fg); border-color: currentColor; box-shadow: none; }
-.btn--ghost:hover, .btn--line:hover { box-shadow: 5px 5px 0 var(--btn-shadow); }
-.btn--sm { min-height: 2.75rem; padding: 0.55rem 1.1rem; font-size: 0.9375rem; box-shadow: 3px 3px 0 var(--btn-shadow); }
-.arrow { width: 1.1rem; height: 1.1rem; flex: none; }
-.more { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 750; min-height: 2.75rem; color: var(--fg); background: linear-gradient(currentColor, currentColor) 0 calc(100% - 0.55rem) / 100% 2px no-repeat; }
-.more .arrow { transition: transform var(--dur) var(--ease); }
+.btn:active { transform: scale(0.97); }
+.btn .arrow { transition: transform var(--dur) var(--ease-out); }
+.btn--ghost, .btn--line { background: transparent; color: var(--fg); border-color: var(--line-2); }
+.btn--sm { min-height: 2.75rem; padding: 0.55rem 1.05rem; font-size: 0.9375rem; }
+.arrow { width: 1.05rem; height: 1.05rem; flex: none; }
+.more { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 650; min-height: 2.75rem; color: var(--fg); }
+.more .arrow { color: var(--accent-text); transition: transform var(--dur) var(--ease-out); }
 .more:hover { color: var(--accent-text); }
-.more:hover .arrow { transform: translateX(0.25rem); }
-
-/* ---------- suprafețe (pagini secundare): fără colțuri rotunjite */
-.card { background: var(--surface); border: 1px solid var(--line); }
-.card--link { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
-.card--link:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--magenta); }
-.icon { width: 1.5rem; height: 1.5rem; flex: none; }
-.icon-badge { display: inline-grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--magenta); color: #fff; }
-
-/* ---------- forme derivate din emblemă */
-.shape-arch { border-radius: var(--arch); overflow: hidden; }
-.shape-blob { border-radius: 62% 38% 55% 45% / 48% 60% 40% 52%; overflow: hidden; }
-.shape-diag { clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%); }
-.tape { position: absolute; z-index: 2; width: 6.5rem; height: 1.6rem; background: rgba(251, 225, 236, 0.85); box-shadow: 0 1px 3px rgba(43, 10, 32, 0.2); }
-.sticker { position: absolute; z-index: 3; display: grid; place-items: center; text-align: center; width: 7.5rem; aspect-ratio: 1; border-radius: 50%; background: var(--c-plum); color: #fff; font-weight: 800; line-height: 1.05; font-size: 0.9375rem; letter-spacing: -0.02em; rotate: -10deg; }
-.sticker b { display: block; font-size: 1.9rem; letter-spacing: -0.05em; }
-
-/* ---------- apariție la scroll (doar transform + opacity, doar cu JS) */
-.js [data-reveal] { opacity: 0; transform: translateY(1.75rem); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); transition-delay: var(--d, 0ms); }
-.js [data-reveal].is-in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { box-shadow: var(--shadow-2); }
+  .btn:hover .arrow, .more:hover .arrow { transform: translateX(3px); }
+  .btn--ghost:hover, .btn--line:hover { border-color: currentColor; box-shadow: none; }
 }
 
-/* ---------- capete de secțiune (asimetrice) */
-.sec-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1.25rem; align-items: end; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
-.sec-head > .eyebrow { grid-column: 1 / -1; }
-.sec-head > .h2 { grid-column: 1 / span 9; }
+/* ---------- suprafețe (folosite cu măsură, în paginile secundare) */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); }
+.card--link { transition: border-color var(--dur) ease, box-shadow var(--dur) ease; }
+@media (hover: hover) and (pointer: fine) { .card--link:hover { border-color: var(--line-2); box-shadow: var(--shadow-1); } }
+.icon { width: 1.5rem; height: 1.5rem; flex: none; }
+.icon-badge { display: none; }
+
+/* ---------- capete de secțiune */
+.sec-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1rem; align-items: end; margin-bottom: clamp(2.25rem, 4.5vw, 3.75rem); }
+.sec-head > .h2 { grid-column: 1 / span 8; }
 .sec-head > .lead { grid-column: 1 / span 7; }
 .sec-head > .sec-aside { grid-column: 10 / -1; justify-self: end; }
 @media (max-width: 900px) {
@@ -186,122 +165,94 @@ main:focus { outline: none; }
   .sec-head > .sec-aside { grid-column: 1 / -1; justify-self: start; }
 }
 
-/* ---------- page hero (pagini secundare): magenta pe toată lățimea */
-.page-hero { position: relative; padding-top: clamp(3rem, 7vw, 6rem); padding-bottom: clamp(3rem, 6vw, 5.5rem); overflow: hidden; isolation: isolate; }
-.page-hero::after { content: ''; position: absolute; z-index: -1; right: -8vw; bottom: -30%; width: min(48vw, 34rem); aspect-ratio: 1; border-radius: var(--arch); background: var(--magenta); opacity: 0.55; rotate: 8deg; }
-.page-hero .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: var(--fs-xs); font-weight: 600; margin-bottom: clamp(1.5rem, 3.5vw, 2.75rem); }
-.page-hero .crumbs a { padding-block: 0.25rem; text-decoration: underline; text-underline-offset: 0.2em; }
-.page-hero .crumbs span[aria-hidden] { opacity: 0.7; }
-.page-hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1.5rem; align-items: end; }
+/* ---------- page hero (pagini secundare): crem, liniștit */
+.page-hero { position: relative; padding-top: clamp(3rem, 6.5vw, 5.5rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); border-bottom: 1px solid var(--line); }
+.page-hero .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: var(--fs-xs); color: var(--fg-2); margin-bottom: clamp(1.25rem, 3vw, 2.25rem); }
+.page-hero .crumbs a { padding-block: 0.25rem; }
+.page-hero .crumbs a:hover { color: var(--accent-text); }
+.page-hero .crumbs span[aria-hidden] { opacity: 0.6; }
+.page-hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 1.25rem; align-items: end; }
 .page-hero__title { grid-column: 1 / span 10; }
-.page-hero__lead { grid-column: 1 / span 7; color: var(--fg); }
-.page-hero__title .eyebrow { margin-bottom: 1.25rem; }
+.page-hero__lead { grid-column: 1 / span 7; }
 @media (max-width: 900px) { .page-hero__title, .page-hero__lead { grid-column: 1 / -1; } }
 
-/* ---------- liste */
-.ticks li { position: relative; padding: 1rem 0 1rem 2.25rem; border-top: 1px solid var(--line); }
+/* ---------- liste (fără numerotare decorativă) */
+.ticks li { position: relative; padding: 0.95rem 0 0.95rem 2rem; border-top: 1px solid var(--line); }
 .ticks li:last-child { border-bottom: 1px solid var(--line); }
-.ticks li::before { content: ''; position: absolute; left: 0.2rem; top: 1.5rem; width: 0.9rem; height: 0.45rem; border-left: 2.5px solid var(--accent-text); border-bottom: 2.5px solid var(--accent-text); transform: rotate(-45deg); }
-.steps { counter-reset: step; }
-.steps > li { counter-increment: step; display: grid; grid-template-columns: 3rem 1fr; gap: 0.5rem; padding: 1.25rem 0; border-top: 1px solid var(--line); }
+.ticks li::before { content: ''; position: absolute; left: 0.15rem; top: 1.45rem; width: 0.8rem; height: 0.4rem; border-left: 2px solid var(--magenta); border-bottom: 2px solid var(--magenta); transform: rotate(-45deg); }
+.steps > li { position: relative; display: block; padding: 1.1rem 0 1.1rem 1.75rem; border-top: 1px solid var(--line); }
 .steps > li:last-child { border-bottom: 1px solid var(--line); }
-.steps > li::before { content: counter(step, decimal-leading-zero); font-weight: 800; font-size: var(--fs-sm); line-height: 1.9; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.steps > li::before { content: ''; position: absolute; left: 0.1rem; top: 1.75rem; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--magenta); }
 
 /* ---------- prose */
-.prose { font-size: 1.125rem; line-height: 1.75; max-width: 44rem; color: #3d2535; }
+.prose { font-size: 1.125rem; line-height: 1.75; max-width: 42rem; color: #3d2535; }
 .prose > * + * { margin-top: 1.2em; }
-.prose h2, .prose h3, .prose h4 { color: var(--c-plum); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; text-wrap: balance; }
-.prose h2 { font-size: clamp(1.6rem, 1.3rem + 1.3vw, 2.3rem); margin-top: 2em; }
-.prose h3 { font-size: clamp(1.3rem, 1.15rem + 0.7vw, 1.6rem); margin-top: 1.8em; }
+.prose h2, .prose h3, .prose h4 { color: var(--c-plum); font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; text-wrap: balance; }
+.prose h2 { font-size: clamp(1.6rem, 1.35rem + 1vw, 2.1rem); margin-top: 2em; }
+.prose h3 { font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.55rem); margin-top: 1.8em; }
 .prose h4 { font-size: 1.2rem; margin-top: 1.6em; }
-.prose strong { font-weight: 750; color: var(--c-plum); }
-.prose a { color: var(--mark); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; overflow-wrap: anywhere; }
+.prose strong { font-weight: 700; color: var(--c-plum); }
+.prose a { color: var(--mark); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; overflow-wrap: anywhere; }
 .prose a:hover { color: var(--c-plum); }
 .prose ul, .prose ol { padding-left: 1.3em; }
 .prose ul { list-style: none; }
 .prose ul > li { position: relative; }
-.prose ul > li::before { content: ''; position: absolute; left: -1.1em; top: 0.7em; width: 0.45em; height: 0.45em; border-radius: 50%; background: var(--magenta); }
+.prose ul > li::before { content: ''; position: absolute; left: -1.1em; top: 0.72em; width: 0.4em; height: 0.4em; border-radius: 50%; background: var(--magenta); }
 .prose ol { list-style: decimal; }
-.prose ol > li::marker { color: var(--mark); font-weight: 800; }
+.prose ol > li::marker { color: var(--mark); font-weight: 700; }
 .prose li + li { margin-top: 0.5em; }
 .prose li > ul, .prose li > ol { margin-top: 0.5em; }
 .prose figure { margin-block: 2em; }
-.prose img { width: auto; max-width: 100%; background: var(--pink); box-shadow: 8px 8px 0 var(--pink-2); }
+.prose img { width: auto; max-width: 100%; border-radius: var(--r-md); background: var(--pink); }
 .prose figcaption { margin-top: 0.7em; font-size: var(--fs-sm); color: var(--fg-2); }
-.prose blockquote { border-left: 4px solid var(--magenta); padding: 0.2em 0 0.2em 1.25em; font-size: 1.35rem; line-height: 1.4; color: var(--c-plum); }
+.prose blockquote { border-left: 1px solid var(--magenta); padding: 0.2em 0 0.2em 1.25em; font-size: 1.3rem; line-height: 1.45; color: var(--c-plum); }
 .prose hr { border: 0; border-top: 1px solid var(--line); margin-block: 2.5em; }
-.prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; display: block; overflow-x: auto; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; display: block; overflow-x: auto; font-variant-numeric: tabular-nums; }
 .prose td, .prose th { border: 1px solid var(--line-2); padding: 0.6em 0.8em; text-align: left; vertical-align: top; }
-.prose pre { background: var(--pink); padding: 1rem; overflow-x: auto; font-size: 0.9rem; }
+.prose pre { background: var(--pink); padding: 1rem; overflow-x: auto; font-size: 0.9rem; border-radius: var(--r-sm); }
 .prose .cta-line { margin-block: 2em; }
-.prose .cta-line a { display: inline-flex; align-items: center; min-height: 3.5rem; padding: 0.9rem 1.6rem; background: var(--magenta-ink); color: #fff; text-decoration: none; font-weight: 750; box-shadow: 5px 5px 0 var(--c-plum); }
-.prose .cta-line a:hover { color: #fff; box-shadow: 8px 8px 0 var(--c-plum); }
+.prose .cta-line a { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0.85rem 1.5rem; background: var(--magenta-ink); color: #fff; text-decoration: none; font-weight: 650; border-radius: var(--r-sm); }
+.prose .cta-line a:hover { color: #fff; }
 
 /* ---------- formulare */
 .form { display: grid; gap: 1.35rem; }
 .field { display: grid; gap: 0.45rem; }
-.field > label, .field > legend, fieldset.field > legend { font-size: var(--fs-sm); font-weight: 650; color: var(--fg); padding: 0; }
+.field > label, .field > legend, fieldset.field > legend { font-size: var(--fs-sm); font-weight: 600; color: var(--fg); padding: 0; }
 fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
-.input { width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; background: var(--surface-2); color: var(--c-plum); border: 1.5px solid var(--line-2); border-radius: 0; font-size: 1.0625rem; transition: border-color var(--dur), box-shadow var(--dur); }
-.t-plum .input, .on-dark .input, .t-magenta .input, .on-plum .input { background: #fff; color: var(--c-plum); }
+.input { width: 100%; min-height: 3.25rem; padding: 0.8rem 1rem; background: #fff; color: var(--c-plum); border: 1px solid var(--line-2); border-radius: var(--r-sm); font-size: 1.0625rem; transition: border-color var(--dur) ease, box-shadow var(--dur) ease; }
 .input::placeholder { color: #6b5563; }
-.input:focus { outline: none; border-color: var(--c-plum); box-shadow: 4px 4px 0 var(--magenta); }
+.input:focus { outline: none; border-color: var(--magenta-ink); box-shadow: 0 0 0 3px rgba(214, 17, 109, 0.18); }
 textarea.input { resize: vertical; min-height: 7rem; line-height: 1.5; }
 select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.25rem; }
 .phone { display: grid; grid-template-columns: 7rem 1fr; gap: 0.75rem; }
 .choices { display: grid; gap: 0.5rem; margin-top: 0.35rem; }
 .choice { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; font-size: 1rem; line-height: 1.45; padding-block: 0.3rem; }
-.choice input { appearance: none; flex: none; width: 1.3rem; height: 1.3rem; margin: 0.05rem 0 0; border: 2px solid currentColor; background: transparent; display: grid; place-content: center; cursor: pointer; }
+.choice input { appearance: none; flex: none; width: 1.25rem; height: 1.25rem; margin: 0.08rem 0 0; border: 1.5px solid currentColor; border-radius: 4px; background: transparent; display: grid; place-content: center; cursor: pointer; }
 .choice input[type='radio'] { border-radius: 50%; }
-.choice input::after { content: ''; width: 0.65rem; height: 0.65rem; background: var(--magenta); transform: scale(0); transition: transform 0.18s var(--ease); border-radius: inherit; }
+.choice input::after { content: ''; width: 0.6rem; height: 0.6rem; background: var(--magenta-ink); transform: scale(0); transition: transform 150ms var(--ease-out); border-radius: 2px; }
+.choice input[type='radio']::after { border-radius: 50%; }
 .choice input:checked::after { transform: scale(1); }
 .choice a { text-decoration: underline; text-underline-offset: 0.2em; }
 .form__note { font-size: var(--fs-sm); color: var(--fg-2); }
-.form__status { padding: 1rem 1.2rem; border: 2px solid var(--c-plum); font-weight: 650; background: #fff; color: var(--c-plum); }
+.form__status { padding: 1rem 1.2rem; border: 1px solid var(--line-2); border-radius: var(--r-sm); font-weight: 600; background: #fff; color: var(--c-plum); }
 .form__status[data-kind='err'] { border-color: #b00020; color: #8a0019; }
 .hp { position: absolute !important; left: -9999px !important; }
 
 /* ---------- utilitare */
-.tag { display: inline-block; font-size: var(--fs-xs); font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-2); }
-.pill { display: inline-flex; align-items: center; gap: 0.4rem; font-size: var(--fs-xs); font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg); }
+.tag { display: inline-block; font-size: var(--fs-xs); font-weight: 600; color: var(--fg-2); }
+.pill { display: inline-flex; align-items: center; gap: 0.4rem; font-size: var(--fs-xs); font-weight: 600; color: var(--fg-2); }
 .stack > * + * { margin-top: var(--stack, 1.25rem); }
 .center { text-align: center; }
 
-/* ---------- fundal care își schimbă culoarea între secțiuni (doar cu JS): secțiunile devin transparente și preiau tema activă de pe <html>;
-   tranziția e un strat fix care pornește cu culoarea veche și dispare prin opacity */
-html.bg-fx main [data-theme]:not([data-lock]) {
-  background: transparent; color: inherit;
-  --bg: inherit; --fg: inherit; --fg-2: inherit; --accent-text: inherit; --line: inherit; --line-2: inherit; --surface: inherit; --surface-2: inherit;
-  --btn-bg: inherit; --btn-fg: inherit; --btn-shadow: inherit; --text: inherit; --text-2: inherit; --ink: inherit; --ink-soft: inherit; --rose: inherit;
-  --accent: inherit; --line-strong: inherit; --focus: inherit; --accent-soft: inherit; --plum: inherit; --bg-2: inherit; --shape: inherit; --shape-2: inherit;
-}
-:root, .t-cream, .t-pink { --shape: var(--magenta); --shape-2: var(--pink-2); }
-.t-plum, .on-dark, html.bg-fx[data-theme="plum"] { --shape: var(--magenta); --shape-2: var(--c-plum-2); }
-.t-magenta, .on-plum, html.bg-fx[data-theme="magenta"] { --shape: var(--magenta); --shape-2: var(--c-plum); }
-html.bg-fx[data-theme="pink"] { --shape: var(--magenta); --shape-2: var(--pink-2); }
-.bgfx { position: fixed; inset: 0; z-index: -1; opacity: 0; visibility: hidden; pointer-events: none; }
-.bgfx.is-fading { visibility: visible; animation: bgfx-fade 0.7s var(--ease) forwards; }
-@keyframes bgfx-fade { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
-
-/* ---------- titluri care apar rând cu rând (mască + slide-up). Cu intro: pornesc când cortina se retrage. */
+/* ---------- singurul moment: titlul din hero apare rând cu rând (după intro, dacă rulează) */
 .lines { display: block; }
-.lines > span { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.lines > span { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
 .lines > span > span { display: inline-block; text-wrap: balance; }
-.js .lines.is-anim > span > span { transform: translateY(108%); animation: line-up 0.95s var(--ease-out) forwards; animation-delay: calc(var(--base, 0.15s) + var(--i, 0) * 0.09s); }
-html.has-intro .lines.is-anim { --base: 1.2s; }
+.js .lines.is-anim > span > span { transform: translateY(105%); animation: line-up 0.9s var(--ease-out) forwards; animation-delay: calc(var(--base, 0.1s) + var(--i, 0) * 0.07s); }
+html.has-intro .lines.is-anim { --base: 1.15s; }
 @keyframes line-up { to { transform: none; } }
-@media (prefers-reduced-motion: reduce) { .js .lines.is-anim > span > span { transform: none; animation: none; } }
 
-/* ---------- cursor custom (doar desktop cu mouse; cursorul nativ rămâne) */
-.cursor { position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none; display: none; }
-html.has-cursor .cursor { display: block; }
-.cursor > span { position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--magenta); color: #fff; font-size: 0; font-weight: 800; letter-spacing: 0.02em; transition: transform 0.3s var(--ease-out), opacity 0.2s; mix-blend-mode: normal; }
-.cursor.is-link > span { transform: scale(3.2); opacity: 0.35; }
-.cursor.has-label > span { width: 84px; height: 84px; margin: -42px 0 0 -42px; transform: none; opacity: 1; font-size: 0.8125rem; }
-.cursor.is-out > span { opacity: 0; }
-
-/* ---------- decor: emblema care plutește / se rotește lent */
-.float { animation: float 9s ease-in-out infinite; }
-.spin { animation: spin 40s linear infinite; }
-@keyframes float { 50% { transform: translateY(-14px) rotate(4deg); } }
-@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .js .lines.is-anim > span > span { transform: none; animation: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

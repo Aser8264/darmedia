@@ -1,57 +1,41 @@
 ---
-// Studiu de caz ca tipografie deschisă: formă magenta derivată din emblemă (arc, cerc, diagonală, petală) în spatele cifrei mari.
-// Hover/focus: forma se modifică (clip-path + rotație) și rezultatul apare. Pe touch, rezultatul e mereu vizibil.
+// Studiu de caz ca rând editorial: cifra (cu unitatea la aceeași linie de bază), rezultatul, canalul, link.
 import Arrow from './Arrow.astro';
 import { logoSize } from '../data/logos';
 import type { CaseStudy } from '../data/site';
 interface Props { c: CaseStudy; i?: number; title?: string; date?: string; headingLevel?: 'h3' | 'h2' }
-const { c, i = 0, title, date, headingLevel: H = 'h3' } = Astro.props;
-const v = ['arch', 'circle', 'diag', 'petal'][i % 4];
+const { c, title, date, headingLevel: H = 'h3' } = Astro.props;
 ---
-<a href={`/${c.slug}/`} class:list={['cc', `cc--${v}`]} data-cursor-label="Citește">
-  <span class="cc__top">
-    <span class="cc__n">{String(i + 1).padStart(2, '0')}</span>
-    <span class="cc__channel">{c.channel}</span>
-    {c.logo && <img class="cc__logo" src={`/media/logos/${c.logo}.webp`} alt={c.client ?? ''} width={logoSize[c.logo].w} height={logoSize[c.logo].h} loading="lazy" decoding="async" />}
+<a href={`/${c.slug}/`} class="cc">
+  <span class="cc__fig">
+    <span class="cc__num">{c.figure}</span>{c.unit && ' '}{c.unit && <span class="cc__unit">{c.unit}</span>}
   </span>
-  <span class="cc__vis">
-    <span class="cc__shape" aria-hidden="true"></span>
-    <span class="cc__fig"><span class="cc__num">{c.figure}</span>{c.unit && <span class="cc__unit">{c.unit}</span>}</span>
-  </span>
-  <span class="cc__res">
+  <span class="cc__body">
     <H class="cc__line">{c.line}</H>
-    {title && <span class="cc__title">{title}{date && <> · {date}</>}</span>}
+    <span class="cc__meta">
+      <span>{c.channel}</span>
+      {c.logo && <img class="cc__logo" src={`/media/logos/${c.logo}.webp`} alt={c.client ?? ''} width={logoSize[c.logo].w} height={logoSize[c.logo].h} loading="lazy" decoding="async" />}
+      {title && <span class="cc__title">{title}{date && <> · {date}</>}</span>}
+    </span>
     <span class="cc__more">Citește studiul de caz <Arrow /></span>
   </span>
 </a>
 <style>
-  .cc { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem 0 1.5rem; min-height: 100%; isolation: isolate; container-type: inline-size; color: var(--fg); border-top: 2px solid var(--fg); }
-  .cc__vis { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(11rem, 62cqi, 17rem); margin-top: 0.5rem; }
-  .cc__shape { position: absolute; z-index: -1; top: 0; bottom: 0; right: 0; width: min(64%, 15rem); background: var(--magenta); transition: clip-path 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
-  .cc--arch .cc__shape { clip-path: inset(0 0 0 0 round 50% 50% 0 0); transform: rotate(-3deg); }
-  .cc--arch:hover .cc__shape, .cc--arch:focus-visible .cc__shape { clip-path: inset(8% 6% 0 6% round 50% 50% 50% 50%); transform: rotate(4deg) scale(1.04); }
-  .cc--circle .cc__shape { clip-path: circle(46% at 50% 50%); }
-  .cc--circle:hover .cc__shape, .cc--circle:focus-visible .cc__shape { clip-path: circle(52% at 40% 58%); transform: translateX(-6%); }
-  .cc--diag .cc__shape { clip-path: polygon(0 14%, 100% 0, 100% 86%, 0 100%); transform: rotate(2deg); }
-  .cc--diag:hover .cc__shape, .cc--diag:focus-visible .cc__shape { clip-path: polygon(0 0, 100% 16%, 100% 100%, 0 84%); transform: rotate(-3deg); }
-  .cc--petal .cc__shape { clip-path: inset(0 0 0 0 round 0 50% 0 50%); transform: rotate(-4deg); }
-  .cc--petal:hover .cc__shape, .cc--petal:focus-visible .cc__shape { clip-path: inset(4% 0 4% 0 round 50% 0 50% 0); transform: rotate(6deg); }
-  .cc__top { display: flex; align-items: center; gap: 0.9rem; min-height: 2.25rem; font-size: var(--fs-xs); font-weight: 750; letter-spacing: 0.14em; text-transform: uppercase; }
-  .cc__n { font-variant-numeric: tabular-nums; }
-  .cc__logo { max-height: 2.25rem; width: auto; margin-left: auto; filter: brightness(0); opacity: 0.85; }
-  .cc__fig { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.4rem; padding-bottom: 0.75rem; }
-  .cc__num { font-size: min(var(--fs-mega), 23cqi); font-weight: 850; line-height: 0.88; letter-spacing: -0.065em; font-variant-numeric: tabular-nums; }
-  .cc__unit { font-size: clamp(1.25rem, 6cqi, 2.25rem); font-weight: 800; letter-spacing: -0.03em; }
-  .cc__res { display: grid; gap: 0.75rem; justify-items: start; padding-top: 0.75rem; }
-  .cc__line { font-size: var(--fs-lg); font-weight: 650; line-height: 1.35; max-width: 24em; text-wrap: pretty; letter-spacing: -0.015em; }
-  .cc__title { font-size: var(--fs-sm); color: var(--fg-2); }
-  .cc__more { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.5rem; font-weight: 750; font-size: var(--fs-sm); border-bottom: 2px solid currentColor; }
-  .cc__more :global(.arrow) { transition: transform var(--dur) var(--ease); }
-  .cc:hover .cc__more :global(.arrow) { transform: translateX(0.3rem); }
-  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .cc__res > * { transform: translateY(0.6rem); opacity: 0.0; transition: transform 0.5s var(--ease-out), opacity 0.4s; }
-    .cc__res > :first-child { opacity: 1; transform: none; }
-    .cc:hover .cc__res > *, .cc:focus-visible .cc__res > * { transform: none; opacity: 1; }
-    .cc:hover .cc__res > :nth-child(2) { transition-delay: 0.05s; } .cc:hover .cc__res > :nth-child(3) { transition-delay: 0.1s; }
+  .cc { display: grid; gap: 0.9rem; padding-block: 1.75rem 2rem; border-top: 1px solid var(--line-2); height: 100%; color: var(--fg); }
+  .cc__fig { display: block; line-height: 1; font-variant-numeric: lining-nums; }
+  .cc__num { font-size: clamp(2.75rem, 2rem + 3vw, 4.25rem); font-weight: 700; line-height: 1; letter-spacing: -0.035em; }
+  .cc__unit { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.6rem); font-weight: 650; letter-spacing: 0; margin-left: 0.3em; color: var(--accent-text); }
+  .cc__body { display: grid; gap: 0.6rem; justify-items: start; }
+  .cc__line { font-size: var(--fs-lg); font-weight: 500; line-height: 1.45; max-width: 30em; text-wrap: pretty; letter-spacing: -0.005em; }
+  .cc__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 1rem; font-size: var(--fs-sm); color: var(--fg-2); }
+  .cc__logo { max-height: 1.75rem; width: auto; filter: brightness(0); opacity: 0.7; }
+  .cc__title { flex-basis: 100%; }
+  .cc__more { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.5rem; font-weight: 650; font-size: var(--fs-sm); }
+  .cc__more :global(.arrow) { color: var(--accent-text); transition: transform 0.2s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .cc { transition: border-color 0.2s ease; }
+    .cc:hover { border-top-color: var(--magenta); }
+    .cc:hover .cc__more { color: var(--accent-text); }
+    .cc:hover .cc__more :global(.arrow) { transform: translateX(3px); }
   }
 </style>

@@ -22,9 +22,8 @@ let n = 0;
             const subs = services.filter((x) => x.parent === s.slug);
             return (
               <li>
-                <details class="svc__row" data-follow>
+                <details class="svc__row">
                   <summary>
-                    <span class="svc__n">{String(n).padStart(2, '0')}</span>
                     <span class="svc__name">{s.name}</span>
                     <span class="svc__plus" aria-hidden="true"></span>
                   </summary>
@@ -35,7 +34,6 @@ let n = 0;
                     )}
                     <a class="more" href={`/${s.slug}/`}>Despre {s.name} <Arrow /></a>
                   </div>
-                  <span class="svc__fill" aria-hidden="true"></span>
                 </details>
               </li>
             );
@@ -46,36 +44,38 @@ let n = 0;
   })}
 </div>
 <style>
-  .svc { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
+  .svc { display: grid; gap: clamp(2.5rem, 5vw, 3.5rem); }
   .svc__group { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
-  .svc__label { grid-column: 1 / span 3; padding-top: 1.1rem; }
-  .svc__cat { font-size: var(--fs-xs); font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
-  .svc__note { font-size: var(--fs-sm); color: var(--fg-2); margin-top: 0.35rem; max-width: 14rem; }
-  .svc__rows { grid-column: 4 / -1; border-top: 1px solid var(--line-2); }
-  .svc__rows > li { border-bottom: 1px solid var(--line-2); }
-  .svc__row { position: relative; overflow: hidden; isolation: isolate; }
-  .svc__row summary { display: grid; grid-template-columns: 3rem 1fr 2.5rem; align-items: center; gap: 0.75rem; min-height: clamp(4.5rem, 8vw, 6.5rem); cursor: pointer; list-style: none; }
+  .svc__label { grid-column: 1 / span 4; padding-top: 1.15rem; padding-right: 1rem; }
+  .svc__cat { font-size: var(--fs-h4); font-weight: 650; letter-spacing: -0.015em; color: var(--fg); }
+  .svc__note { font-size: var(--fs-sm); color: var(--fg-2); margin-top: 0.25rem; }
+  .svc__rows { grid-column: 5 / -1; border-top: 1px solid var(--line-2); }
+  .svc__rows > li { border-bottom: 1px solid var(--line); }
+  .svc__row summary { display: grid; grid-template-columns: 1fr 2rem; align-items: center; gap: 1rem; min-height: 4.25rem; padding-block: 0.75rem; cursor: pointer; list-style: none; }
   .svc__row summary::-webkit-details-marker { display: none; }
-  .svc__n { font-weight: 750; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; color: var(--fg-2); }
-  .svc__name { font-size: clamp(1.75rem, 1rem + 3.4vw, 4rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1; transition: transform 0.5s var(--ease-out); }
-  .svc__plus { position: relative; justify-self: end; width: 2.5rem; height: 2.5rem; border: 2px solid currentColor; border-radius: 50%; transition: transform 0.4s var(--ease-out); }
-  .svc__plus::before, .svc__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.85rem; height: 2px; background: currentColor; transform: translate(-50%, -50%); }
+  .svc__name { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.875rem); font-weight: 650; letter-spacing: -0.025em; line-height: 1.2; transition: color 0.15s ease; }
+  .svc__plus { position: relative; justify-self: end; width: 2rem; height: 2rem; border: 1px solid var(--line-2); border-radius: 50%; transition: transform 0.25s var(--ease-out), border-color 0.15s ease; }
+  .svc__plus::before, .svc__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
   .svc__plus::after { transform: translate(-50%, -50%) rotate(90deg); }
-  .svc__row[open] .svc__plus { transform: rotate(45deg); background: var(--magenta); border-color: var(--magenta); color: #fff; }
-  .svc__body { display: grid; gap: 1rem; justify-items: start; padding: 0 3.25rem 2rem 3.75rem; max-width: 46rem; color: var(--fg-2); font-size: var(--fs-lg); }
-  .svc__subs { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; }
-  .svc__subs a { display: inline-flex; align-items: center; min-height: 2.5rem; font-weight: 700; color: var(--fg); border-bottom: 2px solid var(--magenta); }
+  .svc__row[open] .svc__plus { transform: rotate(45deg); border-color: var(--magenta); color: var(--mark); }
+  .svc__body { display: grid; gap: 0.9rem; justify-items: start; padding: 0 3rem 1.75rem 0; max-width: 42rem; color: var(--fg-2); font-size: var(--fs-lg); }
+  .svc__subs { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+  .svc__subs a { display: inline-flex; align-items: center; min-height: 2.5rem; font-weight: 600; color: var(--fg); text-decoration: underline; text-decoration-color: var(--magenta); text-underline-offset: 0.25em; }
   .svc__subs a:hover { color: var(--accent-text); }
-  .svc__fill { position: absolute; z-index: -1; left: 0; top: 0; width: 22rem; height: 22rem; margin: -11rem 0 0 -11rem; border-radius: 50%; background: var(--magenta); opacity: 0; transform: translate(var(--mx, 50%), var(--my, 50%)) scale(0.3); transition: transform 0.25s var(--ease-out), opacity 0.3s; pointer-events: none; }
   @media (hover: hover) and (pointer: fine) {
-    .svc__row:hover .svc__fill { opacity: 1; transform: translate(var(--mx, 50%), var(--my, 50%)) scale(1); }
-    .svc__row:hover .svc__name { transform: translateX(1rem); }
-    .svc__row:hover .svc__n, .svc__row:hover .svc__body { color: var(--fg); }
+    .svc__row summary:hover .svc__name { color: var(--accent-text); }
+    .svc__row summary:hover .svc__plus { border-color: var(--fg); }
+  }
+  @supports selector(::details-content) {
+    @media (prefers-reduced-motion: no-preference) {
+      .svc { interpolate-size: allow-keywords; }
+      .svc__row::details-content { block-size: 0; overflow: clip; transition: block-size 0.3s var(--ease-out), content-visibility 0.3s allow-discrete; }
+      .svc__row[open]::details-content { block-size: auto; }
+    }
   }
   @media (max-width: 900px) {
     .svc__label, .svc__rows { grid-column: 1 / -1; }
-    .svc__label { padding: 0 0 1rem; }
-    .svc__row summary { grid-template-columns: 2.25rem 1fr 2.5rem; }
-    .svc__body { padding: 0 0 1.5rem 0; }
+    .svc__label { padding: 0 0 0.75rem; }
+    .svc__body { padding-right: 0; }
   }
 </style>

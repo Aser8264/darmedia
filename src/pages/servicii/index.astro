@@ -30,7 +30,7 @@ import { process, keyResults } from '../../data/site';
 <style>
   .proc { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
   .proc li { border-top: 1px solid var(--line); padding-top: 1.5rem; display: grid; gap: 1rem; align-content: start; }
-  .proc__n { font-size: clamp(5rem, 9vw, 8rem); line-height: 0.8; font-weight: 800; letter-spacing: -0.05em; color: var(--rose); margin-bottom: 1.5rem; }
+  .proc__n { display: none; }
   .kr__head { grid-column: 1 / span 5; display: grid; gap: 1.5rem; align-content: start; justify-items: start; }
   .kr__list { grid-column: 7 / -1; }
   .kr__list strong { font-weight: 650; }
